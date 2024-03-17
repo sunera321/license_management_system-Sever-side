@@ -1,16 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace API.Model
+﻿namespace license_management_system_Sever_side.Models
 {
-    public class Partner
+    public class Partner : user
     {
-
-        [Key] public int PId { get; set; }
-        
-        public string? Name { get; set; }
-        public string? Country { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? Password { get; set; }
+        public virtual ICollection<EndClient> EndClients { get; set; }
+        public virtual ICollection<RequestKey> RequestKey { get; set; }
 
     }
 }
