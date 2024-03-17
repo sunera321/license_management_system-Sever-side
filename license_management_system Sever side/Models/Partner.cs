@@ -1,9 +1,16 @@
-﻿namespace license_management_system_Sever_side.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Model
 {
-    public class Partner : user
+    public class Partner
     {
-        public virtual ICollection<EndClient> EndClients { get; set; }
-        public virtual ICollection<RequestKey> RequestKey { get; set; }
+
+        [Key] public int PId { get; set; }
+        
+        public string? Name { get; set; }
+        public string? Country { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Password { get; set; }
 
     }
 }

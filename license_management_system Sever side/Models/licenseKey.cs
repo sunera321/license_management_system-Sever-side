@@ -1,23 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace license_management_system_Sever_side.Models
+namespace API.Model
 {
-    public class licenseKey
+    public class LicenseKey
     {
-        [Key]
-        public int KeyId { get; set; }
-        public string LicenseKey { get; set; }
-        public DateTime Activetiondate { get; set; }
-        public DateTime DeactivatedDta { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsIssused { get; set; }
-        public bool IsExpired { get; set; }
+        [Key] public int CID { get; set; }
+        public string? HostURL { get; set; }
 
-        public int RequestId { get; set; }
-        [JsonIgnore]
-        public virtual RequestKey requestKey { get; set; }
+        public string? ServerMacAddress { get; set; }
+        public DateTime ValidDateUntil { get; set; }
+        public string? Modules { get; set; }
 
-
+       
     }
 }
