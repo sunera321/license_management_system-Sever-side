@@ -42,32 +42,23 @@ namespace license_management_system_Sever_side.Controllers
         [HttpPost]
         public async Task<ActionResult<EndClient>> PostEndClient(EndClient endClient)
         {
+            // Set requestKeys to null
+            endClient.requestKeys = null;
+
+            // Add the EndClient to the context
             _context.Clients.Add(endClient);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetEndClient), new { id = endClient.clientId }, endClient);
-        }
-
-        // PUT: api/EndClients/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEndClient(int id, EndClient endClient)
-        {
-            if (id != endClient.clientId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(endClient).State = EntityState.Modified;
 
             try
             {
+                // Save changes to the database
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateException)
             {
-                if (!EndClientExists(id))
+                // Check for errors
+                if (EndClientExists(endClient.clientId))
                 {
-                    return NotFound();
+                    return Conflict();
                 }
                 else
                 {
@@ -75,7 +66,7 @@ namespace license_management_system_Sever_side.Controllers
                 }
             }
 
-            return NoContent();
+            return CreatedAtAction("GetEndClient", new { id = endClient.clientId }, endClient);
         }
 
         // DELETE: api/EndClients/5
