@@ -21,5 +21,6 @@ namespace license_management_system_Sever_side.Models
         public string Website { get; set; }
         public string Industry { get; set; }
         public string AdditionalInfo { get; set; }
+   
     }
 }
