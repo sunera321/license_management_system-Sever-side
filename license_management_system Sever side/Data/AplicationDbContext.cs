@@ -13,7 +13,7 @@ namespace license_management_system_Sever_side.Data
         public DbSet<ClientPanal>ClientPanals { get; set; }
         public DbSet<EndClient>Clients { get; set; }
         public DbSet<licenseKey> licenseKeys { get; set; }
-        public DbSet<Module> Modules { get; set; }
+        public DbSet<Modules> Modules { get; set; }
         public DbSet<RequestKey> RequestKeys { get; set; }
         public DbSet<user> users { get; set; }
         public DbSet<Partner> Partners { get; set; }
