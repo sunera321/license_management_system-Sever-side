@@ -25,7 +25,7 @@ namespace license_management_system_Sever_side.Models
         [JsonIgnore]
         public ClientServer? clientServer { get; set; }
 
-        public string? MacAddress { get; set; } = null;
+        public string? MacAddress { get; set; }
         
 
         [JsonIgnore]
