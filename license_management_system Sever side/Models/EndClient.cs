@@ -26,6 +26,7 @@ namespace license_management_system_Sever_side.Models
         public ClientServer? clientServer { get; set; }
 
         public string? MacAddress { get; set; }
+        //partner shuld fill this field withing the clinet registaion process
         
 
         [JsonIgnore]
