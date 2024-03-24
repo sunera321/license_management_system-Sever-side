@@ -19,8 +19,10 @@ namespace license_management_system_Sever_side.Data
         public DbSet<Partner> Partners { get; set; }
         public DbSet<PartnerManager> PartnerManagers { get; set; }
         public DbSet<FinaceManager> FinaceManagers { get; set; }
+        public DbSet<ClientServer> ClientServers { get; set; }
+        public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set; }
 
-       protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Partner>().ToTable("Partners");
             modelBuilder.Entity<FinaceManager>().ToTable("FinaceManagers");
@@ -34,6 +36,12 @@ namespace license_management_system_Sever_side.Data
                 entity.HasMany(e => e.partnersManager).WithOne(e => e.requestKey).HasForeignKey(e => e.RequestId).OnDelete(DeleteBehavior.ClientCascade);
                 entity.HasOne(e => e.licenseKey).WithOne(e => e.requestKey).HasForeignKey<licenseKey>(e => e.RequestId).OnDelete(DeleteBehavior.ClientCascade);
 
+            });
+            
+            modelBuilder.Entity<ClientServer>(entity =>
+            {
+                entity.HasMany(e => e.SiteNames).WithOne(e => e.ClientServer).HasForeignKey(e => e.MacAddress).OnDelete(DeleteBehavior.ClientCascade);
+                entity.HasOne(e => e.client).WithOne(e => e.clientServer).HasForeignKey<EndClient>(e => e.MacAddress).OnDelete(DeleteBehavior.ClientCascade);
             });
             modelBuilder.Entity<Partner>(entity =>
             {
