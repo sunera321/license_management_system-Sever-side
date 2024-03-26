@@ -20,7 +20,8 @@ namespace license_management_system_Sever_side.Data
         public DbSet<PartnerManager> PartnerManagers { get; set; }
         public DbSet<FinaceManager> FinaceManagers { get; set; }
 
-       protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<ClientST> ClientSTs { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Partner>().ToTable("Partners");
             modelBuilder.Entity<FinaceManager>().ToTable("FinaceManagers");
