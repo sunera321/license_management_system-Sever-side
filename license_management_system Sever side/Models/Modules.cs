@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace license_management_system_Sever_side.Models
 {
-    public class Module
+    public class Modules
     {
         [Key]
         public int moduleId {  get; set; }

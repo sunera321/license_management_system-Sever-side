@@ -10,14 +10,14 @@ namespace license_management_system_Sever_side.Models
         public int RequestId { get; set; }
         public string Key { get; set; }
         public DateTime RequiredTime { get; set; }
-        public bool isFinanceApproval {  get; set; }
-        public bool isPartnerMgrApproval { get; set; } 
-        public string CommentFinaceMgt { get; set; }
-        public string CommentPartnerMgt { get; set; }
+        public bool isFinanceApproval {  get; set; }=false;
+        public bool isPartnerMgrApproval { get; set; } = false; 
+        public string? CommentFinaceMgt { get; set; }=null;
+        public string? CommentPartnerMgt { get; set; }=null;
         public string Status { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Module> modules { get; set; }
+        public virtual ICollection<Modules> modules { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<EndClient> endClients { get; set; }
