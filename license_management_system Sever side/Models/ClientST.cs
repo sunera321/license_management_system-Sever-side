@@ -15,7 +15,7 @@ namespace license_management_system_Sever_side.Models
         public string? Country { get; set; }
         public string? Modules { get; set; }
 
-        public Boolean Partner { get; set; } 
-        public Boolean Finance { get; set; } 
+        public Boolean Partner { get; set; } = true;
+        public Boolean Finance { get; set; } = true;
     }
 }

@@ -71,10 +71,6 @@ namespace license_management_system_Sever_side.Controllers
                 return NotFound();
             }
 
-            // Update only the partner and finance columns
-            existingClient.Partner = clientST.Partner;
-            existingClient.Finance = clientST.Finance;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -101,7 +97,76 @@ namespace license_management_system_Sever_side.Controllers
 
             return NoContent();
         }
+        // PATCH: api/PAfinanceTCH/5/SetFinanceTrue
+        [HttpPatch("{id}/SetFinanceTrue")]
+        public async Task<IActionResult> SetFinanceTrue(int id)
+        {
+            var client = await _context.ClientSTs.FindAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
 
+            client.Finance = true;
+
+            _context.Entry(client).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClientExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // PATCH: api/PAfinanceTCH/5/SetPartnerTrue
+        [HttpPatch("{id}/SetPartnerTrue")]
+        public async Task<IActionResult> SetPartnerTrue(int id)
+        {
+            var client = await _context.ClientSTs.FindAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            client.Partner = true;
+
+            _context.Entry(client).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClientExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool ClientExists(int id)
+        {
+            return _context.ClientSTs.Any(e => e.CID == id);
+        }
 
     }
 }
