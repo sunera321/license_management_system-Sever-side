@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    partial class AplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240329150705_ST-Updated")]
+    partial class STUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +157,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.HasKey("CID");
 
                     b.ToTable("ClientSTs");
-
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.EndClient", b =>
@@ -193,9 +195,6 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MacAddress")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -215,15 +214,15 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SeverMacAd")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Website")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("clientId");
-
-                    b.HasIndex("MacAddress")
-                        .IsUnique()
-                        .HasFilter("[MacAddress] IS NOT NULL");
 
                     b.HasIndex("PartnerId");
 
@@ -427,30 +426,13 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.ClientServerSiteName", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.ClientServer", "ClientServer")
-                        .WithMany("SiteNames")
-                        .HasForeignKey("MacAddress")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.Navigation("ClientServer");
-                });
-
             modelBuilder.Entity("license_management_system_Sever_side.Models.EndClient", b =>
                 {
-                    b.HasOne("license_management_system_Sever_side.Models.ClientServer", "clientServer")
-                        .WithOne("client")
-                        .HasForeignKey("license_management_system_Sever_side.Models.EndClient", "MacAddress")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
                     b.HasOne("license_management_system_Sever_side.Models.Partner", "partner")
                         .WithMany("EndClients")
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.Navigation("clientServer");
 
                     b.Navigation("partner");
                 });
@@ -518,13 +500,6 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired();
 
                     b.Navigation("requestKey");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.ClientServer", b =>
-                {
-                    b.Navigation("SiteNames");
-
-                    b.Navigation("client");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.RequestKey", b =>
