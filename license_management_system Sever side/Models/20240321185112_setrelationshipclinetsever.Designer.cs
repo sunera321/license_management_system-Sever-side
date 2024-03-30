@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    partial class AplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240321185112_setrelationshipclinetsever")]
+    partial class setrelationshipclinetsever
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,42 +122,44 @@ namespace license_management_system_Sever_side.Migrations
                     b.ToTable("ClientPanals");
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.ClientST", b =>
+            modelBuilder.Entity("license_management_system_Sever_side.Models.ClientServer", b =>
                 {
-                    b.Property<int>("CID")
+                    b.Property<string>("MacAddress")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("HostUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("clientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("testDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MacAddress");
+
+                    b.ToTable("ClientServers");
+                });
+
+            modelBuilder.Entity("license_management_system_Sever_side.Models.ClientServerSiteName", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CName")
+                    b.Property<string>("MacAddress")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SiteName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("MacAddress");
 
-                    b.Property<bool>("Finance")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Modules")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Partner")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PartnerRequested")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TImePeriod")
-                        .HasColumnType("int");
-
-                    b.HasKey("CID");
-
-                    b.ToTable("ClientSTs");
-
+                    b.ToTable("ClientServerSiteNames");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.EndClient", b =>

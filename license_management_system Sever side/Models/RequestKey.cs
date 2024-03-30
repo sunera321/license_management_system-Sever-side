@@ -17,7 +17,7 @@ namespace license_management_system_Sever_side.Models
         public string Status { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Module> modules { get; set; }
+        public virtual ICollection<Modules> modules { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<EndClient> endClients { get; set; }
