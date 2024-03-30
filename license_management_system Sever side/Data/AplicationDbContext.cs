@@ -22,6 +22,9 @@ namespace license_management_system_Sever_side.Data
         public DbSet<ClientServer> ClientServers { get; set; }
         public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set; }
 
+
+        public DbSet<ClientST> ClientSTs { get; set; }
+   
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Partner>().ToTable("Partners");
