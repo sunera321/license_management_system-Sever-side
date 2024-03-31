@@ -38,16 +38,29 @@ namespace license_management_system_Sever_side.Controllers
             return licenseKey;
         }
 
+        
+
         // POST: api/LicenseKey
         [HttpPost]
-        public async Task<ActionResult<Key>> PostKey(Key licenseKey)
+        public async Task<ActionResult<Key>> CreateLicenseKey(Key keyDTO)
         {
-            _context.Keys.Add(licenseKey);
+            var key = new Key
+            {
+                ClientID = keyDTO.ClientID,
+                Hos = keyDTO.Hos,
+                SerMac = keyDTO.SerMac,
+                ValidDate = keyDTO.ValidDate,
+                BFI = keyDTO.BFI,
+                MR = keyDTO.MR,
+                Retail = keyDTO.Retail,
+                Modules = keyDTO.Modules
+            };
+
+            _context.Keys.Add(key);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetKey), new { id = licenseKey.Cid }, licenseKey);
+            return CreatedAtAction(nameof(GetKey), new { id = key.Cid }, key);
         }
-
         // PUT: api/LicenseKey/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLicenseKey(int id, Key licenseKey)
