@@ -20,9 +20,16 @@ namespace license_management_system_Sever_side.Models
         public Boolean MR { get; set; } = false;
         public Boolean Retail { get; set; } = false;
 
-        [NotMapped]
-        public List<string>? Modules { get; set; }
+        public string? Modules { get; set; }
 
-      
+        // Serialize the Modules property to JSON when setting
+        [NotMapped]
+        public List<string>? ModulesList
+        {
+            get => Modules != null ? JsonConvert.DeserializeObject<List<string>>(Modules) : null;
+            set => Modules = value != null ? JsonConvert.SerializeObject(value) : null;
+        }
+
+
     }
 }

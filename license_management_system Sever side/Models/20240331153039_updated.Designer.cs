@@ -11,8 +11,8 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    [Migration("20240331150405_l")]
-    partial class l
+    [Migration("20240331153039_updated")]
+    partial class updated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,9 +80,6 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.Property<bool>("MR")
                         .HasColumnType("bit");
-
-                    b.Property<string>("ModulesJson")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Retail")
                         .HasColumnType("bit");
