@@ -19,16 +19,16 @@ namespace license_management_system_Sever_side.Controllers
 
         // GET: api/LicenseKey
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<licenseKey>>> GetLicenseKeys()
+        public async Task<ActionResult<IEnumerable<Key>>> GetKeys()
         {
-            return await _context.licenseKeys.ToListAsync();
+            return await _context.Keys.ToListAsync();
         }
 
         // GET: api/LicenseKey/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<licenseKey>> GetLicenseKey(int id)
+        public async Task<ActionResult<Key>> GetKey(int id)
         {
-            var licenseKey = await _context.licenseKeys.FindAsync(id);
+            var licenseKey = await _context.Keys.FindAsync(id);
 
             if (licenseKey == null)
             {
@@ -40,19 +40,19 @@ namespace license_management_system_Sever_side.Controllers
 
         // POST: api/LicenseKey
         [HttpPost]
-        public async Task<ActionResult<licenseKey>> PostLicenseKey(licenseKey licenseKey)
+        public async Task<ActionResult<Key>> PostKey(Key licenseKey)
         {
-            _context.licenseKeys.Add(licenseKey);
+            _context.Keys.Add(licenseKey);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetLicenseKey), new { id = licenseKey.KeyId }, licenseKey);
+            return CreatedAtAction(nameof(GetKey), new { id = licenseKey.Cid }, licenseKey);
         }
 
         // PUT: api/LicenseKey/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLicenseKey(int id, licenseKey licenseKey)
+        public async Task<IActionResult> PutLicenseKey(int id, Key licenseKey)
         {
-            if (id != licenseKey.KeyId)
+            if (id != licenseKey.Cid)
             {
                 return BadRequest();
             }
@@ -82,13 +82,13 @@ namespace license_management_system_Sever_side.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLicenseKey(int id)
         {
-            var licenseKey = await _context.licenseKeys.FindAsync(id);
+            var licenseKey = await _context.Keys.FindAsync(id);
             if (licenseKey == null)
             {
                 return NotFound();
             }
 
-            _context.licenseKeys.Remove(licenseKey);
+            _context.Keys.Remove(licenseKey);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -96,7 +96,7 @@ namespace license_management_system_Sever_side.Controllers
 
         private bool LicenseKeyExists(int id)
         {
-            return _context.licenseKeys.Any(e => e.KeyId == id);
+            return _context.Keys.Any(e => e.Cid == id);
         }
     }
 }
