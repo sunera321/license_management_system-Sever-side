@@ -19,7 +19,7 @@ namespace license_management_system_Sever_side.Data
         public DbSet<Partner> Partners { get; set; }
         public DbSet<PartnerManager> PartnerManagers { get; set; }
         public DbSet<FinaceManager> FinaceManagers { get; set; }
-
+        public DbSet<Key> Keys { get; set; }
         public DbSet<ClientST> ClientSTs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
