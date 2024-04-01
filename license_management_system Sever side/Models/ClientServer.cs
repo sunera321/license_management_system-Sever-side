@@ -14,10 +14,5 @@ namespace license_management_system_Sever_side.Models
 
         public DateTime testDate { get; set; }
 
-        [JsonIgnore]
-        public EndClient? client { get; set; } = null;
-
-        [JsonIgnore]
-        public virtual ICollection<ClientServerSiteName>? SiteNames { get; set; }
     }
 }

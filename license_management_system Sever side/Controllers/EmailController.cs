@@ -1,5 +1,5 @@
 ﻿using Email_Test.DTOs;
-using Email_Test.EmailService;
+using license_management_system_Sever_side.EmailServices.KeyEmail;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Email_Test.Controllers
@@ -9,10 +9,7 @@ namespace Email_Test.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
-        // Declaring a private readonly field to hold an instance of the email service
         private readonly IEmailService emailService;
-
-        // Constructor for the EmailController, injecting an instance of IEmailService
         public EmailController(IEmailService emailService)
         {
             this.emailService = emailService;

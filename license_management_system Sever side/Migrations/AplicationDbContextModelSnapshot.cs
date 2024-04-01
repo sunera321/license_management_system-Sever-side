@@ -22,36 +22,6 @@ namespace license_management_system_Sever_side.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EndClientRequestKey", b =>
-                {
-                    b.Property<int>("endClientsclientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("requestKeysRequestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("endClientsclientId", "requestKeysRequestId");
-
-                    b.HasIndex("requestKeysRequestId");
-
-                    b.ToTable("RequestKeyEndClinet", (string)null);
-                });
-
-            modelBuilder.Entity("ModuleRequestKey", b =>
-                {
-                    b.Property<int>("modulesmoduleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("requestKeysRequestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("modulesmoduleId", "requestKeysRequestId");
-
-                    b.HasIndex("requestKeysRequestId");
-
-                    b.ToTable("RequestKeyModules", (string)null);
-                });
-
             modelBuilder.Entity("license_management_system_Sever_side.Models.ClientPanal", b =>
                 {
                     b.Property<string>("Id")
@@ -147,14 +117,12 @@ namespace license_management_system_Sever_side.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("MacAddress")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SiteName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MacAddress");
 
                     b.ToTable("ClientServerSiteNames");
                 });
@@ -196,14 +164,11 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MacAddress")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PartnerId")
-                        .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -223,13 +188,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasKey("clientId");
 
-                    b.HasIndex("MacAddress")
-                        .IsUnique()
-                        .HasFilter("[MacAddress] IS NOT NULL");
-
-                    b.HasIndex("PartnerId");
-
-                    b.ToTable("Clients");
+                    b.ToTable("endClients");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Module", b =>
@@ -269,19 +228,14 @@ namespace license_management_system_Sever_side.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
 
                     b.Property<string>("CommentFinaceMgt")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CommentPartnerMgt")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PartnerId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("RequiredTime")
                         .HasColumnType("datetime2");
@@ -297,8 +251,6 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("RequestId");
-
-                    b.HasIndex("PartnerId");
 
                     b.ToTable("RequestKeys");
                 });
@@ -330,13 +282,7 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
                     b.HasKey("KeyId");
-
-                    b.HasIndex("RequestId")
-                        .IsUnique();
 
                     b.ToTable("licenseKeys");
                 });
@@ -348,6 +294,10 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserEmail")
                         .IsRequired()
@@ -363,187 +313,25 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
 
-                    b.UseTptMappingStrategy();
-                });
+                    b.HasDiscriminator<string>("Discriminator").HasValue("user");
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.FinaceManager", b =>
-                {
-                    b.HasBaseType("license_management_system_Sever_side.Models.user");
-
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("RequestId");
-
-                    b.ToTable("FinaceManagers", (string)null);
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Partner", b =>
                 {
                     b.HasBaseType("license_management_system_Sever_side.Models.user");
 
-                    b.ToTable("Partners", (string)null);
+                    b.HasDiscriminator().HasValue("Partner");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.PartnerManager", b =>
                 {
                     b.HasBaseType("license_management_system_Sever_side.Models.user");
 
-                    b.Property<int>("RequestId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("RequestId");
-
-                    b.ToTable("PartnerManagers", (string)null);
-                });
-
-            modelBuilder.Entity("EndClientRequestKey", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.EndClient", null)
-                        .WithMany()
-                        .HasForeignKey("endClientsclientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("license_management_system_Sever_side.Models.RequestKey", null)
-                        .WithMany()
-                        .HasForeignKey("requestKeysRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ModuleRequestKey", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.Module", null)
-                        .WithMany()
-                        .HasForeignKey("modulesmoduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("license_management_system_Sever_side.Models.RequestKey", null)
-                        .WithMany()
-                        .HasForeignKey("requestKeysRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.ClientServerSiteName", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.ClientServer", "ClientServer")
-                        .WithMany("SiteNames")
-                        .HasForeignKey("MacAddress")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.Navigation("ClientServer");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.EndClient", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.ClientServer", "clientServer")
-                        .WithOne("client")
-                        .HasForeignKey("license_management_system_Sever_side.Models.EndClient", "MacAddress")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
-                    b.HasOne("license_management_system_Sever_side.Models.Partner", "partner")
-                        .WithMany("EndClients")
-                        .HasForeignKey("PartnerId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("clientServer");
-
-                    b.Navigation("partner");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.RequestKey", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.Partner", "partner")
-                        .WithMany("RequestKey")
-                        .HasForeignKey("PartnerId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("partner");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.licenseKey", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.RequestKey", "requestKey")
-                        .WithOne("licenseKey")
-                        .HasForeignKey("license_management_system_Sever_side.Models.licenseKey", "RequestId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("requestKey");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.FinaceManager", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.RequestKey", "requestKey")
-                        .WithMany("finaceManager")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("license_management_system_Sever_side.Models.user", null)
-                        .WithOne()
-                        .HasForeignKey("license_management_system_Sever_side.Models.FinaceManager", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("requestKey");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Partner", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.user", null)
-                        .WithOne()
-                        .HasForeignKey("license_management_system_Sever_side.Models.Partner", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.PartnerManager", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.RequestKey", "requestKey")
-                        .WithMany("partnersManager")
-                        .HasForeignKey("RequestId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("license_management_system_Sever_side.Models.user", null)
-                        .WithOne()
-                        .HasForeignKey("license_management_system_Sever_side.Models.PartnerManager", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("requestKey");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.ClientServer", b =>
-                {
-                    b.Navigation("SiteNames");
-
-                    b.Navigation("client");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.RequestKey", b =>
-                {
-                    b.Navigation("finaceManager");
-
-                    b.Navigation("licenseKey")
-                        .IsRequired();
-
-                    b.Navigation("partnersManager");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Partner", b =>
-                {
-                    b.Navigation("EndClients");
-
-                    b.Navigation("RequestKey");
+                    b.HasDiscriminator().HasValue("PartnerManager");
                 });
 #pragma warning restore 612, 618
         }

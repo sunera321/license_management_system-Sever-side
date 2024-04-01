@@ -14,9 +14,6 @@ namespace license_management_system_Sever_side.Models
         public bool IsIssused { get; set; }
         public bool IsExpired { get; set; }
 
-        public int RequestId { get; set; }
-        [JsonIgnore]
-        public virtual RequestKey requestKey { get; set; }
 
 
     }

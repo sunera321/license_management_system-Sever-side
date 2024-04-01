@@ -12,6 +12,6 @@ namespace license_management_system_Sever_side.Models
 
         public string? MacAddress { get; set; }
 
-        public ClientServer? ClientServer { get; set; }
+        
     }
 }

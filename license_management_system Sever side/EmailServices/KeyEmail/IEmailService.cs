@@ -1,6 +1,6 @@
 ﻿using Email_Test.DTOs;
 
-namespace Email_Test.EmailService
+namespace license_management_system_Sever_side.EmailServices.KeyEmail
 {
     // Defining an interface for the email service
     public interface IEmailService

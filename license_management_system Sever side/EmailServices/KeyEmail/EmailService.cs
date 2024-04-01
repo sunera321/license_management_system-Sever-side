@@ -5,7 +5,7 @@ using Email_Test.DTOs;
 using System.IO;
 using MailKit.Net.Smtp;
 
-namespace Email_Test.EmailService
+namespace license_management_system_Sever_side.EmailServices.KeyEmail
 {
     public class EmailService : IEmailService
     {
@@ -20,7 +20,7 @@ namespace Email_Test.EmailService
         {
 
 
-            string templatePath = "EmailServices/email-template.html"; 
+            string templatePath = "EmailServices/KeyEmail/email-template.html";
             string EmailTem = File.ReadAllText(templatePath);
 
 

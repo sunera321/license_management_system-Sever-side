@@ -16,22 +16,7 @@ namespace license_management_system_Sever_side.Models
         public string? CommentPartnerMgt { get; set; }=null;
         public string Status { get; set; }
 
-        [JsonIgnore]
-        public virtual ICollection<Module> modules { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<EndClient> endClients { get; set; }
-
-        [JsonIgnore]
-        public virtual licenseKey licenseKey { get; set; }
-
-        [ForeignKey("Partner")]
-        public int PartnerId { get; set; }
-        [JsonIgnore]
-        public virtual Partner partner { get; set; }
-
-        public virtual ICollection<PartnerManager> partnersManager { get; set; }
-        public virtual ICollection<FinaceManager> finaceManager { get; set; }
+       
 
     }
 }

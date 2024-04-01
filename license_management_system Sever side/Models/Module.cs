@@ -12,7 +12,6 @@ namespace license_management_system_Sever_side.Models
         public string Features { get; set; }
         public string moduleDescription { get; set; }
 
-        [JsonIgnore]
-        public virtual ICollection<RequestKey> requestKeys { get; set; }
+
     }
 }

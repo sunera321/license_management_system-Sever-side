@@ -21,22 +21,11 @@ namespace license_management_system_Sever_side.Models
         public string AdditionalInfo { get; set; }
         public string HostURL { get; set; }
 
-
-        [JsonIgnore]
-        public ClientServer? clientServer { get; set; }
-
         public string? MacAddress { get; set; }
-        //partner shuld fill this field withing the clinet registaion process
-        
 
-        [JsonIgnore]
-        public virtual ICollection<RequestKey> requestKeys { get; set; }
 
-        [ForeignKey("Partner")]
-        public int PartnerId { get; set; }
-        
-        [JsonIgnore]
-        public virtual Partner partner { get; set; }
+       
+    
 
 
     }
