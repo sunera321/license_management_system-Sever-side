@@ -26,7 +26,7 @@ namespace license_management_system_Sever_side.Controllers
         {
             await _request_key.AddRequestKey(requestKey);
 
-            await _endClientService.UpdateEndClientMackAddress(requestKey.ClientId, requestKey.MackAddress, requestKey.HostUrl);
+           /* await _endClientService.UpdateEndClientMackAddress(requestKey.ClientId, requestKey.MackAddress, requestKey.HostUrl);*/
             return Ok();
         }
 

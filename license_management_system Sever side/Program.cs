@@ -3,6 +3,8 @@ using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Mappings;
 using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
+using license_management_system_Sever_side.Services.EmailServices.ContectMail;
+using license_management_system_Sever_side.Services.EmailServices.KeyEmail;
 using license_management_system_Sever_side.Services.EndClientSerives;
 using license_management_system_Sever_side.Services.ModuleSerives;
 using license_management_system_Sever_side.Services.PartnerSerives;
@@ -11,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/*builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddControllers();*/
+
+builder.Services.AddControllers();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
@@ -26,7 +28,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddCors();
-
+builder.Services.AddScoped<IKeyEmailService, KeyEmailService>();
+builder.Services.AddScoped<IContectEmalService, ContectEmalService>();
 builder.Services.AddScoped<IEndClientService, EndClientService>();
 builder.Services.AddScoped<IPartnerSerives, PartnerSerives>();
 builder.Services.AddScoped<IModuleSerives, ModuleSerives>();

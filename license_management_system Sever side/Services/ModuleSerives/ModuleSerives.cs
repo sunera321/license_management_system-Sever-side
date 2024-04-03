@@ -32,5 +32,16 @@ namespace license_management_system_Sever_side.Services.ModuleSerives
             return _mapper.Map<List<ModuleDto>>(modules);
         }
 
+        //update module
+        public async Task UpdateModule(ModuleDto module)
+        {
+            // map the module dto to module entity
+            var moduleEntity = _mapper.Map<Modules>(module);
+
+            _context.Modules.Update(moduleEntity);
+            await _context.SaveChangesAsync();
+        }
+
+      
     }
 }
