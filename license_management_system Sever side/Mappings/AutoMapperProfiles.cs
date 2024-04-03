@@ -11,7 +11,8 @@ namespace license_management_system_Sever_side.Mappings
         {
             
             CreateMap<EndClient, AddEndClientDto>().ReverseMap();
-            CreateMap<Modules, ModuleDTO>().ReverseMap();
+            CreateMap<RequestKey, RequestKeyDto>().ForMember(m => m.MackAddress, opt => opt.Ignore()).ReverseMap();
+            CreateMap<Modules, ModuleDto>().ReverseMap();
            
         }
     }

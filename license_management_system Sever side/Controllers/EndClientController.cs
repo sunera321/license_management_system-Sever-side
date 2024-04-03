@@ -29,5 +29,12 @@ namespace license_management_system_Sever_side.Controllers
             var endClients = await _endClientService.GetAllEndClients();
             return Ok(endClients);
         }
+
+        [HttpPut("updateEndClient")]
+        public async Task<IActionResult> UpdateEndClient(AddEndClientDto endClient)
+        {
+            await _endClientService.UpdateEndClient(endClient);
+            return Ok();
+        }
     }
 }
