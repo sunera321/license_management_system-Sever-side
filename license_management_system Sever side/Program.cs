@@ -4,6 +4,7 @@ using license_management_system_Sever_side.Mappings;
 using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.EndClientSerives;
+using license_management_system_Sever_side.Services.PartnerSerives;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +26,7 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddCors();
 
 builder.Services.AddScoped<IEndClientService, EndClientService>();
+builder.Services.AddScoped<IPartnerSerives, PartnerSerives>();
 
 var app = builder.Build();
 

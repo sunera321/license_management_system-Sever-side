@@ -12,5 +12,8 @@ namespace license_management_system_Sever_side.Data
         public DbSet<Modules> Modules { get; set; }
         public DbSet<RequestKey> RequestKeys { get; set; }   
         public DbSet<EndClient> EndClients { get; set; }
+        public DbSet<Partner> Partners { get; set; }
+        public DbSet<LicenseKey> LicenseKeys { get; set; }
+
     }
 }

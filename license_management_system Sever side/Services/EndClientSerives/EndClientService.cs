@@ -2,6 +2,7 @@
 using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace license_management_system_Sever_side.Services.EndClientSerives
 {
@@ -26,6 +27,15 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
             await _context.SaveChangesAsync();
 
         }
+
+        //get all client
+        public async Task<IEnumerable<AddEndClientDto>> GetAllEndClients()
+        {
+            var endClients = await _context.EndClients.ToListAsync();
+            return _mapper.Map<List<AddEndClientDto>>(endClients);
+        }
+
+
 
 
 

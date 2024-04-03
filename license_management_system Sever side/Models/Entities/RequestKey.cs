@@ -10,14 +10,14 @@ namespace license_management_system_Sever_side.Models.Entities
         [Key, Column("request_id")]
         [DisplayName("Request ID")]
         public int RequestID { get; set; }
-
-        [Column("status_Partner_mgt"), MaxLength(50)]
+/*
+        [Column("status_Partner_mgt")]
         [DisplayName("Finance Manager Status")]
-        public RequestStatus isFinanceApproval { get; set; } = RequestStatus.Pending;
+        public RequestStatus? isFinanceApproval { get; set; } = RequestStatus.Pending;
 
-        [Column("comment_finace_mgt"), MaxLength(50)]
+        [Column("comment_finace_mgt")]
         [DisplayName("Partner Manager Comment")]
-        public RequestStatus isPartnerApproval { get; set; } = RequestStatus.Pending;
+        public RequestStatus? isPartnerApproval { get; set; } = RequestStatus.Pending;*/
 
         [Column("comment_finace_mgt"), MaxLength(50)]
         [DisplayName("Finace Manager Comment")]
