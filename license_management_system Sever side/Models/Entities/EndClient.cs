@@ -33,16 +33,19 @@ namespace license_management_system_Sever_side.Models.Entities
         public string? Website { get; set; }
         public string? Industry { get; set; }
         public string? AdditionalInfo { get; set; }
+        public string? MackAddress { get; set; }
+        public string? HostUrl { get; set; }
 
-        //[JsonIgnore]
-        //public virtual ICollection<RequestKey>? RequestKeys { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<RequestKey>? RequestKeys { get; set; }
 
 
         // Foreign key property for Partner
+        [ForeignKey("PartnerId")]
         public int PartnerId { get; set; }
 
         // Navigation property for Partner
-        [ForeignKey("PartnerId")]
+    
         public virtual Partner? Partner { get; set; }
 
     }

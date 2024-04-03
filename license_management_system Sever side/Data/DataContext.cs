@@ -15,5 +15,14 @@ namespace license_management_system_Sever_side.Data
         public DbSet<Partner> Partners { get; set; }
         public DbSet<LicenseKey> LicenseKeys { get; set; }
 
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Modules>()
+                .HasMany(m => m.RequestKeys)
+                .WithMany(r => r.Modules)
+                .UsingEntity(j => j.ToTable("ModulesRequestKeys"));
+        }
     }
 }

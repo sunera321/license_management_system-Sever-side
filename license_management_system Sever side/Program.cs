@@ -4,7 +4,9 @@ using license_management_system_Sever_side.Mappings;
 using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.EndClientSerives;
+using license_management_system_Sever_side.Services.ModuleSerives;
 using license_management_system_Sever_side.Services.PartnerSerives;
+using license_management_system_Sever_side.Services.RequestKeySerives;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,7 @@ builder.Services.AddControllers();*/
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDbCon"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,6 +29,8 @@ builder.Services.AddCors();
 
 builder.Services.AddScoped<IEndClientService, EndClientService>();
 builder.Services.AddScoped<IPartnerSerives, PartnerSerives>();
+builder.Services.AddScoped<IModuleSerives, ModuleSerives>();
+builder.Services.AddScoped<IRequestKeySerives, RequestKeySerives>();
 
 var app = builder.Build();
 
