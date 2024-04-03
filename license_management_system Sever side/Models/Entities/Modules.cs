@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using System.Text.Json.Serialization;
 
 namespace license_management_system_Sever_side.Models.Entities
 {
@@ -19,12 +18,12 @@ namespace license_management_system_Sever_side.Models.Entities
         public string Features { get; set; }
         public string ModuleDescription { get; set; }
 
-        [JsonIgnore]
-        public ICollection<RequestKey> RequestKeys { get; set; }
+        // Foreign key property for RequestKey
+        public int RequestKeyId { get; set; }
 
-
-
-
-
+        // Navigation property for RequestKey
+        [ForeignKey("RequestKeyId")]
+        public virtual RequestKey RequestKey { get; set; }
+        public object RequestKeys { get; internal set; }
     }
 }

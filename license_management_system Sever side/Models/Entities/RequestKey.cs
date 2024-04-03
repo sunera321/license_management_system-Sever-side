@@ -11,12 +11,17 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Request ID")]
         public int RequestID { get; set; }
 
+
+
         [Column("status_finance_mgt")]
+
         [DisplayName("Finance Manager Status")]
+        [EnumDataType(typeof(RequestStatus), ErrorMessage = "Invalid status. Please select from Pending, Approved, or Rejected.")]
         public RequestStatus? isFinanceApproval { get; set; } = RequestStatus.Pending;
 
         [Column("status_Partner_mgt")]
         [DisplayName("Partner Manager Comment")]
+        [EnumDataType(typeof(RequestStatus), ErrorMessage = "Invalid status. Please select from Pending, Approved, or Rejected.")]
         public RequestStatus? isPartnerApproval { get; set; } = RequestStatus.Pending;
 
         [Column("comment_finace_mgt"), MaxLength(50)]
