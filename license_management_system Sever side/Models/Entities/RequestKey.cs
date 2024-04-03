@@ -28,6 +28,9 @@ namespace license_management_system_Sever_side.Models.Entities
         public string? CommentPartnerMgt { get; set; } = string.Empty;
         public int NumberOfDays { get; set; }
 
+        public string? MackAddress { get; set; }
+        public string? HostUrl { get; set; }
+
 
         [ForeignKey("EndClientId")]
         public int EndClientId { get; set; }
@@ -38,8 +41,7 @@ namespace license_management_system_Sever_side.Models.Entities
 
 
 
-        // Navigation property for the related Modules
-        public virtual ICollection<Modules> Modules { get; set; }
+       
 
         [ForeignKey("LicenseKeyId")]
         public int LicenseKeyId { get; set; }
@@ -65,7 +67,10 @@ namespace license_management_system_Sever_side.Models.Entities
         // Navigation property back to LicenseKey
         
         public virtual PartnerManager PartnerManager { get; set; }
+
+        public ICollection<Modules> Modules { get; set; }
     }
+
 
     public enum RequestStatus
     {

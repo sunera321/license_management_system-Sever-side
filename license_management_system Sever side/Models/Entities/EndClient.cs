@@ -33,6 +33,8 @@ namespace license_management_system_Sever_side.Models.Entities
         public string? Website { get; set; }
         public string? Industry { get; set; }
         public string? AdditionalInfo { get; set; }
+        public string? MackAddress { get; set; }
+        public string? HostUrl { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<RequestKey>? RequestKeys { get; set; }

@@ -35,6 +35,29 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
             return _mapper.Map<List<AddEndClientDto>>(endClients);
         }
 
+        //update end client
+        public async Task UpdateEndClient(AddEndClientDto endClient)
+        {
+            // map the end client dto to end client entity
+            var endClientEntity = _mapper.Map<EndClient>(endClient);
+
+            _context.EndClients.Update(endClientEntity);
+            await _context.SaveChangesAsync();
+        } 
+        
+        public async Task UpdateEndClientMackAddress(int Id, string mack, string hostUrl)
+        {
+            var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
+            if (endClient != null)
+            {
+                endClient.MackAddress = mack;
+                endClient.HostUrl = hostUrl;
+
+                _context.EndClients.Update(endClient);
+                await _context.SaveChangesAsync();
+            }
+        }
+
 
 
 
