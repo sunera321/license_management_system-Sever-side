@@ -10,11 +10,9 @@ namespace license_management_system_Sever_side.Models.DTOs
         public string? CommentFinaceMgt { get; set; }
         public string? CommentPartnerMgt { get; set; }
         public int NumberOfDays { get; set; }
-
-        public int ClientId { get; set; } 
-
-        public string MackAddress { get; set; }
+        public int ClientId { get; set; }
+/*        public string MackAddress { get; set; }
         public string HostUrl { get; set; }
-
+*/
     }
 }

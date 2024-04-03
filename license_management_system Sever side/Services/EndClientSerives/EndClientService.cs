@@ -43,9 +43,9 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
 
             _context.EndClients.Update(endClientEntity);
             await _context.SaveChangesAsync();
-        } 
-        
-        public async Task UpdateEndClientMackAddress(int Id, string mack, string hostUrl)
+        }
+
+/*        public async Task UpdateEndClientMackAddress(int Id, string mack, string hostUrl)
         {
             var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
             if (endClient != null)
@@ -54,6 +54,17 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
                 endClient.HostUrl = hostUrl;
 
                 _context.EndClients.Update(endClient);
+                await _context.SaveChangesAsync();
+            }
+        }
+*/
+        //delete end client
+        public async Task DeleteEndClient(int Id)
+        {
+            var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
+            if (endClient != null)
+            {
+                _context.EndClients.Remove(endClient);
                 await _context.SaveChangesAsync();
             }
         }

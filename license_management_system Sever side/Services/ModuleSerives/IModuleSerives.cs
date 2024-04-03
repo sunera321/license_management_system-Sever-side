@@ -6,5 +6,9 @@ namespace license_management_system_Sever_side.Services.ModuleSerives
     {
         public Task AddModule(ModuleDto AddModule);
         public Task<IEnumerable<ModuleDto>> GetAllModule();
+
+        public Task UpdateModule(ModuleDto AddModule);
+        public Task DeleteModule(ModuleDto AddModule);
+
     }
 }

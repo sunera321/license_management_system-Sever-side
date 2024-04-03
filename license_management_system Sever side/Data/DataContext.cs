@@ -24,5 +24,10 @@ namespace license_management_system_Sever_side.Data
                 .WithMany(r => r.Modules)
                 .UsingEntity(j => j.ToTable("ModulesRequestKeys"));
         }
+
+        internal Task GetClientsAllDetailsWithMacAddress()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

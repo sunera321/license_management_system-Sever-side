@@ -7,6 +7,8 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
         public Task AddEndClient(AddEndClientDto endClient);
         public Task<IEnumerable<AddEndClientDto>> GetAllEndClients();
         public Task UpdateEndClient(AddEndClientDto endClient);
-        public Task UpdateEndClientMackAddress(int Id, string mack, string hostUrl);
+
+        public Task DeleteEndClient(int Id);
+       /* public Task UpdateEndClientMackAddress(int Id, string mack, string hostUrl);*/
     }
 }

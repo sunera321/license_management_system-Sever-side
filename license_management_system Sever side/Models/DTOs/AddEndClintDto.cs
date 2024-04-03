@@ -12,6 +12,8 @@
         public string? Website { get; set; }
         public string? Industry { get; set; }
         public string? AdditionalInfo { get; set; }
+        public string? MackAddress { get; set; }
+        public string? HostUrl { get; set; }
         public int PartnerId { get; set; }
     }
 }

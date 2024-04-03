@@ -29,5 +29,18 @@ namespace license_management_system_Sever_side.Controllers
             var modules = await _moduleSerives.GetAllModule();
             return Ok(modules);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateModule(ModuleDto module)
+        {
+            await _moduleSerives.UpdateModule(module);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteModule(int Id)
+        {
+            await _moduleSerives.DeleteModule(Id);
+            return Ok();
+        }
     }
 }
