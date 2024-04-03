@@ -36,11 +36,6 @@ namespace license_management_system_Sever_side.Controllers
             await _moduleSerives.UpdateModule(module);
             return Ok();
         }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteModule(int Id)
-        {
-            await _moduleSerives.DeleteModule(Id);
-            return Ok();
-        }
+       
     }
 }

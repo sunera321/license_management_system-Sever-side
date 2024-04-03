@@ -42,15 +42,6 @@ namespace license_management_system_Sever_side.Services.ModuleSerives
             await _context.SaveChangesAsync();
         }
 
-        //delete module
-        public async Task DeleteModule(int Id)
-        {
-            var module = await _context.Modules.FirstOrDefaultAsync(x => x.Id == Id);
-            if (module != null)
-            {
-                _context.Modules.Remove(module);
-                await _context.SaveChangesAsync();
-            }
-        }
+      
     }
 }
