@@ -62,16 +62,16 @@ namespace license_management_system_Sever_side.Models.Entities
 
 
         [ForeignKey("FinaceManagerId")]
-        public int FinaceManagerId { get; set; }
+        public int? FinaceManagerId { get; set; }
         // Navigation property back to LicenseKey
        
         public virtual FinaceManager FinaceManager { get; set; }
 
         [ForeignKey("PartnerManagerID")]
-        public int PartnerManagerID { get; set; }
+        public int? PartnerManagerID { get; set; }
         // Navigation property back to LicenseKey
         
-        public virtual PartnerManager PartnerManager { get; set; }
+        public virtual PartnerManager? PartnerManager { get; set; }
 
         public ICollection<Modules> Modules { get; set; }
     }
