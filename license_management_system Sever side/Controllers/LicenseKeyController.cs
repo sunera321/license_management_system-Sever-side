@@ -50,9 +50,7 @@ namespace license_management_system_Sever_side.Controllers
                 Hos = keyDTO.Hos,
                 SerMac = keyDTO.SerMac,
                 ValidDate = keyDTO.ValidDate,
-                BFI = keyDTO.BFI,
-                MR = keyDTO.MR,
-                Retail = keyDTO.Retail,
+               
                 Modules = keyDTO.Modules
             };
 
