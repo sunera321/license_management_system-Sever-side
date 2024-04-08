@@ -19,7 +19,7 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
         {
 
 
-            string templatePath = "EmailServices/KeyEmail/email-template.html";
+            string templatePath = "Services\\EmailServices\\KeyEmail\\email-template.html";
             string EmailTem = File.ReadAllText(templatePath);
 
 

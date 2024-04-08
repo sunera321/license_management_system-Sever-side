@@ -20,7 +20,7 @@ namespace license_management_system_Sever_side.Services.EmailServices.ContectMai
         {
 
 
-            string templatePath = "EmailServices/ContectMail/Template.html";
+            string templatePath = "Services\\EmailServices\\ContectMail\\Template.html";
             string EmailTem = File.ReadAllText(templatePath);
 
 
