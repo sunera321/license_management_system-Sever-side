@@ -1,5 +1,6 @@
 ﻿using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
+using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.EndClientSerives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,14 @@ namespace license_management_system_Sever_side.Controllers
     public class EndClientController : ControllerBase
     {
         private readonly IEndClientService _endClientService;
-        private readonly DataContext _contsxt;
+        private readonly DataContext _context;
+       
 
         public EndClientController(IEndClientService endClientService, DataContext contsxt)
         {
             _endClientService = endClientService;
-            _contsxt = contsxt;
+            _context = contsxt;
+            
         }
 
 
@@ -29,18 +32,12 @@ namespace license_management_system_Sever_side.Controllers
         }
 
         [HttpGet("getEndClients")]
-        public async Task<IActionResult> GetAllEndClients()
+        public async Task<ActionResult<IEnumerable<EndClient>>> GetEndClients()
         {
-            var endClients = await _endClientService.GetAllEndClients();
-            return Ok(endClients);
+            return await _context.EndClients.ToListAsync();
         }
 
-        [HttpGet("getEndClientAllDetailsWithMacaddress")]
-        public async Task<IActionResult> GetEndClients()
-        {
-            var endClients = await _contsxt.EndClients.ToListAsync();
-            return Ok(endClients);
-        }
+
 
         [HttpPut("updateEndClient")]
         public async Task<IActionResult> UpdateEndClient(AddEndClientDto endClient)

@@ -22,5 +22,8 @@ namespace license_management_system_Sever_side.Controllers
             _contectEmalService.SendEmail(request);
             return Ok();
         }
+
+
+
     }
 }

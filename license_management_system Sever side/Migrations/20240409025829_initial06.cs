@@ -5,32 +5,26 @@
 namespace license_management_system_Sever_side.Migrations
 {
     /// <inheritdoc />
-    public partial class initial5 : Migration
+    public partial class initial06 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "HostUrl",
-                table: "RequestKeys",
+                name: "FinaceManager_discription",
+                table: "Users",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "MackAddress",
-                table: "RequestKeys",
+                name: "Partner_discription",
+                table: "Users",
                 type: "nvarchar(max)",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "HostUrl",
-                table: "EndClients",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "MackAddress",
-                table: "EndClients",
+                name: "discription",
+                table: "Users",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -39,20 +33,16 @@ namespace license_management_system_Sever_side.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "HostUrl",
-                table: "RequestKeys");
+                name: "FinaceManager_discription",
+                table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "MackAddress",
-                table: "RequestKeys");
+                name: "Partner_discription",
+                table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "HostUrl",
-                table: "EndClients");
-
-            migrationBuilder.DropColumn(
-                name: "MackAddress",
-                table: "EndClients");
+                name: "discription",
+                table: "Users");
         }
     }
 }

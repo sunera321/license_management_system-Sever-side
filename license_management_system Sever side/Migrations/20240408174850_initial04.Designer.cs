@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240408174850_initial04")]
+    partial class initial04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,16 +254,10 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
-                    b.Property<string>("discription")
-                        .HasColumnType("nvarchar(max)");
-
                     b.ToTable("Users", t =>
                         {
                             t.Property("UserRole")
                                 .HasColumnName("FinaceManager_UserRole");
-
-                            t.Property("discription")
-                                .HasColumnName("FinaceManager_discription");
                         });
 
                     b.HasDiscriminator().HasValue("FinaceManager");
@@ -273,16 +270,10 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
-                    b.Property<string>("discription")
-                        .HasColumnType("nvarchar(max)");
-
                     b.ToTable("Users", t =>
                         {
                             t.Property("UserRole")
                                 .HasColumnName("Partner_UserRole");
-
-                            t.Property("discription")
-                                .HasColumnName("Partner_discription");
                         });
 
                     b.HasDiscriminator().HasValue("Partner");
@@ -294,9 +285,6 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
-
-                    b.Property<string>("discription")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("PartnerManager");
                 });

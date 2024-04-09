@@ -5,12 +5,12 @@
 namespace license_management_system_Sever_side.Migrations
 {
     /// <inheritdoc />
-    public partial class initial8 : Migration
+    public partial class initial07 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+      
         }
 
         /// <inheritdoc />

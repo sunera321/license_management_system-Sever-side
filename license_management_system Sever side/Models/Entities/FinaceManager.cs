@@ -2,6 +2,7 @@
 {
     public class FinaceManager : User
     {
+        public string? discription { get; set; }
         public Role UserRole { get; set; }=Role.FinanceManager;
 
         // Navigation property for the related EndClients

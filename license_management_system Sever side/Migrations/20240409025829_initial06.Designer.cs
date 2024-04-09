@@ -12,8 +12,8 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240403133330_initial")]
-    partial class initial
+    [Migration("20240409025829_initial06")]
+    partial class initial06
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,14 +30,14 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("ModulesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RequestKeysRequestID")
+                    b.Property<int>("RequestKeyRequestID")
                         .HasColumnType("int");
 
-                    b.HasKey("ModulesId", "RequestKeysRequestID");
+                    b.HasKey("ModulesId", "RequestKeyRequestID");
 
-                    b.HasIndex("RequestKeysRequestID");
+                    b.HasIndex("RequestKeyRequestID");
 
-                    b.ToTable("ModulesRequestKeys", (string)null);
+                    b.ToTable("ModulesRequestKey");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClient", b =>
@@ -128,7 +128,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LicenseKeys");
+                    b.ToTable("LicenseKey");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
@@ -184,17 +184,11 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("EndClientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FinaceManagerId")
+                    b.Property<int?>("FinaceManagerId")
                         .HasColumnType("int");
-
-                    b.Property<string>("HostUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LicenseKeyId")
                         .HasColumnType("int");
-
-                    b.Property<string>("MackAddress")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfDays")
                         .HasColumnType("int");
@@ -202,7 +196,7 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("PartnerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PartnerManagerID")
+                    b.Property<int?>("PartnerManagerID")
                         .HasColumnType("int");
 
                     b.Property<int?>("isFinanceApproval")
@@ -260,10 +254,16 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
+                    b.Property<string>("discription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("Users", t =>
                         {
                             t.Property("UserRole")
                                 .HasColumnName("FinaceManager_UserRole");
+
+                            t.Property("discription")
+                                .HasColumnName("FinaceManager_discription");
                         });
 
                     b.HasDiscriminator().HasValue("FinaceManager");
@@ -276,10 +276,16 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
+                    b.Property<string>("discription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.ToTable("Users", t =>
                         {
                             t.Property("UserRole")
                                 .HasColumnName("Partner_UserRole");
+
+                            t.Property("discription")
+                                .HasColumnName("Partner_discription");
                         });
 
                     b.HasDiscriminator().HasValue("Partner");
@@ -291,6 +297,9 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
+
+                    b.Property<string>("discription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("PartnerManager");
                 });
@@ -305,7 +314,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.RequestKey", null)
                         .WithMany()
-                        .HasForeignKey("RequestKeysRequestID")
+                        .HasForeignKey("RequestKeyRequestID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -331,9 +340,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.FinaceManager", "FinaceManager")
                         .WithMany("RequestKeys")
-                        .HasForeignKey("FinaceManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FinaceManagerId");
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.LicenseKey", "LicenseKey")
                         .WithMany("RequestKeys")
@@ -349,9 +356,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.PartnerManager", "PartnerManager")
                         .WithMany("RequestKeys")
-                        .HasForeignKey("PartnerManagerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PartnerManagerID");
 
                     b.Navigation("EndClient");
 

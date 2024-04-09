@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace license_management_system_Sever_side.Migrations
 {
     /// <inheritdoc />
-    public partial class initial2 : Migration
+    public partial class initial01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "LicenseKeys",
+                name: "LicenseKey",
                 columns: table => new
                 {
                     key_id = table.Column<int>(type: "int", nullable: false)
@@ -23,7 +23,23 @@ namespace license_management_system_Sever_side.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LicenseKeys", x => x.key_id);
+                    table.PrimaryKey("PK_LicenseKey", x => x.key_id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Modules",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    CreatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Features = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModuleDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Modules", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +75,8 @@ namespace license_management_system_Sever_side.Migrations
                     Website = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Industry = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MackAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HostUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PartnerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -86,8 +104,8 @@ namespace license_management_system_Sever_side.Migrations
                     EndClientId = table.Column<int>(type: "int", nullable: false),
                     LicenseKeyId = table.Column<int>(type: "int", nullable: false),
                     PartnerId = table.Column<int>(type: "int", nullable: false),
-                    FinaceManagerId = table.Column<int>(type: "int", nullable: false),
-                    PartnerManagerID = table.Column<int>(type: "int", nullable: false)
+                    FinaceManagerId = table.Column<int>(type: "int", nullable: true),
+                    PartnerManagerID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,17 +117,16 @@ namespace license_management_system_Sever_side.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RequestKeys_LicenseKeys_LicenseKeyId",
+                        name: "FK_RequestKeys_LicenseKey_LicenseKeyId",
                         column: x => x.LicenseKeyId,
-                        principalTable: "LicenseKeys",
+                        principalTable: "LicenseKey",
                         principalColumn: "key_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RequestKeys_Users_FinaceManagerId",
                         column: x => x.FinaceManagerId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_RequestKeys_Users_PartnerId",
                         column: x => x.PartnerId,
@@ -120,28 +137,28 @@ namespace license_management_system_Sever_side.Migrations
                         name: "FK_RequestKeys_Users_PartnerManagerID",
                         column: x => x.PartnerManagerID,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Modules",
+                name: "ModulesRequestKey",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    CreatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Features = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModuleDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RequestKeyId = table.Column<int>(type: "int", nullable: false)
+                    ModulesId = table.Column<int>(type: "int", nullable: false),
+                    RequestKeyRequestID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Modules", x => x.id);
+                    table.PrimaryKey("PK_ModulesRequestKey", x => new { x.ModulesId, x.RequestKeyRequestID });
                     table.ForeignKey(
-                        name: "FK_Modules_RequestKeys_RequestKeyId",
-                        column: x => x.RequestKeyId,
+                        name: "FK_ModulesRequestKey_Modules_ModulesId",
+                        column: x => x.ModulesId,
+                        principalTable: "Modules",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ModulesRequestKey_RequestKeys_RequestKeyRequestID",
+                        column: x => x.RequestKeyRequestID,
                         principalTable: "RequestKeys",
                         principalColumn: "request_id",
                         onDelete: ReferentialAction.Cascade);
@@ -153,9 +170,9 @@ namespace license_management_system_Sever_side.Migrations
                 column: "PartnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Modules_RequestKeyId",
-                table: "Modules",
-                column: "RequestKeyId");
+                name: "IX_ModulesRequestKey_RequestKeyRequestID",
+                table: "ModulesRequestKey",
+                column: "RequestKeyRequestID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RequestKeys_EndClientId",
@@ -187,6 +204,9 @@ namespace license_management_system_Sever_side.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ModulesRequestKey");
+
+            migrationBuilder.DropTable(
                 name: "Modules");
 
             migrationBuilder.DropTable(
@@ -196,7 +216,7 @@ namespace license_management_system_Sever_side.Migrations
                 name: "EndClients");
 
             migrationBuilder.DropTable(
-                name: "LicenseKeys");
+                name: "LicenseKey");
 
             migrationBuilder.DropTable(
                 name: "Users");

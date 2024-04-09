@@ -4,6 +4,7 @@ namespace license_management_system_Sever_side.Models.Entities
 {
     public class Partner : User
     {
+        public string? discription { get; set; } 
         [JsonIgnore]
         public Role UserRole { get; set; }=Role.Partner;
 

@@ -28,8 +28,6 @@ namespace license_management_system_Sever_side.Models.Entities
         public string? CommentPartnerMgt { get; set; } = string.Empty;
         public int NumberOfDays { get; set; }
 
-        public string? MackAddress { get; set; }
-        public string? HostUrl { get; set; }
 
 
         [ForeignKey("EndClientId")]

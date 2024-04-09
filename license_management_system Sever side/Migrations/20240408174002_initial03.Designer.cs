@@ -12,8 +12,8 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240403053046_initial3")]
-    partial class initial3
+    [Migration("20240408174002_initial03")]
+    partial class initial03
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,14 +30,14 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("ModulesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RequestKeysRequestID")
+                    b.Property<int>("RequestKeyRequestID")
                         .HasColumnType("int");
 
-                    b.HasKey("ModulesId", "RequestKeysRequestID");
+                    b.HasKey("ModulesId", "RequestKeyRequestID");
 
-                    b.HasIndex("RequestKeysRequestID");
+                    b.HasIndex("RequestKeyRequestID");
 
-                    b.ToTable("ModulesRequestKeys", (string)null);
+                    b.ToTable("ModulesRequestKey");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClient", b =>
@@ -64,7 +64,13 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("email");
 
+                    b.Property<string>("HostUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Industry")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MackAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -122,7 +128,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LicenseKeys");
+                    b.ToTable("LicenseKey");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
@@ -178,7 +184,7 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("EndClientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FinaceManagerId")
+                    b.Property<int?>("FinaceManagerId")
                         .HasColumnType("int");
 
                     b.Property<int>("LicenseKeyId")
@@ -190,7 +196,7 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int>("PartnerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PartnerManagerID")
+                    b.Property<int?>("PartnerManagerID")
                         .HasColumnType("int");
 
                     b.Property<int?>("isFinanceApproval")
@@ -293,7 +299,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.RequestKey", null)
                         .WithMany()
-                        .HasForeignKey("RequestKeysRequestID")
+                        .HasForeignKey("RequestKeyRequestID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -319,9 +325,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.FinaceManager", "FinaceManager")
                         .WithMany("RequestKeys")
-                        .HasForeignKey("FinaceManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FinaceManagerId");
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.LicenseKey", "LicenseKey")
                         .WithMany("RequestKeys")
@@ -337,9 +341,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     b.HasOne("license_management_system_Sever_side.Models.Entities.PartnerManager", "PartnerManager")
                         .WithMany("RequestKeys")
-                        .HasForeignKey("PartnerManagerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PartnerManagerID");
 
                     b.Navigation("EndClient");
 

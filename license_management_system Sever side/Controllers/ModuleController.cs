@@ -1,7 +1,9 @@
-﻿using license_management_system_Sever_side.Models.DTOs;
+﻿using license_management_system_Sever_side.Data;
+using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Services.ModuleSerives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace license_management_system_Sever_side.Controllers
 {
@@ -10,11 +12,14 @@ namespace license_management_system_Sever_side.Controllers
     public class ModuleController : ControllerBase
     {
         private readonly IModuleSerives _moduleSerives;
+       
 
         public ModuleController(IModuleSerives moduleSerives)
         {
             _moduleSerives = moduleSerives;
+            
         }
+     
 
         [HttpPost]
         public async Task<IActionResult> AddModule(ModuleDto module)
@@ -29,6 +34,8 @@ namespace license_management_system_Sever_side.Controllers
             var modules = await _moduleSerives.GetAllModule();
             return Ok(modules);
         }
+
+
 
         [HttpPut]
         public async Task<IActionResult> UpdateModule(ModuleDto module)
