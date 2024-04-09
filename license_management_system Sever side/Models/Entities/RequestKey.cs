@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using Foolproof;
+using System.Text.Json.Serialization;
 
 namespace license_management_system_Sever_side.Models.Entities
 {
@@ -39,13 +40,13 @@ namespace license_management_system_Sever_side.Models.Entities
 
 
 
-       
 
+        [JsonIgnore]
         [ForeignKey("LicenseKeyId")]
-        public int LicenseKeyId { get; set; }
+        public int? LicenseKeyId { get; set; }
         // Navigation property back to LicenseKey
         
-        public virtual LicenseKey LicenseKey { get; set; }
+        public virtual LicenseKey? LicenseKey { get; set; }
 
         [ForeignKey("PartnerId ")]
         public int PartnerId { get; set; }

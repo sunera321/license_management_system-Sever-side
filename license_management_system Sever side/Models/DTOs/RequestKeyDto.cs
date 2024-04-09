@@ -18,7 +18,6 @@ namespace license_management_system_Sever_side.Models.DTOs
 
         public int EndClientId { get; set; }
 
-        public int LicenseKeyId { get; set; }
 
         public int PartnerId { get; set; }
 
