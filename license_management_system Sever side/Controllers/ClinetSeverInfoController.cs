@@ -46,19 +46,21 @@ namespace license_management_system_Sever_side.Controllers
             {
                 // Mac address is invalid
                 _context.ClientServerInfos.Add(clientServer);
-                Console.WriteLine("ClientServer is Invalid..." + clientServer);
-                return BadRequest();
+                Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
+                return Ok("Invalid Clint");
             }
 
-       /*     if (EndClient.HostUrl != serverdata.HostUrl)
+            if (client.HostUrl != serverdata.HostUrl)
             {
                 // Host URL is invalid
-                _context.ClientServers.Add(clientServer);
-                Console.WriteLine("ClientServer is Invalid..." + clientServer);
-                return BadRequest();
-            }*/
+                _context.ClientServerInfos.Add(clientServer);
+                Console.WriteLine("ClientServer is MacAddress is Validated..." + clientServer);
+                Console.WriteLine("ClientServer is Host URl Invalid..." + clientServer);
+                return Ok("Invalid Host URl");
+            }
+         
 
-            Console.WriteLine("ClientServer is Validated..." + clientServer);
+            Console.WriteLine("ClientServer is MacAddress and Host URl Validated..." + clientServer);
             return Ok();
         }
     }
