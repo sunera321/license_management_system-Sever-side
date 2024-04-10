@@ -51,7 +51,7 @@ namespace license_management_system_Sever_side.Models.Entities
         public int PartnerId { get; set; }
 
         // Navigation property for Partner
-    
+        [JsonIgnore]
         public virtual Partner? Partner { get; set; }
 
     }
