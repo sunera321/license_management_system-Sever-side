@@ -24,8 +24,6 @@ namespace license_management_system_Sever_side.Models.Entities
 
 
 
-        // Navigation property for the related RequestKey
-        public virtual ICollection<RequestKey> RequestKeys { get; set; }
 
     }
 }

@@ -38,16 +38,6 @@ namespace license_management_system_Sever_side.Models.Entities
 
         public virtual EndClient EndClient { get; set; }
 
-
-
-
-        [JsonIgnore]
-        [ForeignKey("LicenseKeyId")]
-        public int? LicenseKeyId { get; set; }
-        // Navigation property back to LicenseKey
-        
-        public virtual LicenseKey? LicenseKey { get; set; }
-
         [ForeignKey("PartnerId ")]
         public int PartnerId { get; set; }
         // Navigation property back to LicenseKey
