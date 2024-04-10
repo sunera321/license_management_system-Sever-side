@@ -10,9 +10,9 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Key ID")]
         public int Id { get; set; }
 
-        [Column("Key"), MaxLength(50)]
+        [Column("Key_name"), MaxLength(50)]
         [DisplayName("Key")]
-        public  string Key { get; set; }
+        public  string? Key_name { get; set; }
 
         [Column("activation_date")]
         [DisplayName("Activati Date")]
