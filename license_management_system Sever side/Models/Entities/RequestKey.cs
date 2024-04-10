@@ -44,14 +44,7 @@ namespace license_management_system_Sever_side.Models.Entities
 
 
 
-        /*
-        [JsonIgnore]
-        [ForeignKey("LicenseKeyId")]
-        public int LicenseKeyId { get; set; }
-        // Navigation property back to LicenseKey
-        [JsonIgnore]
-        public virtual LicenseKey LicenseKey { get; set; }
-        */
+
         [ForeignKey("PartnerId ")]
         public int PartnerId { get; set; }
         // Navigation property back to LicenseKey

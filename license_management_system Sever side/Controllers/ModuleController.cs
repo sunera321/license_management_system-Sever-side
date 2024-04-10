@@ -1,9 +1,11 @@
 ﻿using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
+using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.ModuleSerives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace license_management_system_Sever_side.Controllers
 {
@@ -12,11 +14,13 @@ namespace license_management_system_Sever_side.Controllers
     public class ModuleController : ControllerBase
     {
         private readonly IModuleSerives _moduleSerives;
-       
+        private readonly DataContext _context;
 
-        public ModuleController(IModuleSerives moduleSerives)
+
+        public ModuleController(IModuleSerives moduleSerives,DataContext context)
         {
             _moduleSerives = moduleSerives;
+            _context = context;
             
         }
      
@@ -33,6 +37,12 @@ namespace license_management_system_Sever_side.Controllers
         {
             var modules = await _moduleSerives.GetAllModule();
             return Ok(modules);
+        }
+
+        [HttpGet("getModuleswithId")]
+        public async Task<ActionResult<IEnumerable<Modules>>> GetModuleswithId()
+        {
+            return await _context.Modules.ToListAsync();
         }
 
 
