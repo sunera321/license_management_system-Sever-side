@@ -1,9 +1,11 @@
-﻿using license_management_system_Sever_side.Models.DTOs;
+﻿using license_management_system_Sever_side.Data;
+using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.EndClientSerives;
 using license_management_system_Sever_side.Services.RequestKeySerives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace license_management_system_Sever_side.Controllers
 {
@@ -13,11 +15,13 @@ namespace license_management_system_Sever_side.Controllers
     {
         private readonly IRequestKeySerives _request_key;
         private readonly IEndClientService _endClientService;
+        private readonly DataContext _context;
 
-        public RequestKeyController(IRequestKeySerives requestkeyserives, IEndClientService endClientService)
+        public RequestKeyController(IRequestKeySerives requestkeyserives, IEndClientService endClientService, DataContext context)
         {
             _request_key = requestkeyserives;
             _endClientService = endClientService;
+            _context = context;
         }
 
         //add request key
@@ -37,5 +41,15 @@ namespace license_management_system_Sever_side.Controllers
             var requestKeys = await _request_key.GetAllrequestkeys();
             return Ok(requestKeys);
         }
+        
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RequestKey>>> GetAllRequestKeysWith()
+        {
+            // Include EndClient details in the query
+            var requestKeys = await _context.RequestKeys.Include(r => r.EndClient).ToListAsync();
+
+            return requestKeys;
+        }
+
     }
 }
