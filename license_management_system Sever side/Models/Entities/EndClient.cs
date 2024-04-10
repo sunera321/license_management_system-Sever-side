@@ -26,8 +26,14 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Phone Number")]
         public  string? PhoneNumber { get; set; }
 
+        [Column("City"), MaxLength(30)]
+        [DisplayName("City")]
         public string? City { get; set; }
+        [Column("Region"), MaxLength(30)]
+        [DisplayName("Region")]
         public string? Region { get; set; }
+        [Column("Country"), MaxLength(30)]
+        [DisplayName("Country")]
         public string? Country { get; set; }
         public string? PostalCode { get; set; }
         public string? Website { get; set; }
