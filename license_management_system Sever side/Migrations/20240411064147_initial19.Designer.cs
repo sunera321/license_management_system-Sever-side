@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240411064147_initial19")]
+    partial class initial19
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,12 +244,12 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int?>("PartnerManagerID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("isFinanceApproval")
-                        .HasColumnType("bit")
+                    b.Property<int?>("isFinanceApproval")
+                        .HasColumnType("int")
                         .HasColumnName("status_finance_mgt");
 
-                    b.Property<bool>("isPartnerApproval")
-                        .HasColumnType("bit")
+                    b.Property<int?>("isPartnerApproval")
+                        .HasColumnType("int")
                         .HasColumnName("status_Partner_mgt");
 
                     b.HasKey("RequestID");
@@ -409,8 +412,6 @@ namespace license_management_system_Sever_side.Migrations
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.ClientServerInfo", b =>
-
-               
                 {
                     b.Navigation("SiteNames");
                 });

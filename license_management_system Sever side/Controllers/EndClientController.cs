@@ -27,15 +27,11 @@ namespace license_management_system_Sever_side.Controllers
         [HttpPost("addEndClient")]
         public async Task<IActionResult> AddEndClient(AddEndClientDto endClient)
         {
+            
             await _endClientService.AddEndClient(endClient);
             return Ok();
         }
 
-        [HttpGet("getEndClients")]
-        public async Task<ActionResult<IEnumerable<EndClient>>> GetEndClients()
-        {
-            return await _context.EndClients.ToListAsync();
-        }
 
 
 
@@ -51,6 +47,13 @@ namespace license_management_system_Sever_side.Controllers
         {
             await _endClientService.DeleteEndClient(Id);
             return Ok();
+        }
+
+        [HttpGet("getEndClient")]
+        public async Task<IActionResult> GetEndClient()
+        {
+            var endClient = await _context.EndClients.ToListAsync();
+            return Ok(endClient);
         }
     }
 }

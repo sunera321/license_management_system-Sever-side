@@ -29,5 +29,12 @@ namespace license_management_system_Sever_side.Controllers
             var partners = await _partnerSerives.GetAllPartners();
             return Ok(partners);
         }
+
+        [HttpDelete("deletePartner")]
+        public async Task<IActionResult> Delete_Partner(int id)
+        {
+            await _partnerSerives.DeletePartner(id);
+            return Ok();
+        }
     }
 }

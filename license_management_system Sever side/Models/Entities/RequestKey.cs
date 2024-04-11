@@ -9,14 +9,13 @@ namespace license_management_system_Sever_side.Models.Entities
 {
     public class RequestKey
     {
-     
-
         [Key, Column("request_id")]
         [DisplayName("Request ID")]
         public int RequestID { get; set; }
 
         [Column("status_finance_mgt")]
         [DisplayName("Finance Manager Status")]
+
         
         public Boolean isFinanceApproval { get; set; } = false;
 
@@ -24,6 +23,7 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Partner Manager Status")]
         
         public Boolean isPartnerApproval { get; set; } =false;
+
 
         [Column("comment_finace_mgt"), MaxLength(50)]
         [DisplayName("Finace Manager Comment")]
@@ -42,9 +42,6 @@ namespace license_management_system_Sever_side.Models.Entities
         // Navigation property back to EndClient
 
         public virtual EndClient EndClient { get; set; }
-
-
-
 
         [ForeignKey("PartnerId ")]
         public int PartnerId { get; set; }
