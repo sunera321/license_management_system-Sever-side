@@ -2,7 +2,9 @@
 using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace license_management_system_Sever_side.Services.RequestKeySerives
 {
@@ -33,6 +35,20 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
         {
             var requestKeys = await _context.RequestKeys.ToListAsync();
             return _mapper.Map<List<RequestKeyDto>>(requestKeys);
+        }
+        //Get All Requestkeys with Endclinet
+        public async Task<IEnumerable<RequestKeyDto>> GetAllRequestKeysWithEndClientDetails()
+        {
+            var requestKeys = await _context.RequestKeys
+                                .Include(r => r.EndClient)
+                                .Include(r => r.Modules) // Include Modules
+                                .ToListAsync();
+
+            // Map the RequestKey entities to RequestKeyDto objects
+            var requestKeyDtos = _mapper.Map<List<RequestKeyDto>>(requestKeys);
+
+            return requestKeyDtos;
+
         }
     }
 }
