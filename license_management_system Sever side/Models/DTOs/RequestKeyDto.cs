@@ -6,9 +6,9 @@ namespace license_management_system_Sever_side.Models.DTOs
     {
 
 
-        public RequestStatus? isFinanceApproval { get; set; }
+        public Boolean isFinanceApproval { get; set; }
 
-        public RequestStatus? isPartnerApproval { get; set; }
+        public Boolean isPartnerApproval { get; set; }
 
         public string CommentFinaceMgt { get; set; }
 
