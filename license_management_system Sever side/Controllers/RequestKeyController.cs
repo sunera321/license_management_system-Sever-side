@@ -48,8 +48,9 @@ namespace license_management_system_Sever_side.Controllers
             // Include EndClient details in the query
             var requestKeys = await _context.RequestKeys.Include(r => r.EndClient).ToListAsync();
 
-            return requestKeys;
+            return Ok(requestKeys);
         }
+        
         // PATCH: api/PAfinanceTCH/5/SetFinanceTrue
         [HttpPatch("{id}/SetFinanceTrue")]
         public async Task<IActionResult> SetFinanceTrue(int id)
@@ -117,6 +118,49 @@ namespace license_management_system_Sever_side.Controllers
         }
 
         private bool ClientExists(int id)
+        {
+            return _context.RequestKeys.Any(e => e.RequestID == id);
+        }
+
+        // PATCH: api/RequestKey/{request_id}/Reject
+        [HttpPatch("{request_id}/RejectFianceMgt")]
+        public async Task<IActionResult> RejectRequest(int request_id, [FromBody] string rejectionReason)
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(request_id);
+
+            if (requestKey == null)
+            {
+                return NotFound();
+            }
+
+            // Update the CommentFinaceMgt column with the rejection reason
+            requestKey.CommentFinaceMgt = rejectionReason;
+
+            // Update the Partner Manager status to Rejected
+            requestKey.isFinanceApproval = false;
+
+            _context.Entry(requestKey).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!RequestKeyExists(request_id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool RequestKeyExists(int id)
         {
             return _context.RequestKeys.Any(e => e.RequestID == id);
         }

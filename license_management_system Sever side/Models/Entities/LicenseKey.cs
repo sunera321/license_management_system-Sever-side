@@ -22,6 +22,12 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Deactivated Date")]
         public DateTime DeactivatedDate { get; set; }
 
+        [ForeignKey("request_id")]
+        public int? RequestID { get; set; }
+        // Navigation property back to LicenseKey
+
+        public virtual RequestKey? RequestKey{ get; set; }
+
 
 
 
