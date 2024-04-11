@@ -22,6 +22,7 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
         {
             // map the end client dto to end client entity
             var endClientEntity = _mapper.Map<EndClient>(endClient);
+           
 
             _context.EndClients.Add(endClientEntity);
             await _context.SaveChangesAsync();
@@ -31,6 +32,7 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
         //get all client
         public async Task<IEnumerable<AddEndClientDto>> GetAllEndClients()
         {
+
             var endClients = await _context.EndClients.ToListAsync();
             return _mapper.Map<List<AddEndClientDto>>(endClients);
         }

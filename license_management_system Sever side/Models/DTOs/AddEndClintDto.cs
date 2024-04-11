@@ -15,5 +15,6 @@
         public string? MackAddress { get; set; }
         public string? HostUrl { get; set; }
         public int PartnerId { get; set; }
+
     }
 }

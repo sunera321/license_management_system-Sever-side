@@ -20,6 +20,8 @@ namespace license_management_system_Sever_side.Data
         public DbSet<ClientServerInfo> ClientServerInfos { get; set; }
         public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set;}
 
+        
+
 
 
 

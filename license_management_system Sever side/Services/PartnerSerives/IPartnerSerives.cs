@@ -7,5 +7,7 @@ namespace license_management_system_Sever_side.Services.PartnerSerives
     {
         public Task AddPartner(Partner partner);
         public Task<IEnumerable<Partner>> GetAllPartners();
+
+        public Task DeletePartner(int id);
     }
 }
