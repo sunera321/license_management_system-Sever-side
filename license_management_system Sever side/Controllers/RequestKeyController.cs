@@ -160,6 +160,44 @@ namespace license_management_system_Sever_side.Controllers
             return NoContent();
         }
 
+        // PATCH: api/RequestKey/{request_id}/Reject
+        [HttpPatch("{request_id}/RejectFiancePart")]
+        public async Task<IActionResult> RejectRequestPart(int request_id, [FromBody] string rejectionReason)
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(request_id);
+
+            if (requestKey == null)
+            {
+                return NotFound();
+            }
+
+            // Update the CommentFinaceMgt column with the rejection reason
+            requestKey.CommentPartnerMgt = rejectionReason;
+
+            // Update the Partner Manager status to Rejected
+            requestKey.isPartnerApproval = false;
+
+            _context.Entry(requestKey).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!RequestKeyExists(request_id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         private bool RequestKeyExists(int id)
         {
             return _context.RequestKeys.Any(e => e.RequestID == id);

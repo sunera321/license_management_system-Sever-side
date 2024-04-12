@@ -24,7 +24,7 @@ namespace license_management_system_Sever_side.Models.Entities
 
         
         public bool isFinanceApproval { get; set; } 
-
+        
         [Column("status_Partner_mgt")]
         [DisplayName("Partner Manager Status")]
         
