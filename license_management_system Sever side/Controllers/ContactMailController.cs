@@ -19,6 +19,10 @@ namespace license_management_system_Sever_side.Controllers
         [HttpPost]
         public IActionResult SendEmail(SendClintMailDto request)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             _contectEmalService.SendEmail(request);
             return Ok();
         }
