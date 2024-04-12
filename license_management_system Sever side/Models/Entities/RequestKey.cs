@@ -20,9 +20,11 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Partner Manager Comment")]
         public RequestStatus? isPartnerApproval { get; set; } = RequestStatus.Pending;
 
+
         [Column("comment_finace_mgt"), MaxLength(50)]
         [DisplayName("Finace Manager Comment")]
         public string? CommentFinaceMgt { get; set; } =string.Empty;
+
 
         [Column("comment_partner_mgt"), MaxLength(50)]
         [DisplayName("Partner Manager Comment")]
@@ -39,17 +41,17 @@ namespace license_management_system_Sever_side.Models.Entities
         public virtual EndClient EndClient { get; set; }
 
         [ForeignKey("PartnerId ")]
-        public int PartnerId { get; set; }
+        public int? PartnerId { get; set; }
         // Navigation property back to LicenseKey
        
-        public virtual Partner Partner { get; set; }
+        public virtual Partner? Partner { get; set; }
 
 
         [ForeignKey("FinaceManagerId")]
         public int? FinaceManagerId { get; set; }
         // Navigation property back to LicenseKey
        
-        public virtual FinaceManager FinaceManager { get; set; }
+        public virtual FinaceManager? FinaceManager { get; set; }
 
         [ForeignKey("PartnerManagerID")]
         public int? PartnerManagerID { get; set; }
@@ -58,6 +60,10 @@ namespace license_management_system_Sever_side.Models.Entities
         public virtual PartnerManager? PartnerManager { get; set; }
 
         public ICollection<Modules> Modules { get; set; }
+
+        [JsonIgnore]
+        public LicenseKey? LicenseKey { get; set; }
+
     }
 
 

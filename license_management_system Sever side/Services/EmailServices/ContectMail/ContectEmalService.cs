@@ -19,16 +19,15 @@ namespace license_management_system_Sever_side.Services.EmailServices.ContectMai
         public string SendEmail(SendClintMailDto request)
         {
 
-
             string templatePath = "Services\\EmailServices\\ContectMail\\Template.html";
             string EmailTem = File.ReadAllText(templatePath);
 
 
             EmailTem = EmailTem.Replace("{{To}}", request.To);
+            EmailTem =EmailTem.Replace("{{Name}}", request.Name);
             EmailTem = EmailTem.Replace("{{Subject}}", request.Subject);
             EmailTem = EmailTem.Replace("{{Descriptionta}}", request.Description);
             EmailTem = EmailTem.Replace("{{ContactInfo}}", request.ContactInfo);
-
 
             var email = new MimeMessage();
 
