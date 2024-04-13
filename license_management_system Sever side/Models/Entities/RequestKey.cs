@@ -40,37 +40,32 @@ namespace license_management_system_Sever_side.Models.Entities
 
         [ForeignKey("EndClientId")]
         public int EndClientId { get; set; }
-
-        // Navigation property back to EndClient
-
         public virtual EndClient EndClient { get; set; }
+
 
         [ForeignKey("PartnerId ")]
         public int? PartnerId { get; set; }
-        // Navigation property back to LicenseKey
-       
         public virtual Partner? Partner { get; set; }
 
 
         [ForeignKey("FinaceManagerId")]
         public int? FinaceManagerId { get; set; }
-        // Navigation property back to LicenseKey
-       
         public virtual FinaceManager? FinaceManager { get; set; }
+
 
         [ForeignKey("PartnerManagerID")]
         public int? PartnerManagerID { get; set; }
-        // Navigation property back to LicenseKey
-        
         public virtual PartnerManager? PartnerManager { get; set; }
+
 
         public ICollection<Modules> Modules { get; set; }
 
         [JsonIgnore]
-        public LicenseKey? LicenseKey { get; set; }
+        public License_key? License_key { get; set; }
+
+        
 
     }
-
 
     public enum RequestStatus
     {

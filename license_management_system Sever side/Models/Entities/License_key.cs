@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace license_management_system_Sever_side.Models.Entities
 {
-    public class LicenseKey
+    public class License_key
     {
         [Key, Column("key_id")]
         [DisplayName("Key ID")]
@@ -12,7 +13,7 @@ namespace license_management_system_Sever_side.Models.Entities
 
         [Column("Key_name"), MaxLength(50)]
         [DisplayName("Key")]
-        public  string? Key_name { get; set; }
+        public string? Key_name { get; set; }
 
         [Column("activation_date")]
         [DisplayName("Activati Date")]
@@ -22,8 +23,12 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Deactivated Date")]
         public DateTime DeactivatedDate { get; set; }
 
+        [ForeignKey("RequestId")]
+        public int RequestId { get; set; }
 
-
+        [JsonIgnore]
+        public RequestKey RequestKey { get; set; }
 
     }
 }
+
