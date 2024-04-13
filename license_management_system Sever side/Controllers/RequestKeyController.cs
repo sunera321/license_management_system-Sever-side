@@ -25,14 +25,28 @@ namespace license_management_system_Sever_side.Controllers
         }
 
         //add request key
+        //add request key
         [HttpPost("addRequestKey")]
         public async Task<IActionResult> AddRequestKey(RequestKeyDto requestKey)
         {
+            // Set the comment properties to null if they are empty strings
+            if (string.IsNullOrWhiteSpace(requestKey.CommentFinaceMgt))
+            {
+                requestKey.CommentFinaceMgt = null;
+            }
+
+            if (string.IsNullOrWhiteSpace(requestKey.CommentPartnerMgt))
+            {
+                requestKey.CommentPartnerMgt = null;
+            }
+            requestKey.isFinanceApproval = false;
+            requestKey.isPartnerApproval = false;
+
             await _request_key.AddRequestKey(requestKey);
 
-           /* await _endClientService.UpdateEndClientMackAddress(requestKey.ClientId, requestKey.MackAddress, requestKey.HostUrl);*/
             return Ok();
         }
+
 
         //get all request keys
         [HttpGet("getAllRequestKeys")]

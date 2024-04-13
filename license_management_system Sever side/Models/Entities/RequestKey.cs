@@ -28,16 +28,16 @@ namespace license_management_system_Sever_side.Models.Entities
         [Column("status_Partner_mgt")]
         [DisplayName("Partner Manager Status")]
         
-        public bool isPartnerApproval { get; set; } 
+        public bool isPartnerApproval { get; set; }
 
 
         [Column("comment_finace_mgt"), MaxLength(50)]
         [DisplayName("Finace Manager Comment")]
-        public string? CommentFinaceMgt { get; set; } =string.Empty;
+        public string? CommentFinaceMgt { get; set; } = null;
 
         [Column("comment_partner_mgt"), MaxLength(50)]
         [DisplayName("Partner Manager Comment")]
-        public string? CommentPartnerMgt { get; set; } = string.Empty;
+        public string? CommentPartnerMgt { get; set; } = null;
         public int NumberOfDays { get; set; }
 
 
