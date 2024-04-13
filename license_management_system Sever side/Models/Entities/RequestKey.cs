@@ -69,9 +69,12 @@ namespace license_management_system_Sever_side.Models.Entities
         public virtual PartnerManager? PartnerManager { get; set; }
         [JsonIgnore]
         public ICollection<Modules> Modules { get; set; }
+        [JsonIgnore]
+        public LicenseKey? Licensekey { get; set; }
+
     }
 
-   
+
     public enum RequestStatus
     {
         Pending,

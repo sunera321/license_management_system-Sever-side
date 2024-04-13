@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace license_management_system_Sever_side.Models.Entities
 {
@@ -12,7 +13,7 @@ namespace license_management_system_Sever_side.Models.Entities
 
         [Column("Key_name"), MaxLength(50)]
         [DisplayName("Key")]
-        public  string? Key_name { get; set; }
+        public string? Key_name { get; set; }
 
         [Column("activation_date")]
         [DisplayName("Activati Date")]
@@ -22,13 +23,11 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Deactivated Date")]
         public DateTime DeactivatedDate { get; set; }
 
-        [ForeignKey("request_id")]
-        public int? RequestID { get; set; }
-        // Navigation property back to LicenseKey
+        [ForeignKey("RequestId")]
+        public int RequestId { get; set; }
 
-        public virtual RequestKey? RequestKey{ get; set; }
-
-
+        [JsonIgnore]
+        public RequestKey RequestKey { get; set; }
 
 
     }
