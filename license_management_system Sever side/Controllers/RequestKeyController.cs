@@ -25,7 +25,6 @@ namespace license_management_system_Sever_side.Controllers
         }
 
         //add request key
-        //add request key
         [HttpPost("addRequestKey")]
         public async Task<IActionResult> AddRequestKey(RequestKeyDto requestKey)
         {
