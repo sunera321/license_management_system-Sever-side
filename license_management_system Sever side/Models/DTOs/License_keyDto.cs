@@ -2,7 +2,7 @@
 {
     public class License_keyDto
     {
-        public string? Key_name { get; set; }
+        public string Key_name { get; set; }
         public DateTime ActivationDate { get; set; }
         
         public int RequestId { get; set; }

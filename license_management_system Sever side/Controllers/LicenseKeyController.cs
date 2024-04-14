@@ -34,9 +34,9 @@ namespace license_management_system_Sever_side.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLicenseKey(int id)
+        public async Task<IActionResult> DeleteLicenseKey(string key)
         {
-            await _licenseKeyServices.DeleteLicenseKey(id);
+            await _licenseKeyServices.DeleteLicenseKey(key);
             return Ok();
         }
     }

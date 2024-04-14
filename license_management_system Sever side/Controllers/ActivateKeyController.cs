@@ -20,22 +20,7 @@ namespace license_management_system_Sever_side.Controllers
         {
             _context = context;
         }
-        private static async Task SendDataToUrl(string licenseKey)
-        {
-            using (var client = new HttpClient())
-            {
-                var activationData = new ActivateKey
-                {
-                    Clint_License_Key = licenseKey
-                };
-
-                var json = JsonConvert.SerializeObject(activationData);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var response = await client.PostAsync("https://licence-management.free.beeceptor.com", content);
-            
-            }
-        }
+      
 
         [HttpPost]
         public IActionResult ActivateLicnseKey(ActivateKeyDot ValidetKey)
@@ -50,15 +35,19 @@ namespace license_management_system_Sever_side.Controllers
             License_key key = _context.License_keys.FirstOrDefault(c => c.Key_name == ValidetKey.Clint_License_Key);
             if (key == null)
             {
-                SendDataToUrl("Invalid Key");
                 Console.WriteLine("Invalid Key");
-                return Ok("Invalid Key");
+                
+                return BadRequest("Invalid Key");
             }
-            SendDataToUrl("Invalid Key");
+            Console.WriteLine(key.Key_name);
             Console.WriteLine("Valid Key");
-            return Ok("Valid Key");
-
+            key.Key_Status ="Activated";
+            _context.SaveChanges();
+            return Ok("Key Activated");
         }
+
+      
+
 
     }
 }

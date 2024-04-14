@@ -4,6 +4,7 @@ using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace license_management_system_Sever_side.Services.LicenseKeyServices
 {
@@ -21,11 +22,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
         public async Task AddLicenseKey(License_keyDto licenseKey)
         {
             var licenseKeyEntity = _mapper.Map<License_key>(licenseKey);
-
-          
-               
-                licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddMonths(6);
-            
+            licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddMonths(6);
+            licenseKeyEntity.Key_Status = "Available";
             await _context.License_keys.AddAsync(licenseKeyEntity);
             await _context.SaveChangesAsync();
         }
@@ -37,9 +35,9 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
         }
 
         //delete key
-        public async Task DeleteLicenseKey(int Id)
+        public async Task DeleteLicenseKey(string key)
         {
-            var licenseKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Id == Id);
+            var licenseKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == key);
             _context.License_keys.Remove(licenseKey);
             await _context.SaveChangesAsync();
         }
