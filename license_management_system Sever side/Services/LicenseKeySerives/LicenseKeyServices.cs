@@ -22,16 +22,19 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
         public async Task AddLicenseKey(License_keyDto licenseKey)
         {
             var licenseKeyEntity = _mapper.Map<License_key>(licenseKey);
-            licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddMonths(6);
             licenseKeyEntity.Key_Status = "Available";
             await _context.License_keys.AddAsync(licenseKeyEntity);
-            await _context.SaveChangesAsync();
-        }
+           
 
-        public async Task<IEnumerable<License_keyDto>> GetAllLicenseKeys()
-        {
-            var licenseKeys = await _context.License_keys.ToListAsync();
-            return _mapper.Map<IEnumerable<License_keyDto>>(licenseKeys);
+            // Fetch the NumberOfDays from RequestKey table
+            var requestKey = await _context.RequestKeys
+                .FirstOrDefaultAsync(r => r.RequestID == licenseKeyEntity.RequestId);
+
+            Console.WriteLine(requestKey.NumberOfDays);
+            licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddDays(requestKey.NumberOfDays);
+
+            Console.WriteLine(licenseKeyEntity.DeactivatedDate);
+            await _context.SaveChangesAsync();
         }
 
         //delete key
