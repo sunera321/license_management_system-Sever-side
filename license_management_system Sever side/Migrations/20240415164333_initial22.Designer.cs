@@ -12,8 +12,8 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240413072400_intial22")]
-    partial class intial22
+    [Migration("20240415164333_initial22")]
+    partial class initial22
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,7 +152,7 @@ namespace license_management_system_Sever_side.Migrations
                     b.ToTable("EndClients");
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.LicenseKey", b =>
+            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_Key", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,17 +174,9 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("Key_name");
 
-                    b.Property<int?>("RequestID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RequestKeyRequestID")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RequestKeyRequestID");
-
-                    b.ToTable("LicenseKey");
+                    b.ToTable("License_Keys");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
@@ -386,15 +378,6 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired();
 
                     b.Navigation("Partner");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.LicenseKey", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.Entities.RequestKey", "RequestKey")
-                        .WithMany()
-                        .HasForeignKey("RequestKeyRequestID");
-
-                    b.Navigation("RequestKey");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>
