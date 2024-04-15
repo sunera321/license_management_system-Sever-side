@@ -16,26 +16,26 @@ namespace license_management_system_Sever_side.Data
         public DbSet<RequestKey> RequestKeys { get; set; }   
         public DbSet<EndClient> EndClients { get; set; }
         public DbSet<Partner> Partners { get; set; }
-        public DbSet<License_Key> License_Keys { get; set; }
+
+
+        public DbSet<License_key> License_keys { get; set; }
+
         public DbSet<ClientServerInfo> ClientServerInfos { get; set; }
         public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set;}
 
-        
 
 
 
 
-        /* protected override void OnModelCreating(ModelBuilder modelBuilder)
-         {
-             modelBuilder.Entity<Modules>()
-                 .HasMany(m => m.RequestKeys)
-                 .WithMany(r => `r.Modules)
-                 .UsingEntity(j => j.ToTable("ModulesRequestKeys"));
-         }
 
-         internal Task GetClientsAllDetailsWithMacAddress()
-         {
-             throw new NotImplementedException();
-         }*/
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<License_key>()
+               .HasOne(lk => lk.RequestKey)
+               .WithOne(rk => rk.License_key)
+               .HasForeignKey<License_key>(lk => lk.RequestId);
+        }
+
+     
     }
 }

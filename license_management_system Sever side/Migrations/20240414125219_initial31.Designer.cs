@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240414125219_initial31")]
+    partial class initial31
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,7 +153,6 @@ namespace license_management_system_Sever_side.Migrations
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
-
                 {
                     b.Property<string>("Key_name")
                         .HasMaxLength(50)
@@ -166,7 +168,6 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnName("deactivated_Date");
 
                     b.Property<string>("Key_Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("key_status");
 
@@ -179,7 +180,6 @@ namespace license_management_system_Sever_side.Migrations
                         .IsUnique();
 
                     b.ToTable("License_keys");
-
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>

@@ -42,6 +42,8 @@ namespace license_management_system_Sever_side.Controllers
             }
 
             EndClient client = _context.EndClients.FirstOrDefault(c => c.MackAddress == serverdata.MacAddress);
+            Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
+            Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
             if (client == null)
             {
                 // Mac address is invalid

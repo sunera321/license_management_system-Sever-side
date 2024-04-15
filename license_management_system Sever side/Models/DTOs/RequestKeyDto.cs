@@ -14,6 +14,7 @@ namespace license_management_system_Sever_side.Models.DTOs
 
         public string CommentPartnerMgt { get; set; }
 
+
         public int NumberOfDays { get; set; }
 
         public int EndClientId { get; set; }
@@ -21,9 +22,6 @@ namespace license_management_system_Sever_side.Models.DTOs
 
         public int PartnerId { get; set; }
 
-        public int? FinaceManagerId { get; set; }
-
-        public int? PartnerManagerID { get; set; }
 
         public int? ModuleId { get; set; }
 
