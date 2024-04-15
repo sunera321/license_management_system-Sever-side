@@ -70,7 +70,9 @@ namespace license_management_system_Sever_side.Models.Entities
         [JsonIgnore]
         public ICollection<Modules> Modules { get; set; }
         [JsonIgnore]
+
         public License_key? License_key { get; set; }
+
 
     }
 

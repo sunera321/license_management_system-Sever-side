@@ -36,12 +36,11 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
             var requestKeys = await _context.RequestKeys.ToListAsync();
             return _mapper.Map<List<RequestKeyDto>>(requestKeys);
         }
-        //Get All Requestkeys with Endclinet
+       /* //Get All Requestkeys with Endclinet
         public async Task<IEnumerable<RequestKeyDto>> GetAllRequestKeysWithEndClientDetails()
         {
             var requestKeys = await _context.RequestKeys
                                 .Include(r => r.EndClient)
-                                .Include(r => r.Modules) // Include Modules
                                 .ToListAsync();
 
             // Map the RequestKey entities to RequestKeyDto objects
@@ -49,6 +48,6 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
 
             return requestKeyDtos;
 
-        }
+        }*/
     }
 }
