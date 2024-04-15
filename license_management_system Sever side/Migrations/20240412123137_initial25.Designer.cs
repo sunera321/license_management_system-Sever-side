@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240412123137_initial25")]
+    partial class initial25
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,10 +154,12 @@ namespace license_management_system_Sever_side.Migrations
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
                 {
-                    b.Property<string>("Key_name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Key_name");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("key_id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("ActivationDate")
                         .HasColumnType("datetime2")
@@ -164,15 +169,15 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("deactivated_Date");
 
-                    b.Property<string>("Key_Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("key_status");
+                    b.Property<string>("Key")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("Key_name");
 
                     b.Property<int>("RequestId")
                         .HasColumnType("int");
 
-                    b.HasKey("Key_name");
+                    b.HasKey("Id");
 
                     b.HasIndex("RequestId")
                         .IsUnique();

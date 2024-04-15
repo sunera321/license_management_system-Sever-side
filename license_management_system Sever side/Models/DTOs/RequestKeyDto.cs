@@ -6,13 +6,7 @@ namespace license_management_system_Sever_side.Models.DTOs
     {
 
 
-        public RequestStatus? isFinanceApproval { get; set; }
-
-        public RequestStatus? isPartnerApproval { get; set; }
-
-        public string CommentFinaceMgt { get; set; }
-
-        public string CommentPartnerMgt { get; set; }
+        
 
         public int NumberOfDays { get; set; }
 
@@ -21,9 +15,6 @@ namespace license_management_system_Sever_side.Models.DTOs
 
         public int PartnerId { get; set; }
 
-        public int? FinaceManagerId { get; set; }
-
-        public int? PartnerManagerID { get; set; }
 
         public int? ModuleId { get; set; }
 

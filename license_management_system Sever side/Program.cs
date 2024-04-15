@@ -6,6 +6,7 @@ using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.EmailServices.ContectMail;
 using license_management_system_Sever_side.Services.EmailServices.KeyEmail;
 using license_management_system_Sever_side.Services.EndClientSerives;
+using license_management_system_Sever_side.Services.LicenseKeyServices;
 using license_management_system_Sever_side.Services.ModuleSerives;
 using license_management_system_Sever_side.Services.PartnerSerives;
 using license_management_system_Sever_side.Services.RequestKeySerives;
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IEndClientService, EndClientService>();
 builder.Services.AddScoped<IPartnerSerives, PartnerSerives>();
 builder.Services.AddScoped<IModuleSerives, ModuleSerives>();
 builder.Services.AddScoped<IRequestKeySerives, RequestKeySerives>();
+builder.Services.AddScoped<ILicenseKeyServices, LicenseKeyServices>();
 
 var app = builder.Build();
 
