@@ -40,13 +40,9 @@ namespace license_management_system_Sever_side.Models.Entities
         public string? CommentPartnerMgt { get; set; } = null;
         public int NumberOfDays { get; set; }
 
-
-
         [ForeignKey("EndClientId")]
         public int EndClientId { get; set; }
-
         // Navigation property back to EndClient
-
         public virtual EndClient EndClient { get; set; }
 
         [ForeignKey("PartnerId ")]
@@ -54,7 +50,6 @@ namespace license_management_system_Sever_side.Models.Entities
         // Navigation property back to LicenseKey
        
         public virtual Partner Partner { get; set; }
-
 
         [ForeignKey("FinaceManagerId")]
         public int? FinaceManagerId { get; set; }
@@ -71,10 +66,7 @@ namespace license_management_system_Sever_side.Models.Entities
         public ICollection<Modules> Modules { get; set; }
         [JsonIgnore]
         public License_key? License_key { get; set; }
-
     }
-
-
     public enum RequestStatus
     {
         Pending,
