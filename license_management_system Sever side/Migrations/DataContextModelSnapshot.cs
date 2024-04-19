@@ -152,8 +152,8 @@ namespace license_management_system_Sever_side.Migrations
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
                 {
                     b.Property<string>("Key_name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("Key_name");
 
                     b.Property<DateTime>("ActivationDate")

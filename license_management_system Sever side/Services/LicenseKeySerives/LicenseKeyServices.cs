@@ -30,7 +30,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             var requestKey = await _context.RequestKeys
                 .FirstOrDefaultAsync(r => r.RequestID == licenseKeyEntity.RequestId);
 
-            //Console.WriteLine(requestKey.NumberOfDays);
+            Console.WriteLine(requestKey.NumberOfDays);
             licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddDays(requestKey.NumberOfDays);
 
             Console.WriteLine(licenseKeyEntity.DeactivatedDate);

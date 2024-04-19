@@ -5,32 +5,34 @@
 namespace license_management_system_Sever_side.Migrations
 {
     /// <inheritdoc />
-    public partial class initial32 : Migration
+    public partial class intial37 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "key_status",
+                name: "Key_name",
                 table: "License_keys",
-                type: "nvarchar(max)",
+                type: "nvarchar(100)",
+                maxLength: 100,
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldType: "nvarchar(50)",
+                oldMaxLength: 50);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "key_status",
+                name: "Key_name",
                 table: "License_keys",
-                type: "nvarchar(max)",
-                nullable: true,
+                type: "nvarchar(50)",
+                maxLength: 50,
+                nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(100)",
+                oldMaxLength: 100);
         }
     }
 }
