@@ -47,9 +47,6 @@ namespace license_management_system_Sever_side.Models.Entities
         [NotMapped]
         public virtual ICollection<Module> Modules { get; set; }
 
-        [JsonIgnore]
-        public virtual ICollection<RequestKey>? RequestKeys { get; set; }
-
 
         // Foreign key property for Partner
         [ForeignKey("PartnerId")]

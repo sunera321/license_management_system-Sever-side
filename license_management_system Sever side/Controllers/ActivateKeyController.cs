@@ -39,11 +39,32 @@ namespace license_management_system_Sever_side.Controllers
                 
                 return BadRequest("Invalid Key");
             }
-            Console.WriteLine(key.Key_name);
-            Console.WriteLine("Valid Key");
-            key.Key_Status ="Activated";
+           
+            else {
+                if(key.DeactivatedDate > DateTime.Now)
+                {
+                    if (key.Key_Status == "Activated")
+                    {
+                        return Ok("Key Already Activated");
+                       
+                    }
+                    else
+                    {
+                        key.Key_Status = "Activated";
+                      
+                    }
+                }
+                else
+                {
+                    key.Key_Status = "Expired";
+                   
+                }
+            }
+
+
             _context.SaveChanges();
-            return Ok("Key Activated");
+            return Ok(key.Key_Status);
+            
         }
 
       
