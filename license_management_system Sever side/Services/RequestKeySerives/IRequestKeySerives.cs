@@ -7,6 +7,6 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
     {
         public Task AddRequestKey(RequestKeyDto requestKey);
         public Task<IEnumerable<RequestKeyDto>> GetAllrequestkeys();
-        public Task<IEnumerable<RequestKeyDto>> GetAllRequestKeysWithEndClientDetails();
+        //public Task<IEnumerable<RequestKeyDto>> GetAllRequestKeysWithEndClientDetails();
     }
 }
