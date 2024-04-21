@@ -29,8 +29,13 @@ namespace license_management_system_Sever_side.Models.Entities
 
         [Column("key_status")]
         [DisplayName("Key Status")]
-       
         public string Key_Status { get; set; }
+
+
+        [Column("Clint Id")]
+        [DisplayName("Clint Id")]
+        public int? ClintId { get; set; }
+
 
         [ForeignKey("RequestId")]
         public int RequestId { get; set; }
