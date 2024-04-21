@@ -24,16 +24,14 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             var licenseKeyEntity = _mapper.Map<License_key>(licenseKey);
             licenseKeyEntity.Key_Status = "Available";
             await _context.License_keys.AddAsync(licenseKeyEntity);
-           
-
             // Fetch the NumberOfDays from RequestKey table
             var requestKey = await _context.RequestKeys
                 .FirstOrDefaultAsync(r => r.RequestID == licenseKeyEntity.RequestId);
 
-            Console.WriteLine(requestKey.NumberOfDays);
+            
             licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddDays(requestKey.NumberOfDays);
-
-            Console.WriteLine(licenseKeyEntity.DeactivatedDate);
+            licenseKeyEntity.ClintId= requestKey.EndClientId;
+            
             await _context.SaveChangesAsync();
         }
 
