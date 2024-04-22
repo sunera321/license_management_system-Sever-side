@@ -31,6 +31,7 @@ namespace license_management_system_Sever_side.Controllers
             clientServer.HostUrl = serverdata.HostUrl;
             clientServer.MacAddress = serverdata.MacAddress;
             clientServer.testDate = DateTime.Now;
+            clientServer.licenceKey = serverdata.LicenceKey;
             clientServer.SiteNames = new List<ClientServerSiteName>();
 
             foreach (string siteName in serverdata.SiteNames)
@@ -44,10 +45,11 @@ namespace license_management_system_Sever_side.Controllers
             EndClient client = _context.EndClients.FirstOrDefault(c => c.MackAddress == serverdata.MacAddress);
             Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
             Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
+            _context.ClientServerInfos.Add(clientServer);
             if (client == null)
             {
                 // Mac address is invalid
-                _context.ClientServerInfos.Add(clientServer);
+
                 Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
                 return Ok("Invalid Clint");
             }
@@ -55,7 +57,7 @@ namespace license_management_system_Sever_side.Controllers
             if (client.HostUrl != serverdata.HostUrl)
             {
                 // Host URL is invalid
-                _context.ClientServerInfos.Add(clientServer);
+               
                 Console.WriteLine("ClientServer is MacAddress is Validated..." + clientServer);
                 Console.WriteLine("ClientServer is Host URl Invalid..." + clientServer);
                 return Ok("Invalid Host URl");
@@ -64,6 +66,15 @@ namespace license_management_system_Sever_side.Controllers
 
             Console.WriteLine("ClientServer is MacAddress and Host URl Validated..." + clientServer);
             return Ok();
+        }
+
+        //get all ClientServerInfo
+        [HttpGet]
+        [Route("GetAllClientServerInfo")]
+        public IActionResult GetAllClientServerInfo()
+        {
+            var clientServerInfo = _context.ClientServerInfos.ToList();
+            return Ok(clientServerInfo);
         }
     }
 

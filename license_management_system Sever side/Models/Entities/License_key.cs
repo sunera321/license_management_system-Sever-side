@@ -27,6 +27,10 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Deactivated Date")]
         public DateTime DeactivatedDate { get; set; }
 
+        [Column("macAddress")]
+        [DisplayName("Mac Address")]
+        public string? MacAddress { get; set; }
+
         [Column("key_status")]
         [DisplayName("Key Status")]
         public string Key_Status { get; set; }

@@ -4,6 +4,8 @@
     {
         public string HostUrl { get; set; }
         public string MacAddress { get; set; }
+
+        public string LicenceKey { get; set; }
         public string[] SiteNames { get; set; }
     }
 }
