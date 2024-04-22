@@ -71,7 +71,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         DeactivatedDate = DateTime.Now.AddDays(requestKey.NumberOfDays),
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
-                        ClintId = endClient.Id
+                        ClintId = endClient.Id,
+                        //macAddress = endClient.MackAddress
                     };
 
                     _context.License_keys.Add(license);

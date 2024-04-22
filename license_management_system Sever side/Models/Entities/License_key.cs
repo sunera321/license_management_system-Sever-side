@@ -31,6 +31,9 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Key Status")]
         public string Key_Status { get; set; }
 
+        [Column("macAddress")]
+        [DisplayName("Mac Address")]
+        public string? MacAddress { get; set; }
 
         [Column("Clint Id")]
         [DisplayName("Clint Id")]
