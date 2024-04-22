@@ -69,7 +69,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         Key_name = hashedKey,
                         ActivationDate = DateTime.Now,
                         DeactivatedDate = DateTime.Now.AddDays(requestKey.NumberOfDays),
-                        Key_Status = "Activated", // Assuming you want to activate the key upon generation
+                        Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id
                     };
