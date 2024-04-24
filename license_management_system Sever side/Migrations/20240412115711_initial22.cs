@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿/*using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace license_management_system_Sever_side.Migrations
 {
@@ -111,3 +111,4 @@ namespace license_management_system_Sever_side.Migrations
         }
     }
 }
+*/

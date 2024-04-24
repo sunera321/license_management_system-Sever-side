@@ -12,7 +12,7 @@ namespace license_management_system_Sever_side.Models.Entities
 
             public string? HostUrl { get; set; }
 
-            public int clientId { get; set; }
+            public string licenceKey { get; set; }
 
             public DateTime testDate { get; set; }
 
