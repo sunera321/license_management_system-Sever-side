@@ -1,15 +1,9 @@
 ﻿using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
-using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.LicenseKeyServices;
-using MathNet.Numerics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
-using SKGL;
-using SKM.V3.Methods;
+
 
 namespace license_management_system_Sever_side.Controllers
 {
