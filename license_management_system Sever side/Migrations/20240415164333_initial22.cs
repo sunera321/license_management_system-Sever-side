@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿/*using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -60,3 +60,4 @@ namespace license_management_system_Sever_side.Migrations
         }
     }
 }
+*/

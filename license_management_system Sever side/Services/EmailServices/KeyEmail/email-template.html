@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -67,12 +67,114 @@
         <h4>Hello {{ClientName}},</h4>
         <p>{{Deta}}</p>
         <p>Congratulations! Your license key for [Software Name] has been successfully generated.</p>
-        <p class="license-key">License Key: {{LicenseKey}}</p>
+        <p class="license-key">License Key:<br /> {{LicenseKey}}</p>
+        {{id}}<br />
+        {{expare}}<br />
+        {{activate}}<br />
+
         <p class="note">Please keep this license key safe and do not share it with others.</p>
         <div class="footer">
             <p>Best regards,</p>
             <p>Your Software License Management Team</p>
         </div>
+    </div>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Key Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h4 {
+            color: #007bff; /* Blue */
+            text-align: center;
+        }
+
+        p {
+            color: #666; /* Gray */
+            text-align: justify;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .license-key {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff; /* Blue */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+            .info p {
+                margin-bottom: 10px;
+            }
+
+        .note {
+            color: #999; /* Light Gray */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            border-top: 1px solid #ccc; /* Light Gray */
+            text-align: center;
+            padding-top: 10px;
+        }
+
+            .footer p {
+                margin: 0;
+            }
+
+        .privacy-info {
+            color: #999; /* Light Gray */
+            font-size: 12px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>License Key Notification</h1>
+        <h4>Hello {{ClientName}},</h4>
+        <p>We are delighted to inform you that your license key for [Software Name] has been successfully generated.</p>
+        <p class="license-key">License Key: {{LicenseKey}}</p>
+        <div class="info">
+            <p>Client ID: {{id}}</p>
+            <p>Expiration Date: {{expare}}</p>
+            <p>Activation Date: {{activate}}</p>
+            <p>Note: Please make sure to activate the license key before the expiration date.</p>
+        </div>
+        <p class="note">Please keep this license key safe and do not share it with others.</p>
+        <div class="footer">
+            <p>Best regards,</p>
+            <p>Your Software License Management Team</p>
+        </div>
+        <p class="privacy-info">This email contains confidential information. The license key provided is for your use only and must not be shared with others. Unauthorized distribution or disclosure of this key is prohibited.</p>
     </div>
 </body>
 </html>
