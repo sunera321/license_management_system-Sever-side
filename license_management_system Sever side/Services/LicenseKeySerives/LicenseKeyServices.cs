@@ -13,13 +13,11 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly IServiceProvider _serviceProvider;
 
-        public LicenseKeyServices(DataContext context, IMapper mapper , IServiceProvider serviceProvider)
+        public LicenseKeyServices(DataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _serviceProvider = serviceProvider; ;
         }
 
         public async Task AddLicenseKey(License_keyDto licenseKey)
@@ -138,34 +136,6 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error decoding string", ex);
             }
         }
-
-       /* protected  async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            Console.WriteLine("test");
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                Console.WriteLine("test");
-                using (var scope = _serviceProvider.CreateScope())
-                {
-                    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-                    Console.WriteLine("test");
-                    // Get expired keys
-                    var expiredKeys = await context.License_keys
-                        .Where(k => k.DeactivatedDate <= DateTime.Now && k.Key_Status == "Available")
-                        .ToListAsync();
-                    Console.WriteLine($"Found {expiredKeys.Count} expired keys");
-                    foreach (var key in expiredKeys)
-                    {
-                        key.Key_Status = "Expired";
-                    }
-
-                    await context.SaveChangesAsync();
-                }
-                
-
-                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
-            }
-            
-        }*/
     }
+
 }
