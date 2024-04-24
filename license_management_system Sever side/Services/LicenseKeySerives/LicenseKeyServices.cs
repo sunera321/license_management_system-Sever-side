@@ -136,6 +136,20 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error decoding string", ex);
             }
         }
+        /* private string HashString(string input)
+         {
+             // Hash the input string using SHA256 algorithm
+             using (SHA256 sha256Hash = SHA256.Create())
+             {
+                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+                 StringBuilder builder = new StringBuilder();
+                 foreach (byte b in bytes)
+                 {
+                     builder.Append(b.ToString("x2"));
+                 }
+                 return builder.ToString();
+             }
+         }*/
     }
-
 }
+
