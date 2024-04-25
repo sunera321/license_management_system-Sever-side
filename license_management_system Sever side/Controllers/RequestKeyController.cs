@@ -46,6 +46,38 @@ namespace license_management_system_Sever_side.Controllers
             return Ok();
         }
 
+        // PATCH endpoint to update Client details
+        [HttpPatch("{clientId}")]
+        public async Task<IActionResult> UpdateClientDetails(int clientId,ClientUpdateDto model)
+        {
+            var client = await _context.EndClients.FindAsync(clientId);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            // Update client details
+            if (model.HostUrl != null)
+            {
+                client.HostUrl = model.HostUrl;
+            }
+
+            if (model.MackAddress != null)
+            {
+                client.MackAddress = model.MackAddress;
+            }
+
+            if (model.Website != null)
+            {
+                client.Website = model.Website;
+            }
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
         //get all request keys
         [HttpGet("getAllRequestKeys")]
