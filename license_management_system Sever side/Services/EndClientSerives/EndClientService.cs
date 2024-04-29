@@ -36,10 +36,11 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
             var endClients = await _context.EndClients.ToListAsync();
             return _mapper.Map<List<AddEndClientDto>>(endClients);
         }
+     
 
         //update end client
         public async Task UpdateEndClient(AddEndClientDto endClient)
-        {
+        {   
             // map the end client dto to end client entity
             var endClientEntity = _mapper.Map<EndClient>(endClient);
 
@@ -69,6 +70,14 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
                 _context.EndClients.Remove(endClient);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        ////get only have licenkey client
+        public async Task<IEnumerable<ControllPanalClientDto>> GetkeyHasEndClients()
+        {
+            // ActivetDate is not null
+            var endClients = await _context.EndClients.Where(x => x.ActivetDate != null).ToListAsync();
+            return _mapper.Map<List<ControllPanalClientDto>>(endClients);
         }
 
 

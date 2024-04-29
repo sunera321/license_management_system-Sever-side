@@ -60,7 +60,6 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                     string email = endClient.Email;
                     string macAddress = endClient.MackAddress;
                     string hostUrl = endClient.HostUrl;
-
                     string combinedData = email + macAddress + hostUrl;
                     string hashedKey = HashString(combinedData);
 
@@ -74,7 +73,10 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         ClintId = endClient.Id,
                         MacAddress = endClient.MackAddress
                     };
-
+                    var ClintDate= _context.EndClients.FirstOrDefault(x => x.Id == endClientId);
+                    ClintDate.ActivetDate = DateTime.Now;
+                    ClintDate.ExpireDate = DateTime.Now.AddDays(requestKey.NumberOfDays);
+                    _context.EndClients.Update(ClintDate);
                     _context.License_keys.Add(license);
                     await _context.SaveChangesAsync();
 

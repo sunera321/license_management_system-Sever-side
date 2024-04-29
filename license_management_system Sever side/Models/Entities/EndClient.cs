@@ -35,13 +35,16 @@ namespace license_management_system_Sever_side.Models.Entities
         [Column("Region"), MaxLength(30)]
         [DisplayName("Region")]
         public string? Region { get; set; }
-        [Column("Country"), MaxLength(30)]
+        [Column("Country") ]
         [DisplayName("Country")]
         public string? Country { get; set; }
         public string? PostalCode { get; set; }
         public string? Website { get; set; }
         public string? Industry { get; set; }
         public string? AdditionalInfo { get; set; }
+
+        public DateTime? ActivetDate { get; set; } =null;
+        public DateTime? ExpireDate { get; set; } = null;
         public string? MackAddress { get; set; }
         public string? HostUrl { get; set; }
         [NotMapped]

@@ -15,7 +15,7 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Name")]
         public string Modulename { get; set; }
 
-        public DateTime CreatedData { get; set; }
+        public DateTime CreatedData { get; set; } = System.DateTime.Now;
         public string Features { get; set; }
         public string ModuleDescription { get; set; }
 

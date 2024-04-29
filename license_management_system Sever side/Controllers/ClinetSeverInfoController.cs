@@ -4,6 +4,7 @@ using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace license_management_system_Sever_side.Controllers
 {
@@ -20,11 +21,46 @@ namespace license_management_system_Sever_side.Controllers
 
         [HttpPost]
         [Route("AddClientServerDetails")]
-        public IActionResult AddClientServerDetails(ClientServerInfoDto serverdata)
+        public async Task<IActionResult> AddClientServerDetails(ClientServerInfoDto serverdata)
         {
-            if (serverdata.HostUrl == null && serverdata.MacAddress == null)
+            if (serverdata.LicenceKey == null)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null licence key");
+            }
+            
+            if (serverdata.MacAddress == null)
+            {
+                return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null Mac Address");
+            }
+
+            if (serverdata.HostUrl == null)
+            {
+                return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null Host Url");
+            }
+
+            // check whether the licence key is exist on licence_key table
+            var dbLicenceKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == serverdata.LicenceKey);
+
+            if (dbLicenceKey == null)
+            {
+                // invalid licence key
+                return StatusCode(StatusCodes.Status404NotFound, "Invalid Licence Key");
+            }
+
+            // check whether the recieved mac address is belongs to the licence key
+            if (dbLicenceKey.MacAddress != serverdata.MacAddress)
+            {
+                // invalid mac address
+                
+                // create new table for hold login with invalid mac address
+                // ClientId, partnerID, macaddress, licence key, login time, status
+                // create service for this table
+                //these task are done in this function
+                // search client id from maac address
+                // search partner id from mac address
+                // create dto to add data to the table
+                // call the function
+
             }
 
             ClientServerInfo clientServer = new ClientServerInfo();
