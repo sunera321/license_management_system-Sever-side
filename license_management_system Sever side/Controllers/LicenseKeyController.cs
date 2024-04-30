@@ -25,12 +25,7 @@ namespace license_management_system_Sever_side.Controllers
             var licenseKey = await _context.License_keys.ToListAsync();
             return Ok(licenseKey);
         }
-        [HttpPost]
-        public async Task<IActionResult> AddLicenseKey(License_keyDto licenseKey)
-        {
-            await _licenseKeyServices.AddLicenseKey(licenseKey);
-            return Ok();
-        }
+      
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLicenseKey(string key)

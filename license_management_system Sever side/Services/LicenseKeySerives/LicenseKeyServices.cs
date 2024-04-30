@@ -20,29 +20,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             _mapper = mapper;
         }
 
-        public async Task AddLicenseKey(License_keyDto licenseKey)
-        {
-            var licenseKeyEntity = _mapper.Map<License_key>(licenseKey);
-            licenseKeyEntity.Key_Status = "Available";
-            await _context.License_keys.AddAsync(licenseKeyEntity);
-            // Fetch the NumberOfDays from RequestKey table
-            var requestKey = await _context.RequestKeys
-                .FirstOrDefaultAsync(r => r.RequestID == licenseKeyEntity.RequestId);
+     
 
-
-            licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddDays(requestKey.NumberOfDays);
-            licenseKeyEntity.ClintId = requestKey.EndClientId;
-
-            await _context.SaveChangesAsync();
-        }
-
-        //delete key
-        public async Task DeleteLicenseKey(string key)
-        {
-            var licenseKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == key);
-            _context.License_keys.Remove(licenseKey);
-            await _context.SaveChangesAsync();
-        }
         public async Task<string> GenerateLicenseKey(int endClientId, int requestKeyId)
         {
             try
@@ -65,6 +44,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
 
                     var license = new License_key
                     {
+                      
+
                         Key_name = hashedKey,
                         ActivationDate = DateTime.Now,
                         DeactivatedDate = DateTime.Now.AddDays(requestKey.NumberOfDays),
@@ -77,10 +58,18 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                     ClintDate.ActivetDate = DateTime.Now;
                     ClintDate.ExpireDate = DateTime.Now.AddDays(requestKey.NumberOfDays);
                     _context.EndClients.Update(ClintDate);
-                    _context.License_keys.Add(license);
-                    await _context.SaveChangesAsync();
-
-                    return hashedKey;
+                    //check if the key is already generated
+                    var key = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == hashedKey);
+                    if (key == null)
+                    {
+                        _context.License_keys.Add(license);
+                        await _context.SaveChangesAsync();
+                        return hashedKey;
+                    }
+                    else
+                    {
+                        throw new Exception("License key already generated");
+                    }                   
                 }
                 else
                 {
@@ -93,6 +82,16 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             }
         }
 
+
+/// ////////////////////////////////////////////////////////////////////////
+ 
+
+
+
+
+
+
+        //decode key
         public async Task<string> DecodeLicenseKeyByRequestId(int requestId)
         {
             try

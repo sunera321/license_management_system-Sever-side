@@ -55,11 +55,14 @@ namespace license_management_system_Sever_side.Controllers
             var endClient = await _context.EndClients.ToListAsync();
             return Ok(endClient);
         }
+ /// //////////////////////////
 
         [HttpGet("getEndClienthasKey")]
         public async Task<IActionResult> GetEndClientWithKey()
         {
-            var endClient = await _endClientService.GetkeyHasEndClients();
+
+            //get only have licenkey client
+            var endClient = await _context.EndClients.Where(x => x.ActivetDate != null).ToListAsync();
             return Ok(endClient);
         }
     }

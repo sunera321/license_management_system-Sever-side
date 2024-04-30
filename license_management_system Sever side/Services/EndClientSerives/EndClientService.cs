@@ -47,19 +47,7 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
             _context.EndClients.Update(endClientEntity);
             await _context.SaveChangesAsync();
         }
-/*
-        public async Task UpdateEndClientMackAddress(int Id, string mack, string hostUrl)
-        {
-            var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
-            if (endClient != null)
-            {
-                endClient.MackAddress = mack;
-                endClient.HostUrl = hostUrl;
 
-                _context.EndClients.Update(endClient);
-                await _context.SaveChangesAsync();
-            }
-        }*/
 
         //delete end client
         public async Task DeleteEndClient(int Id)
@@ -75,7 +63,7 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
         ////get only have licenkey client
         public async Task<IEnumerable<ControllPanalClientDto>> GetkeyHasEndClients()
         {
-            // ActivetDate is not null
+        
             var endClients = await _context.EndClients.Where(x => x.ActivetDate != null).ToListAsync();
             return _mapper.Map<List<ControllPanalClientDto>>(endClients);
         }
