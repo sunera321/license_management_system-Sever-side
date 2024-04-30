@@ -82,6 +82,28 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             }
         }
 
+        //delete key
+        public async Task DeleteLicenseKey(string key)
+        {
+            try
+            {
+                var licenseKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == key);
+
+                if (licenseKey != null)
+                {
+                    _context.License_keys.Remove(licenseKey);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new KeyNotFoundException("License key not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error deleting license key", ex);
+            }
+        }
 
 /// ////////////////////////////////////////////////////////////////////////
  
