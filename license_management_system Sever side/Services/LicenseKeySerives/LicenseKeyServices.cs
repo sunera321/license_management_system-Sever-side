@@ -20,8 +20,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             _mapper = mapper;
         }
 
-     
 
+        //////////////////////////sunera's part/////////////////////////////////////////////////
         public async Task<string> GenerateLicenseKey(int endClientId, int requestKeyId)
         {
             try
@@ -52,7 +52,9 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
-                        MacAddress = endClient.MackAddress
+                        MacAddress = endClient.MackAddress,
+                        HostUrl=endClient.HostUrl
+
                     };
                     var ClintDate= _context.EndClients.FirstOrDefault(x => x.Id == endClientId);
                     ClintDate.ActivetDate = DateTime.Now;
@@ -105,7 +107,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             }
         }
 
-/// ////////////////////////////////////////////////////////////////////////
+//////////////////////////Himasha's part/////////////////////////////////////////////////
  
 
 

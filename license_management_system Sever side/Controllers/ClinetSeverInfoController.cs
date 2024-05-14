@@ -23,47 +23,112 @@ namespace license_management_system_Sever_side.Controllers
         [Route("AddClientServerDetails")]
         public async Task<IActionResult> AddClientServerDetails(ClientServerInfoDto serverdata)
         {
-            if (serverdata.LicenceKey == null)
+            Console.WriteLine("Server Data: " );
+            if (serverdata.licenceKey == null)
             {
                 return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null licence key");
             }
-            
-            if (serverdata.MacAddress == null)
+
+            if (serverdata.macAddress == null)
             {
                 return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null Mac Address");
             }
 
-            if (serverdata.HostUrl == null)
+            if (serverdata.hostUrl == null)
             {
                 return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null Host Url");
             }
 
             // check whether the licence key is exist on licence_key table
-            var dbLicenceKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == serverdata.LicenceKey);
-
+            var dbLicenceKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == serverdata.licenceKey);
+            Loging_Validetion keyLog = new Loging_Validetion();
             if (dbLicenceKey == null)
             {
                 // invalid licence key
-                return StatusCode(StatusCodes.Status404NotFound, "Invalid Licence Key");
+                Console.WriteLine("Invalid Licence Key");
+                try
+                {
+                    _context.Loging_Validetion.Add(keyLog);
+                    _context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error: " + e);
+                }
+                return StatusCode(StatusCodes.Status200OK, "Invalid Licence Key");
             }
-
-            // check whether the recieved mac address is belongs to the licence key
-            if (dbLicenceKey.MacAddress != serverdata.MacAddress)
+            else
             {
-                // invalid mac address
-                
-                // create new table for hold login with invalid mac address
-                // ClientId, partnerID, macaddress, licence key, login time, status
-                // create service for this table
-                //these task are done in this function
-                // search client id from maac address
-                // search partner id from mac address
-                // create dto to add data to the table
-                // call the function
+               
+                keyLog.LogLicenseKey = serverdata.licenceKey;
+                keyLog.ClintId = dbLicenceKey.ClintId;
+                var EndClintDtl = await _context.EndClients.FirstOrDefaultAsync(c => c.Id == dbLicenceKey.ClintId);
+                keyLog.PartnerId = EndClintDtl.PartnerId;
+                keyLog.LogMacAddress = serverdata.macAddress;
+                keyLog.LogHostUrl = serverdata.hostUrl;
+                if (dbLicenceKey.MacAddress != serverdata.macAddress)
+                {
+                    keyLog.StatusCode = "Invalid Mac Address";
+                    Console.WriteLine("Invalid Mac Address");
+                    //save infomation to the database Loging_Validetion table with exeption
+                    try
+                    {
+                        _context.Loging_Validetion.Add(keyLog);
+                        _context.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error: " + e);
+                    }
+                    return StatusCode(StatusCodes.Status404NotFound, "Invalid Mac Address");
+                  
+
+                 
+                }
+                else
+                {
+                    if (dbLicenceKey.HostUrl != serverdata.hostUrl)
+                    {
+                        keyLog.StatusCode = "Invalid Host URL";
+                        Console.WriteLine("Invalid Host URL");
+                        try
+                        {
+                            _context.Loging_Validetion.Add(keyLog);
+                            _context.SaveChanges();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Error: " + e);
+                        }
+                        return StatusCode(StatusCodes.Status404NotFound, "Invalid Host URL");
+                       
+                    }
+                    else
+                    {
+                        keyLog.StatusCode = "Valid_Loging";
+                        Console.WriteLine("Valid Loging");
+                        try
+                        {
+                            _context.Loging_Validetion.Add(keyLog);
+                            _context.SaveChanges();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Error: " + e);
+                        }
+                        return StatusCode(StatusCodes.Status200OK, "Valid Loging");
+                    }
+                    
+
+
+                }
 
             }
 
-            ClientServerInfo clientServer = new ClientServerInfo();
+
+
+            ////////////////////////////not need////////////////////////////////////////////////////////////
+/*            ClientServerInfo clientServer = new ClientServerInfo();
             clientServer.HostUrl = serverdata.HostUrl;
             clientServer.MacAddress = serverdata.MacAddress;
             clientServer.testDate = DateTime.Now;
@@ -93,24 +158,29 @@ namespace license_management_system_Sever_side.Controllers
             if (client.HostUrl != serverdata.HostUrl)
             {
                 // Host URL is invalid
-               
+
                 Console.WriteLine("ClientServer is MacAddress is Validated..." + clientServer);
                 Console.WriteLine("ClientServer is Host URl Invalid..." + clientServer);
                 return Ok("Invalid Host URl");
             }
-         
+
 
             Console.WriteLine("ClientServer is MacAddress and Host URl Validated..." + clientServer);
-            return Ok();
+            return Ok();*/
+
+            ///////////not need/////////////////////////////////////////////////
         }
+
+
+
 
         //get all ClientServerInfo
         [HttpGet]
         [Route("GetAllClientServerInfo")]
         public IActionResult GetAllClientServerInfo()
         {
-            var clientServerInfo = _context.ClientServerInfos.ToList();
-            return Ok(clientServerInfo);
+            var Loging_Validetion = _context.Loging_Validetion.ToList();
+            return Ok(Loging_Validetion);
         }
     }
 

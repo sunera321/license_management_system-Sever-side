@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240514073159_add_loging_valication_table")]
+    partial class add_loging_valication_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,6 +158,40 @@ namespace license_management_system_Sever_side.Migrations
                     b.ToTable("EndClients");
                 });
 
+            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Key_Log_Info", b =>
+                {
+                    b.Property<string>("LogKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ClintId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LogHostUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogLicenseKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogMacAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LogTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PartnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LogKey");
+
+                    b.ToTable("Key_Log_Infos");
+                });
+
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
                 {
                     b.Property<string>("Key_name")
@@ -196,40 +233,6 @@ namespace license_management_system_Sever_side.Migrations
                         .IsUnique();
 
                     b.ToTable("License_keys");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Loging_Validetion", b =>
-                {
-                    b.Property<string>("LogKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("ClintId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LogHostUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogLicenseKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogMacAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LogTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("PartnerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StatusCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LogKey");
-
-                    b.ToTable("Loging_Validetion");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
