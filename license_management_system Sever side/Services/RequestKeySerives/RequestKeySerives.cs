@@ -28,9 +28,9 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
             _context.RequestKeys.Add(requestKeyEntity);
             await _context.SaveChangesAsync();
         }
-        
+
         //get all request keys
-        
+
         public async Task<IEnumerable<RequestKeyDto>> GetAllrequestkeys()
         {
             var requestKeys = await _context.RequestKeys.ToListAsync();
@@ -86,6 +86,52 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
             await _context.SaveChangesAsync();
             return true;
         }
+        public IEnumerable<EndClientWithRequestKeysDTO> GetAllEndClientsWithRequestKeys()
+        {
+            var endClients = _context.EndClients.Select(ec => new AddEndClientDto
+            {
+                Name = ec.Name,
+                Email = ec.Email,
+                PhoneNumber = ec.PhoneNumber,
+                City = ec.City,
+                Region = ec.Region,
+                Country = ec.Country,
+                PostalCode = ec.PostalCode,
+                Website = ec.Website,
+                Industry = ec.Industry,
+                AdditionalInfo = ec.AdditionalInfo,
+                MackAddress = ec.MackAddress,
+                HostUrl = ec.HostUrl,
+                PartnerId = ec.PartnerId
+            }).ToList();
+
+            var result = new List<EndClientWithRequestKeysDTO>();
+
+            foreach (var endClient in endClients)
+            {
+                var requestKeys = _context.RequestKeys
+                    .Where(rk => rk.EndClientId == endClient.Id)
+                    .Select(rk => new RequestKeyDto
+                    {
+                        isFinanceApproval = rk.isFinanceApproval,
+                        isPartnerApproval = rk.isPartnerApproval,
+                        CommentFinaceMgt = rk.CommentFinaceMgt,
+                        CommentPartnerMgt = rk.CommentPartnerMgt,
+                        NumberOfDays = rk.NumberOfDays,
+                        EndClientId = rk.EndClientId,
+                        PartnerId = rk.PartnerId,
+                        
+                    }).ToList();
+
+                result.Add(new EndClientWithRequestKeysDTO
+                {
+                    AddEndClientDto = endClient,
+                    RequestKeyDtos = requestKeys
+                });
+            }
+
+            return result;
+        }
+
     }
 }
-

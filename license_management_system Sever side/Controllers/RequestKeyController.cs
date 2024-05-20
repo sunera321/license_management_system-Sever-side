@@ -46,6 +46,38 @@ namespace license_management_system_Sever_side.Controllers
             return Ok();
         }
 
+        // PATCH endpoint to update Client details
+        [HttpPatch("{clientId}")]
+        public async Task<IActionResult> UpdateClientDetails(int clientId, ClientUpdateDto model)
+        {
+            var client = await _context.EndClients.FindAsync(clientId);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            // Update client details
+            if (model.HostUrl != null)
+            {
+                client.HostUrl = model.HostUrl;
+            }
+
+            if (model.MackAddress != null)
+            {
+                client.MackAddress = model.MackAddress;
+            }
+
+            if (model.Website != null)
+            {
+                client.Website = model.Website;
+            }
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
         //get all request keys
         [HttpGet("getAllRequestKeys")]
@@ -54,7 +86,7 @@ namespace license_management_system_Sever_side.Controllers
             var requestKeys = await _request_key.GetAllrequestkeys();
             return Ok(requestKeys);
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestKey>>> GetAllRequestKeysWith()
         {
@@ -91,7 +123,12 @@ namespace license_management_system_Sever_side.Controllers
             var result = await _request_key.RejectPartnerManagement(requestId, rejectionReason);
             return result ? NoContent() : NotFound();
         }
+        [HttpGet("Check")]
+        public ActionResult<IEnumerable<EndClientWithRequestKeysDTO>> GetAllEndClientsWithRequestKeys()
+        {
+            var data = _request_key.GetAllEndClientsWithRequestKeys();
+            return Ok(data);
+        }
     }
 
 }
-

@@ -4,6 +4,7 @@ namespace license_management_system_Sever_side.Models.DTOs
 {
     public class AddEndClientDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string? PhoneNumber { get; set; }
