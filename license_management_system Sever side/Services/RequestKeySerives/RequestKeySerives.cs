@@ -90,6 +90,7 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
         {
             var endClients = _context.EndClients.Select(ec => new AddEndClientDto
             {
+                Id = ec.Id,
                 Name = ec.Name,
                 Email = ec.Email,
                 PhoneNumber = ec.PhoneNumber,
