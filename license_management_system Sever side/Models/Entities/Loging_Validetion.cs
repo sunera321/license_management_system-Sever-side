@@ -11,6 +11,8 @@ namespace license_management_system_Sever_side.Models.Entities
 
         public string LogLicenseKey { get; set; }
         public int? ClintId { get; set; }
+        public string ClintName { get; set; }
+        public string ClintEmail { get; set; }
 
         public string LogMacAddress { get; set; }
 
@@ -18,6 +20,8 @@ namespace license_management_system_Sever_side.Models.Entities
 
         public int? PartnerId { get; set; }
 
+        public string PartnerName { get; set; }
+        public string PartnerEmail { get; set; }
         public string? StatusCode { get; set; }
 
 

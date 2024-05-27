@@ -65,5 +65,13 @@ namespace license_management_system_Sever_side.Controllers
             var endClient = await _context.EndClients.Where(x => x.ActivetDate != null).ToListAsync();
             return Ok(endClient);
         }
+
+        //get client by id
+        [HttpGet("getEndClientById/{Id}")]
+        public async Task<IActionResult> GetEndClientById(int Id)
+        {
+            var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
+            return Ok(endClient);
+        }
     }
 }

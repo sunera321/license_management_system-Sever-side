@@ -53,7 +53,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
                         MacAddress = endClient.MackAddress,
-                        HostUrl=endClient.HostUrl
+                        HostUrl= endClient.HostUrl
 
                     };
                     var ClintDate= _context.EndClients.FirstOrDefault(x => x.Id == endClientId);
@@ -105,6 +105,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             {
                 throw new Exception("Error deleting license key", ex);
             }
+
         }
 
 //////////////////////////Himasha's part/////////////////////////////////////////////////

@@ -45,10 +45,10 @@ namespace license_management_system_Sever_side.Models.Entities
 
         public DateTime? ActivetDate { get; set; } =null;
         public DateTime? ExpireDate { get; set; } = null;
-        public string? MackAddress { get; set; }
-        public string? HostUrl { get; set; }
-        [NotMapped]
-        public virtual ICollection<Module> Modules { get; set; }
+        public string? MackAddress { get; set; } = null;
+        public string? HostUrl { get; set; } = null;
+
+        public int? ModuleID { get; set; } = null;
 
 
         // Foreign key property for Partner

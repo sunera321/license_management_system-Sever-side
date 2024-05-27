@@ -10,10 +10,10 @@ namespace license_management_system_Sever_side.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClinetSeverInfoController : ControllerBase
+    public class LogingValidateInfoController : ControllerBase
     {
         DataContext _context;
-        public ClinetSeverInfoController(DataContext context)
+        public LogingValidateInfoController(DataContext context)
         {
             _context = context;
         }
@@ -26,17 +26,17 @@ namespace license_management_system_Sever_side.Controllers
             Console.WriteLine("Server Data: " );
             if (serverdata.licenceKey == null)
             {
-                return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null licence key");
+                return Ok( "Receviced null licence key");
             }
 
             if (serverdata.macAddress == null)
             {
-                return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null Mac Address");
+                return Ok("Receviced null Mac Address");
             }
 
             if (serverdata.hostUrl == null)
             {
-                return StatusCode(StatusCodes.Status406NotAcceptable, "Receviced null Host Url");
+                return Ok("Receviced null Host Url");
             }
 
             // check whether the licence key is exist on licence_key table
@@ -55,7 +55,7 @@ namespace license_management_system_Sever_side.Controllers
                 {
                     Console.WriteLine("Error: " + e);
                 }
-                return StatusCode(StatusCodes.Status200OK, "Invalid Licence Key");
+                return Ok("Invalid Licence Key");
             }
             else
             {
@@ -63,9 +63,14 @@ namespace license_management_system_Sever_side.Controllers
                 keyLog.LogLicenseKey = serverdata.licenceKey;
                 keyLog.ClintId = dbLicenceKey.ClintId;
                 var EndClintDtl = await _context.EndClients.FirstOrDefaultAsync(c => c.Id == dbLicenceKey.ClintId);
+                var partner = await _context.Partners.FirstOrDefaultAsync(p => p.Id == EndClintDtl.PartnerId);
                 keyLog.PartnerId = EndClintDtl.PartnerId;
                 keyLog.LogMacAddress = serverdata.macAddress;
                 keyLog.LogHostUrl = serverdata.hostUrl;
+                keyLog.ClintEmail= EndClintDtl.Email;
+                keyLog.ClintName = EndClintDtl.Name;
+                keyLog.PartnerEmail= partner.Name;
+                keyLog.PartnerName = partner.Email;
                 if (dbLicenceKey.MacAddress != serverdata.macAddress)
                 {
                     keyLog.StatusCode = "Invalid Mac Address";
@@ -80,7 +85,7 @@ namespace license_management_system_Sever_side.Controllers
                     {
                         Console.WriteLine("Error: " + e);
                     }
-                    return StatusCode(StatusCodes.Status404NotFound, "Invalid Mac Address");
+                    return Ok("Invalid Mac Address");
                   
 
                  
@@ -100,7 +105,7 @@ namespace license_management_system_Sever_side.Controllers
                         {
                             Console.WriteLine("Error: " + e);
                         }
-                        return StatusCode(StatusCodes.Status404NotFound, "Invalid Host URL");
+                        return Ok("Invalid Host URL");
                        
                     }
                     else
@@ -116,7 +121,7 @@ namespace license_management_system_Sever_side.Controllers
                         {
                             Console.WriteLine("Error: " + e);
                         }
-                        return StatusCode(StatusCodes.Status200OK, "Valid Loging");
+                        return Ok("Valid Loging");
                     }
                     
 
@@ -182,6 +187,17 @@ namespace license_management_system_Sever_side.Controllers
             var Loging_Validetion = _context.Loging_Validetion.ToList();
             return Ok(Loging_Validetion);
         }
+
+        //get clinet withing the logkey
+        [HttpGet]
+        [Route("GetClientServerInfo/{logKey}")]
+        public IActionResult GetClientServerInfo(string logKey)
+        {
+            var Loging_Validetion = _context.Loging_Validetion.FirstOrDefault(l => l.LogKey == logKey);
+            return Ok(Loging_Validetion);
+        }
+
+
     }
 
 
