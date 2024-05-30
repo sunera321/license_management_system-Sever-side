@@ -72,6 +72,10 @@ namespace license_management_system_Sever_side.Controllers
             {
                 client.Website = model.Website;
             }
+            if (model.ModuleID != null)
+            {
+                client.ModuleID = model.ModuleID;
+            }
 
             // Save changes to the database
             await _context.SaveChangesAsync();

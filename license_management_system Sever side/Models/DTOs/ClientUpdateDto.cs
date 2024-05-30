@@ -5,5 +5,7 @@
         public string? Website { get; set; }
         public string? MackAddress { get; set; }
         public string? HostUrl { get; set; }
+
+        public int ModuleID { get; set; }
     }
 }
