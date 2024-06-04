@@ -5,6 +5,7 @@ using license_management_system_Sever_side.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace license_management_system_Sever_side.Services.LicenseKeyServices
@@ -60,8 +61,9 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                     string email = endClient.Email;
                     string macAddress = endClient.MackAddress;
                     string hostUrl = endClient.HostUrl;
+                    int ModuleID = (int)endClient.ModuleID;
 
-                    string combinedData = email + macAddress + hostUrl;
+                    string combinedData = email + macAddress + hostUrl+ModuleID ;
                     string hashedKey = HashString(combinedData);
 
                     var license = new License_key
@@ -113,7 +115,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             }
         }
 
-        private string HashString(string input)
+       /* private string HashString(string input)
         {
             try
             {
@@ -124,7 +126,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error hashing string", ex);
             }
         }
-
+       */
         private string DecodeString(string input)
         {
             try
@@ -136,7 +138,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error decoding string", ex);
             }
         }
-       /* private string HashString(string input)
+        private string HashString(string input)
         {
             // Hash the input string using SHA256 algorithm
             using (SHA256 sha256Hash = SHA256.Create())
@@ -149,6 +151,6 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 }
                 return builder.ToString();
             }
-        }*/
+        }
     }
 }
