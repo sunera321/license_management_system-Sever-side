@@ -125,8 +125,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             {
                 throw new Exception("Error hashing string", ex);
             }
-        }
-       */
+        }*/
+
         private string DecodeString(string input)
         {
             try
@@ -141,6 +141,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
         private string HashString(string input)
         {
             // Hash the input string using SHA256 algorithm
+
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
