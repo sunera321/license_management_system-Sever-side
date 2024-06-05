@@ -64,11 +64,13 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                     int ModuleID = (int)endClient.ModuleID;
 
                     string combinedData = email + macAddress + hostUrl+ModuleID ;
-                    string hashedKey = HashString(combinedData);
+                    string hashedKey = NormalHash(combinedData);
+
+                    string Doublehashed = HashString(hashedKey);
 
                     var license = new License_key
                     {
-                        Key_name = hashedKey,
+                        Key_name = Doublehashed,
                         ActivationDate = DateTime.Now,
                         DeactivatedDate = DateTime.Now.AddDays(requestKey.NumberOfDays),
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
@@ -92,6 +94,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error generating license key", ex);
             }
         }
+        
 
         public async Task<string> DecodeLicenseKeyByRequestId(int requestId)
         {
@@ -115,7 +118,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             }
         }
 
-       /* private string HashString(string input)
+        private string NormalHash(string input)
         {
             try
             {
@@ -125,7 +128,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             {
                 throw new Exception("Error hashing string", ex);
             }
-        }*/
+        }
 
         private string DecodeString(string input)
         {
