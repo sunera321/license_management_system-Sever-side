@@ -8,48 +8,57 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
 {
     public class EndClientService : IEndClientService
     {
-        DataContext _context;
-        IMapper _mapper;
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public EndClientService(DataContext dataContext, IMapper mapper) 
-        { 
+        public EndClientService(DataContext dataContext, IMapper mapper)
+        {
             _context = dataContext;
             _mapper = mapper;
         }
 
-        // add new end client
-        public async Task AddEndClient(AddEndClientDto endClient)
+        // Add new end client
+        public async Task AddEndClient(AddEndClientDto endClientDto)
         {
-            // map the end client dto to end client entity
-            var endClientEntity = _mapper.Map<EndClient>(endClient);
-           
+            // Map the end client dto to end client entity
+            var endClientEntity = _mapper.Map<EndClient>(endClientDto);
 
+            // Add the new end client
             _context.EndClients.Add(endClientEntity);
             await _context.SaveChangesAsync();
 
+            // Handle the addition of multiple modules
+            foreach (var moduleId in endClientDto.ModuleIds)
+            {
+                var endClientModule = new EndClientModule
+                {
+                    EndClientId = endClientEntity.Id,
+                    ModuleId = moduleId
+                };
+                _context.EndClientModules.Add(endClientModule);
+            }
+
+            await _context.SaveChangesAsync();
         }
 
-        //get all client
+        // Get all clients
         public async Task<IEnumerable<AddEndClientDto>> GetAllEndClients()
         {
-
             var endClients = await _context.EndClients.ToListAsync();
             return _mapper.Map<List<AddEndClientDto>>(endClients);
         }
-     
 
-        //update end client
-        public async Task UpdateEndClient(AddEndClientDto endClient)
-        {   
-            // map the end client dto to end client entity
-            var endClientEntity = _mapper.Map<EndClient>(endClient);
+        // Update end client
+        public async Task UpdateEndClient(AddEndClientDto endClientDto)
+        {
+            // Map the end client dto to end client entity
+            var endClientEntity = _mapper.Map<EndClient>(endClientDto);
 
             _context.EndClients.Update(endClientEntity);
             await _context.SaveChangesAsync();
         }
 
-
-        //delete end client
+        // Delete end client
         public async Task DeleteEndClient(int Id)
         {
             var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
@@ -60,18 +69,11 @@ namespace license_management_system_Sever_side.Services.EndClientSerives
             }
         }
 
-        ////get only have licenkey client
+        // Get clients that have a license key
         public async Task<IEnumerable<ControllPanalClientDto>> GetkeyHasEndClients()
         {
-        
-            var endClients = await _context.EndClients.Where(x => x.ActivetDate != null).ToListAsync();
+            var endClients = await _context.EndClients.Where(x => x.ActiveDate != null).ToListAsync();
             return _mapper.Map<List<ControllPanalClientDto>>(endClients);
         }
-
-
-
-
-
-
     }
 }

@@ -37,7 +37,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 if (endClient != null && requestKey != null)
                 {
                     string email = endClient.Email;
-                    string macAddress = endClient.MackAddress;
+                    string macAddress = endClient.MacAddress;
                     string hostUrl = endClient.HostUrl;
                     string combinedData = email + macAddress + hostUrl;
                     string hashedKey = HashString(combinedData);
@@ -52,12 +52,12 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
-                        MacAddress = endClient.MackAddress,
+                        MacAddress = endClient.MacAddress,
                         HostUrl= endClient.HostUrl
 
                     };
                     var ClintDate= _context.EndClients.FirstOrDefault(x => x.Id == endClientId);
-                    ClintDate.ActivetDate = DateTime.Now;
+                    ClintDate.ActiveDate = DateTime.Now;
                     ClintDate.ExpireDate = DateTime.Now.AddDays(requestKey.NumberOfDays);
                     _context.EndClients.Update(ClintDate);
                     //check if the key is already generated

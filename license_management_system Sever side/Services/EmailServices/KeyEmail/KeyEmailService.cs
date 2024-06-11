@@ -12,6 +12,7 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
         private readonly IConfiguration config;
         private readonly DataContext _context;
 
+    
         public KeyEmailService(IConfiguration config, DataContext context)
         {
             this.config = config;
@@ -28,7 +29,8 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
             {
                 Console.WriteLine("License key not found.");
                 // License key not found, handle accordingly
-                return "License key not found.";
+                
+                return ("License key not found.");
             }
 
             // Fetch client's email address from the associated client record
@@ -38,7 +40,8 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
             {
                 Console.WriteLine("Client email not found.");
                 // Client not found or client email is empty, handle accordingly
-                return "Client email not found.";
+               
+                return ("Client email not found.");
             }
 
 
@@ -72,7 +75,9 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
 
             smtp.Disconnect(true);
 
-            return "Mail Sent";
+          
+            return ("Mail Sent");
+          
         }
     }
 }

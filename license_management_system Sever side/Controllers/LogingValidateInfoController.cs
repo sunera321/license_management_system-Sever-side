@@ -59,7 +59,17 @@ namespace license_management_system_Sever_side.Controllers
             }
             else
             {
+                if(dbLicenceKey.Key_Status == "Available")
+                {
+                    return Ok("Licence Key is not Activated");
+
+                }
                
+               if(dbLicenceKey.DeactivatedDate < DateTime.Now)
+                {
+                    dbLicenceKey.Key_Status = "Expired";
+                    _context.SaveChanges();
+                }
                 keyLog.LogLicenseKey = serverdata.licenceKey;
                 keyLog.ClintId = dbLicenceKey.ClintId;
                 var EndClintDtl = await _context.EndClients.FirstOrDefaultAsync(c => c.Id == dbLicenceKey.ClintId);
@@ -110,70 +120,47 @@ namespace license_management_system_Sever_side.Controllers
                     }
                     else
                     {
-                        keyLog.StatusCode = "Valid_Loging";
-                        Console.WriteLine("Valid Loging");
-                        try
+                        if (dbLicenceKey.Key_Status == "Expired")
                         {
-                            _context.Loging_Validetion.Add(keyLog);
-                            _context.SaveChanges();
+                           
+                            keyLog.StatusCode = "Expired Key";
+                            Console.WriteLine("Expired Key");
+                            try
+                            {
+                                _context.Loging_Validetion.Add(keyLog);
+                                _context.SaveChanges();
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Error: " + e);
+                            }
+                            return Ok("Expired Key");
+                            
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Console.WriteLine("Error: " + e);
+                            keyLog.StatusCode = "Valid_Loging";
+                            Console.WriteLine("Valid Loging");
+                            try
+                            {
+                                _context.Loging_Validetion.Add(keyLog);
+                                _context.SaveChanges();
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Error: " + e);
+                            }
+                            return Ok("Valid Loging");
                         }
-                        return Ok("Valid Loging");
+
                     }
-                    
-
-
                 }
 
             }
 
 
-
-            ////////////////////////////not need////////////////////////////////////////////////////////////
-/*            ClientServerInfo clientServer = new ClientServerInfo();
-            clientServer.HostUrl = serverdata.HostUrl;
-            clientServer.MacAddress = serverdata.MacAddress;
-            clientServer.testDate = DateTime.Now;
-            clientServer.licenceKey = serverdata.LicenceKey;
-            clientServer.SiteNames = new List<ClientServerSiteName>();
-
-            foreach (string siteName in serverdata.SiteNames)
-            {
-                ClientServerSiteName name = new ClientServerSiteName();
-                name.SiteName = siteName;
-                name.MacAddress = serverdata.MacAddress;
-                clientServer.SiteNames.Add(name);
-            }
-
-            EndClient client = _context.EndClients.FirstOrDefault(c => c.MackAddress == serverdata.MacAddress);
-            Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
-            Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
-            _context.ClientServerInfos.Add(clientServer);
-            if (client == null)
-            {
-                // Mac address is invalid
-
-                Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
-                return Ok("Invalid Clint");
-            }
-
-            if (client.HostUrl != serverdata.HostUrl)
-            {
-                // Host URL is invalid
-
-                Console.WriteLine("ClientServer is MacAddress is Validated..." + clientServer);
-                Console.WriteLine("ClientServer is Host URl Invalid..." + clientServer);
-                return Ok("Invalid Host URl");
-            }
-
-
-            Console.WriteLine("ClientServer is MacAddress and Host URl Validated..." + clientServer);
-            return Ok();*/
-
-            ///////////not need/////////////////////////////////////////////////
         }
 
 

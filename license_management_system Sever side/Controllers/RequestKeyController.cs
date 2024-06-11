@@ -65,7 +65,7 @@ namespace license_management_system_Sever_side.Controllers
 
             if (model.MackAddress != null)
             {
-                client.MackAddress = model.MackAddress;
+                client.MacAddress = model.MackAddress;
             }
 
             if (model.Website != null)

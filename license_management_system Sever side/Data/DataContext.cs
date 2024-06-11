@@ -23,11 +23,12 @@ namespace license_management_system_Sever_side.Data
         public DbSet<Loging_Validetion> Loging_Validetion { get; set; }
         public DbSet<ClientServerInfo> ClientServerInfos { get; set; }
         public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set;}
+        public DbSet<EndClientModule> EndClientModules { get; set; }
 
 
 
 
-       
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,7 +36,28 @@ namespace license_management_system_Sever_side.Data
                .HasOne(lk => lk.RequestKey)
                .WithOne(rk => rk.License_key)
                .HasForeignKey<License_key>(lk => lk.RequestId);
+
+
+            
+                base.OnModelCreating(modelBuilder);
+
+                // Configure many-to-many relationship
+                modelBuilder.Entity<EndClientModule>()
+                    .HasKey(ecm => new { ecm.EndClientId, ecm.ModuleId });
+
+                modelBuilder.Entity<EndClientModule>()
+                    .HasOne(ecm => ecm.EndClient)
+                    .WithMany(ec => ec.EndClientModules)
+                    .HasForeignKey(ecm => ecm.EndClientId);
+
+                modelBuilder.Entity<EndClientModule>()
+                    .HasOne(ecm => ecm.Module)
+                    .WithMany(m => m.EndClientModules)
+                    .HasForeignKey(ecm => ecm.ModuleId);
+            
         }
+
+
 
      
     }
