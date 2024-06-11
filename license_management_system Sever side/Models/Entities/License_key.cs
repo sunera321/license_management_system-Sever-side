@@ -31,6 +31,12 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Mac Address")]
         public string? MacAddress { get; set; }
 
+        //create HostUrl Colom
+        [Column("HostUrl")]
+        [DisplayName("Host Url")]
+        public string? HostUrl { get; set; }
+
+
         [Column("key_status")]
         [DisplayName("Key Status")]
         public string Key_Status { get; set; }

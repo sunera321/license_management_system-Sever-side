@@ -6,6 +6,7 @@ namespace license_management_system_Sever_side.Models.Entities
 {
     public class ClientServerInfo
     {
+            // need ro remove
 
             [Key]
             public string? MacAddress { get; set; }

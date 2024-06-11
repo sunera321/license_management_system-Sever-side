@@ -10,8 +10,6 @@
         public string? Email { get; set; }
         public string? MackAddress { get; set; }
         public string? HostUrl { get; set; }
-
         public int NumberOfDays { get; set; }
-
     }
 }
