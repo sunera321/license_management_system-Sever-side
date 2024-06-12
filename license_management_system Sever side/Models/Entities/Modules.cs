@@ -15,6 +15,10 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Name")]
         public string Modulename { get; set; }
 
+        [Column("image path"), MaxLength(100)]
+        [DisplayName("Image Path")]
+        public string? ImagePath { get; set; }
+
         [Column("created data")]
         [DisplayName("Created Data")]
         public DateTime CreatedData { get; set; } = System.DateTime.Now;
