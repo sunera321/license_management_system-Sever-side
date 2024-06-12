@@ -6,6 +6,7 @@
         public string? MackAddress { get; set; }
         public string? HostUrl { get; set; }
 
-        public int ModuleID { get; set; }
+        // Change EndClientModules from int to List<int>
+        public List<int> EndClientModules { get; set; } = new List<int>();
     }
 }

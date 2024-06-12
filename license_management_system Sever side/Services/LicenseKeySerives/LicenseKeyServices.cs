@@ -59,11 +59,11 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 if (endClient != null && requestKey != null)
                 {
                     string email = endClient.Email;
-                    string macAddress = endClient.MackAddress;
+                    string macAddress = endClient.MacAddress;
                     string hostUrl = endClient.HostUrl;
-                    int ModuleID = (int)endClient.ModuleID;
+                   // int ModuleID = (int)endClient.EndClientModules;
 
-                    string combinedData = email + macAddress + hostUrl+ModuleID ;
+                    string combinedData = email + macAddress + hostUrl ;
                     string hashedKey = NormalHash(combinedData);
 
                     string Doublehashed = HashString(hashedKey);
@@ -76,7 +76,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
-                        MacAddress = endClient.MackAddress
+                        MacAddress = endClient.MacAddress
                     };
 
                     _context.License_keys.Add(license);

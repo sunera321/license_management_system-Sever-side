@@ -65,17 +65,15 @@ namespace license_management_system_Sever_side.Controllers
 
             if (model.MackAddress != null)
             {
-                client.MackAddress = model.MackAddress;
+                client.MacAddress = model.MackAddress;
             }
 
             if (model.Website != null)
             {
                 client.Website = model.Website;
             }
-            if (model.ModuleID != null)
-            {
-                client.ModuleID = model.ModuleID;
-            }
+            
+            
 
             // Save changes to the database
             await _context.SaveChangesAsync();
@@ -127,13 +125,10 @@ namespace license_management_system_Sever_side.Controllers
             var result = await _request_key.RejectPartnerManagement(requestId, rejectionReason);
             return result ? NoContent() : NotFound();
         }
-        [HttpGet("Check")]
-        public ActionResult<IEnumerable<EndClientWithRequestKeysDTO>> GetAllEndClientsWithRequestKeys()
-        {
-            var data = _request_key.GetAllEndClientsWithRequestKeys();
-            return Ok(data);
-        }
 
-    }
+
+      
+
+        }
 
 }

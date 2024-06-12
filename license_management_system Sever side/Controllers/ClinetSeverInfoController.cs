@@ -41,7 +41,7 @@ namespace license_management_system_Sever_side.Controllers
                 clientServer.SiteNames.Add(name);
             }
 
-            EndClient client = _context.EndClients.FirstOrDefault(c => c.MackAddress == serverdata.MacAddress);
+            EndClient client = _context.EndClients.FirstOrDefault(c => c.MacAddress == serverdata.MacAddress);
             Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
             Console.WriteLine("ClientServer is Invalid Clint..." + clientServer);
             if (client == null)

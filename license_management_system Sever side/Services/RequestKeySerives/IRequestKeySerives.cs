@@ -12,7 +12,7 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
        public  Task<bool> SetPartnerApproval(int id);
         public Task<bool> RejectFinanceManagement(int requestId, string rejectionReason);
        public  Task<bool> RejectPartnerManagement(int requestId, string rejectionReason);
-       public  IEnumerable<EndClientWithRequestKeysDTO> GetAllEndClientsWithRequestKeys();
+       
 
     }
 }
