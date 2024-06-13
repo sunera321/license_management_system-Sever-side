@@ -48,14 +48,14 @@ namespace license_management_system_Sever_side.Controllers
         [HttpPost("UpdateModule")]
         public async Task<ActionResult> PostEndClientModule(EndClientModuleDTO endClientModuleDTO)
         {
-            // Check if the EndClient exists
+            // Check client is availbale
             var endClient = await _context.EndClients.FindAsync(endClientModuleDTO.EndClientId);
             if (endClient == null)
             {
                 return NotFound("EndClient not found");
             }
 
-            // List to hold all the EndClientModule objects to be added
+            //List to hold
             var endClientModules = new List<EndClientModule>();
 
             foreach (var moduleId in endClientModuleDTO.ModuleIds)
@@ -70,14 +70,14 @@ namespace license_management_system_Sever_side.Controllers
                 // Check if the relationship already exists
                 if (!_context.EndClientModules.Any(ecm => ecm.EndClientId == endClient.Id && ecm.ModuleId == moduleId))
                 {
-                    // Create new EndClientModule object
+                   
                     var endClientModule = new EndClientModule
                     {
                         EndClientId = endClientModuleDTO.EndClientId,
                         ModuleId = moduleId
                     };
 
-                    // Add to the list
+                    
                     endClientModules.Add(endClientModule);
                 }
             }
