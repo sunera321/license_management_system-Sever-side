@@ -8,7 +8,7 @@ namespace license_management_system_Sever_side.Services.ModuleSerives
 {
     public class ModuleSerives : IModuleSerives
     {
-        DataContext _context;
+         DataContext _context;
         IMapper _mapper;
         public ModuleSerives(DataContext dataContext, IMapper mapper)
         {

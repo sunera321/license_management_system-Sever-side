@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240603050734_initial99")]
+    partial class initial99
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +78,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ActiveDate")
+                    b.Property<DateTime?>("ActivetDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AdditionalInfo")
@@ -105,8 +108,11 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<string>("Industry")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MacAddress")
+                    b.Property<string>("MackAddress")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ModuleID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -138,23 +144,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.HasIndex("PartnerId");
 
                     b.ToTable("EndClients");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClientModule", b =>
-                {
-                    b.Property<int>("EndClientId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.HasKey("EndClientId", "ModuleId");
-
-                    b.HasIndex("ModuleId");
-
-                    b.ToTable("EndClientModules");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
@@ -270,6 +259,7 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnName("features");
 
                     b.Property<string>("ImagePath")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("image path");
@@ -286,7 +276,12 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("name");
 
+                    b.Property<int?>("RequestKeyRequestID")
+                        .HasColumnType("int");
+
                     b.HasKey("ModulesId");
+
+                    b.HasIndex("RequestKeyRequestID");
 
                     b.ToTable("Modules");
                 });
@@ -446,25 +441,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.Navigation("Partner");
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClientModule", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.Entities.EndClient", "EndClient")
-                        .WithMany("EndClientModules")
-                        .HasForeignKey("EndClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("license_management_system_Sever_side.Models.Entities.Modules", "Module")
-                        .WithMany("EndClientModules")
-                        .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EndClient");
-
-                    b.Navigation("Module");
-                });
-
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
                 {
                     b.HasOne("license_management_system_Sever_side.Models.Entities.RequestKey", "RequestKey")
@@ -474,6 +450,13 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired();
 
                     b.Navigation("RequestKey");
+                });
+
+            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
+                {
+                    b.HasOne("license_management_system_Sever_side.Models.Entities.RequestKey", null)
+                        .WithMany("Modules")
+                        .HasForeignKey("RequestKeyRequestID");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>
@@ -512,19 +495,11 @@ namespace license_management_system_Sever_side.Migrations
                     b.Navigation("SiteNames");
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClient", b =>
-                {
-                    b.Navigation("EndClientModules");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
-                {
-                    b.Navigation("EndClientModules");
-                });
-
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>
                 {
                     b.Navigation("License_key");
+
+                    b.Navigation("Modules");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.FinaceManager", b =>

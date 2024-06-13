@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240514073159_add_loging_valication_table")]
+    partial class add_loging_valication_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace license_management_system_Sever_side.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ModulesRequestKey", b =>
+                {
+                    b.Property<int>("ModulesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequestKeyRequestID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ModulesId", "RequestKeyRequestID");
+
+                    b.HasIndex("RequestKeyRequestID");
+
+                    b.ToTable("ModulesRequestKey");
+                });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.ClientServerInfo", b =>
                 {
@@ -75,7 +93,7 @@ namespace license_management_system_Sever_side.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("ActiveDate")
+                    b.Property<DateTime?>("ActivetDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AdditionalInfo")
@@ -105,7 +123,7 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<string>("Industry")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MacAddress")
+                    b.Property<string>("MackAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -140,21 +158,38 @@ namespace license_management_system_Sever_side.Migrations
                     b.ToTable("EndClients");
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClientModule", b =>
+            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Key_Log_Info", b =>
                 {
-                    b.Property<int>("EndClientId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
+                    b.Property<string>("LogKey")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
+                    b.Property<int?>("ClintId")
+                        .HasColumnType("int");
 
-                    b.HasKey("EndClientId", "ModuleId");
+                    b.Property<string>("LogHostUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ModuleId");
+                    b.Property<string>("LogLicenseKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("EndClientModules");
+                    b.Property<string>("LogMacAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LogTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PartnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LogKey");
+
+                    b.ToTable("Key_Log_Infos");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
@@ -200,56 +235,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.ToTable("License_keys");
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Loging_Validetion", b =>
-                {
-                    b.Property<string>("LogKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ClintEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ClintId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClintName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogHostUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogLicenseKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogMacAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LogTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PartnerEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PartnerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PartnerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StatusCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LogKey");
-
-                    b.ToTable("Loging_Validetion");
-                });
-
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
                 {
                     b.Property<int>("ModulesId")
@@ -260,25 +245,15 @@ namespace license_management_system_Sever_side.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModulesId"));
 
                     b.Property<DateTime>("CreatedData")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created data");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Features")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("features");
-
-                    b.Property<string>("ImagePath")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("image path");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModuleDescription")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("module description");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Modulename")
                         .IsRequired()
@@ -426,6 +401,21 @@ namespace license_management_system_Sever_side.Migrations
                     b.HasDiscriminator().HasValue("PartnerManager");
                 });
 
+            modelBuilder.Entity("ModulesRequestKey", b =>
+                {
+                    b.HasOne("license_management_system_Sever_side.Models.Entities.Modules", null)
+                        .WithMany()
+                        .HasForeignKey("ModulesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("license_management_system_Sever_side.Models.Entities.RequestKey", null)
+                        .WithMany()
+                        .HasForeignKey("RequestKeyRequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.ClientServerSiteName", b =>
                 {
                     b.HasOne("license_management_system_Sever_side.Models.Entities.ClientServerInfo", "ClientServer")
@@ -444,25 +434,6 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired();
 
                     b.Navigation("Partner");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClientModule", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.Entities.EndClient", "EndClient")
-                        .WithMany("EndClientModules")
-                        .HasForeignKey("EndClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("license_management_system_Sever_side.Models.Entities.Modules", "Module")
-                        .WithMany("EndClientModules")
-                        .HasForeignKey("ModuleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EndClient");
-
-                    b.Navigation("Module");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
@@ -510,16 +481,6 @@ namespace license_management_system_Sever_side.Migrations
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.ClientServerInfo", b =>
                 {
                     b.Navigation("SiteNames");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.EndClient", b =>
-                {
-                    b.Navigation("EndClientModules");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
-                {
-                    b.Navigation("EndClientModules");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>

@@ -20,29 +20,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             _mapper = mapper;
         }
 
-        public async Task AddLicenseKey(License_keyDto licenseKey)
-        {
-            var licenseKeyEntity = _mapper.Map<License_key>(licenseKey);
-            licenseKeyEntity.Key_Status = "Available";
-            await _context.License_keys.AddAsync(licenseKeyEntity);
-            // Fetch the NumberOfDays from RequestKey table
-            var requestKey = await _context.RequestKeys
-                .FirstOrDefaultAsync(r => r.RequestID == licenseKeyEntity.RequestId);
 
-
-            licenseKeyEntity.DeactivatedDate = licenseKeyEntity.ActivationDate.AddDays(requestKey.NumberOfDays);
-            licenseKeyEntity.ClintId = requestKey.EndClientId;
-
-            await _context.SaveChangesAsync();
-        }
-
-        //delete key
-        public async Task DeleteLicenseKey(string key)
-        {
-            var licenseKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == key);
-            _context.License_keys.Remove(licenseKey);
-            await _context.SaveChangesAsync();
-        }
+        //////////////////////////sunera's part/////////////////////////////////////////////////
         public async Task<string> GenerateLicenseKey(int endClientId, int requestKeyId)
         {
             try
@@ -58,27 +37,41 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 if (endClient != null && requestKey != null)
                 {
                     string email = endClient.Email;
-                    string macAddress = endClient.MackAddress;
+                    string macAddress = endClient.MacAddress;
                     string hostUrl = endClient.HostUrl;
-
                     string combinedData = email + macAddress + hostUrl;
                     string hashedKey = HashString(combinedData);
 
                     var license = new License_key
                     {
+                      
+
                         Key_name = hashedKey,
                         ActivationDate = DateTime.Now,
                         DeactivatedDate = DateTime.Now.AddDays(requestKey.NumberOfDays),
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
-                        MacAddress = endClient.MackAddress
+                        MacAddress = endClient.MacAddress,
+                        HostUrl= endClient.HostUrl
+
                     };
-
-                    _context.License_keys.Add(license);
-                    await _context.SaveChangesAsync();
-
-                    return hashedKey;
+                    var ClintDate= _context.EndClients.FirstOrDefault(x => x.Id == endClientId);
+                    ClintDate.ActiveDate = DateTime.Now;
+                    ClintDate.ExpireDate = DateTime.Now.AddDays(requestKey.NumberOfDays);
+                    _context.EndClients.Update(ClintDate);
+                    //check if the key is already generated
+                    var key = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == hashedKey);
+                    if (key == null)
+                    {
+                        _context.License_keys.Add(license);
+                        await _context.SaveChangesAsync();
+                        return hashedKey;
+                    }
+                    else
+                    {
+                        throw new Exception("License key already generated");
+                    }                   
                 }
                 else
                 {
@@ -91,6 +84,39 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             }
         }
 
+        //delete key
+        public async Task DeleteLicenseKey(string key)
+        {
+            try
+            {
+                var licenseKey = await _context.License_keys.FirstOrDefaultAsync(l => l.Key_name == key);
+
+                if (licenseKey != null)
+                {
+                    _context.License_keys.Remove(licenseKey);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    throw new KeyNotFoundException("License key not found");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error deleting license key", ex);
+            }
+
+        }
+
+//////////////////////////Himasha's part/////////////////////////////////////////////////
+ 
+
+
+
+
+
+
+        //decode key
         public async Task<string> DecodeLicenseKeyByRequestId(int requestId)
         {
             try

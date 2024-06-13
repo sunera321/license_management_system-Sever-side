@@ -29,7 +29,7 @@ namespace license_management_system_Sever_side.Controllers
         public async Task<IActionResult> AddModule(ModuleDto module)
         {
             await _moduleSerives.AddModule(module);
-            return Ok();
+            return Ok("add module");
         }
 
         [HttpGet]
