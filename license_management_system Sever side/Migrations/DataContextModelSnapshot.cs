@@ -215,7 +215,6 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnName("features");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("image path");
@@ -232,12 +231,7 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("name");
 
-                    b.Property<int?>("RequestKeyRequestID")
-                        .HasColumnType("int");
-
                     b.HasKey("ModulesId");
-
-                    b.HasIndex("RequestKeyRequestID");
 
                     b.ToTable("Modules");
                 });
@@ -427,13 +421,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.Navigation("RequestKey");
                 });
 
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Modules", b =>
-                {
-                    b.HasOne("license_management_system_Sever_side.Models.Entities.RequestKey", null)
-                        .WithMany("Modules")
-                        .HasForeignKey("RequestKeyRequestID");
-                });
-
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>
                 {
                     b.HasOne("license_management_system_Sever_side.Models.Entities.EndClient", "EndClient")
@@ -483,8 +470,6 @@ namespace license_management_system_Sever_side.Migrations
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>
                 {
                     b.Navigation("License_key");
-
-                    b.Navigation("Modules");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.FinaceManager", b =>

@@ -5,7 +5,7 @@
 namespace license_management_system_Sever_side.Migrations
 {
     /// <inheritdoc />
-    public partial class New2 : Migration
+    public partial class New : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

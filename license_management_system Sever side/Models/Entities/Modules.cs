@@ -17,7 +17,7 @@ namespace license_management_system_Sever_side.Models.Entities
 
         [Column("image path"), MaxLength(100)]
         [DisplayName("Image Path")]
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
         [Column("created data")]
         [DisplayName("Created Data")]

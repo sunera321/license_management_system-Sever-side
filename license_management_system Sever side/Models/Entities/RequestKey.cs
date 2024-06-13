@@ -62,9 +62,9 @@ namespace license_management_system_Sever_side.Models.Entities
         // Navigation property back to LicenseKey
         
         public virtual PartnerManager? PartnerManager { get; set; }
-        [JsonIgnore]
+       /* [JsonIgnore]
         public ICollection<Modules> Modules { get; set; }
-        [JsonIgnore]
+        [JsonIgnore]*/
 
         public License_key? License_key { get; set; }
 
