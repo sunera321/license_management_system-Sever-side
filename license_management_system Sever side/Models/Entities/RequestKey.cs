@@ -22,12 +22,12 @@ namespace license_management_system_Sever_side.Models.Entities
         [Column("status_finance_mgt")]
         [DisplayName("Finance Manager Status")]
 
-        
-        public bool isFinanceApproval { get; set; } 
-        
+
+        public bool isFinanceApproval { get; set; }
+
         [Column("status_Partner_mgt")]
         [DisplayName("Partner Manager Status")]
-        
+
         public bool isPartnerApproval { get; set; }
 
 
@@ -48,23 +48,22 @@ namespace license_management_system_Sever_side.Models.Entities
         [ForeignKey("PartnerId ")]
         public int PartnerId { get; set; }
         // Navigation property back to LicenseKey
-       
+
         public virtual Partner Partner { get; set; }
 
         [ForeignKey("FinaceManagerId")]
         public int? FinaceManagerId { get; set; }
         // Navigation property back to LicenseKey
-       
+
         public virtual FinaceManager FinaceManager { get; set; }
 
         [ForeignKey("PartnerManagerID")]
         public int? PartnerManagerID { get; set; }
         // Navigation property back to LicenseKey
-        
-        public virtual PartnerManager? PartnerManager { get; set; }
- 
-        [JsonIgnore]
 
+        public virtual PartnerManager? PartnerManager { get; set; }
+        [JsonIgnore]
+     
         public License_key? License_key { get; set; }
 
     }

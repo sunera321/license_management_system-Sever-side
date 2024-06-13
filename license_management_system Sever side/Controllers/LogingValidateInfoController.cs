@@ -70,10 +70,25 @@ namespace license_management_system_Sever_side.Controllers
                     dbLicenceKey.Key_Status = "Expired";
                     _context.SaveChanges();
                 }
-                keyLog.LogLicenseKey = serverdata.licenceKey;
-                keyLog.ClintId = dbLicenceKey.ClintId;
                 var EndClintDtl = await _context.EndClients.FirstOrDefaultAsync(c => c.Id == dbLicenceKey.ClintId);
                 var partner = await _context.Partners.FirstOrDefaultAsync(p => p.Id == EndClintDtl.PartnerId);
+
+                //call ClintIdByModulesController and cheak the modules eqlea the serverdata.SoftwareName
+                var modules = await _context.EndClientModules.Where(x => x.EndClientId == dbLicenceKey.ClintId).ToListAsync();
+                var moduleIds = modules.Select(x => x.ModuleId).ToList();
+                var moduleNames = new List<string>();
+                foreach (var moduleId in moduleIds)
+                {
+                    var moduleName = await _context.Modules.FirstOrDefaultAsync(x => x.ModulesId == moduleId);
+                    moduleNames.Add(moduleName.Modulename);
+                }
+                if (!moduleNames.Contains(serverdata.SoftwareName))
+                {
+                    Console.WriteLine("Don't have access this software");
+                    return Ok("Don't have access this software");
+                }
+                keyLog.LogLicenseKey = serverdata.licenceKey;
+                keyLog.ClintId = dbLicenceKey.ClintId;
                 keyLog.PartnerId = EndClintDtl.PartnerId;
                 keyLog.LogMacAddress = serverdata.macAddress;
                 keyLog.LogHostUrl = serverdata.hostUrl;

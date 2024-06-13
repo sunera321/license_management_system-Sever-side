@@ -1,5 +1,6 @@
 ﻿using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
+using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.EndClientSerives;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -47,11 +48,12 @@ namespace license_management_system_Sever_side.Controllers
             return Ok(endClient);
         }
 
-        [HttpGet("getEndClienthasKey")]
-        public async Task<IActionResult> GetEndClientWithKey()
+        [HttpGet("GetkeyHasEndClients")]
+        public async Task<IActionResult> GetkeyHasEndClients()
         {
-            var endClient = await _endClientService.GetkeyHasEndClients();
-            return Ok(endClient);
+            //get all the end clients that has licence key without use service file
+            var endClients = await _context.EndClients.Where(x => x.ActiveDate != null).ToListAsync();
+            return Ok(endClients);
         }
 
         [HttpGet("getEndClientById/{Id}")]
@@ -59,6 +61,31 @@ namespace license_management_system_Sever_side.Controllers
         {
             var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
             return Ok(endClient);
+        }
+        //edite end clint modules
+        [HttpPut("updateEndClientModules/{Id}")]
+        public async Task<IActionResult> UpdateEndClientModules(int Id, List<int> moduleIds)
+        {
+            var endClient = await _context.EndClients.FirstOrDefaultAsync(x => x.Id == Id);
+            if (endClient == null)
+            {
+                return NotFound();
+            }
+
+          
+            //add new modules to the end client
+            foreach (var moduleId in moduleIds)
+            {
+                var endClientModule = new EndClientModule
+                {
+                    EndClientId = Id,
+                    ModuleId = moduleId
+                };
+                _context.EndClientModules.Add(endClientModule);
+            }
+
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
