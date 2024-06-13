@@ -73,6 +73,9 @@ namespace license_management_system_Sever_side.Controllers
                 client.Website = model.Website;
             }
 
+
+
+
             // Save changes to the database
             await _context.SaveChangesAsync();
 
@@ -123,8 +126,10 @@ namespace license_management_system_Sever_side.Controllers
             var result = await _request_key.RejectPartnerManagement(requestId, rejectionReason);
             return result ? NoContent() : NotFound();
         }
-    
+
+
+
+
 
     }
-
 }
