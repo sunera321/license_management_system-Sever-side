@@ -94,8 +94,8 @@ namespace license_management_system_Sever_side.Controllers
                 keyLog.LogHostUrl = serverdata.hostUrl;
                 keyLog.ClintEmail= EndClintDtl.Email;
                 keyLog.ClintName = EndClintDtl.Name;
-                keyLog.PartnerEmail= partner.Name;
-                keyLog.PartnerName = partner.Email;
+                keyLog.PartnerEmail= partner.Email;
+                keyLog.PartnerName = partner.Name;
                 if (dbLicenceKey.MacAddress != serverdata.macAddress)
                 {
                     keyLog.StatusCode = "Invalid Mac Address";

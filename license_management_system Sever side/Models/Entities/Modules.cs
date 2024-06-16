@@ -15,7 +15,7 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Name")]
         public string Modulename { get; set; }
 
-        [Column("image path"), MaxLength(100)]
+        [Column("image path"), MaxLength(1000)]
         [DisplayName("Image Path")]
         public string? ImagePath { get; set; }
 
@@ -30,6 +30,10 @@ namespace license_management_system_Sever_side.Models.Entities
         [Column("module description"), MaxLength(100)]
         [DisplayName("Module Description")]
         public string ModuleDescription { get; set; }
+
+        [Column ("codule Cost"), MaxLength(30)]
+        [DisplayName("Module Cost")]
+        public float ModuleCost { get; set; }
 
         // Navigation property for many-to-many relationship
         public virtual ICollection<EndClientModule> EndClientModules { get; set; } = new List<EndClientModule>();
