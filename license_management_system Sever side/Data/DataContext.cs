@@ -25,7 +25,7 @@ namespace license_management_system_Sever_side.Data
         public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set;}
         public DbSet<EndClientModule> EndClientModules { get; set; }
 
-
+     
 
 
 

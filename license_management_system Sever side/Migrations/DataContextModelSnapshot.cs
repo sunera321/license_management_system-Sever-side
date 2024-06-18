@@ -285,6 +285,11 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("module description");
 
+                    b.Property<float>("Modulecost")
+                        .HasMaxLength(100)
+                        .HasColumnType("real")
+                        .HasColumnName("codule Cost");
+
                     b.Property<string>("Modulename")
                         .IsRequired()
                         .HasMaxLength(30)
