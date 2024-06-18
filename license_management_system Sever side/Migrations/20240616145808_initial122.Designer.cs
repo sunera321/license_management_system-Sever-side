@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240616145808_initial122")]
+    partial class initial122
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,11 +288,6 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("module description");
 
-                    b.Property<float>("Modulecost")
-                        .HasMaxLength(100)
-                        .HasColumnType("real")
-                        .HasColumnName("codule Cost");
-
                     b.Property<string>("Modulename")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -299,32 +297,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.HasKey("ModulesId");
 
                     b.ToTable("Modules");
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Notifications", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("text");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("title");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>
