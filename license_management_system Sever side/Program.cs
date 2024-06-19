@@ -40,6 +40,7 @@ builder.Services.AddScoped<IRequestKeySerives, RequestKeySerives>();
 builder.Services.AddScoped<ILicenseKeyServices, LicenseKeyServices>();
 
 
+
 var app = builder.Build();
 
 

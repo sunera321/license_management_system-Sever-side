@@ -4,6 +4,7 @@ using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace license_management_system_Sever_side.Services.ModuleSerives
 {
     public class ModuleSerives : IModuleSerives
@@ -41,7 +42,19 @@ namespace license_management_system_Sever_side.Services.ModuleSerives
             _context.Modules.Update(moduleEntity);
             await _context.SaveChangesAsync();
         }
+        //get module statistics
+        public async Task<List<ModuleStatisticDTO>> GetModuleStatistics()
+        {
+            var query = @"SELECT a.name, COUNT(b.moduleId) AS total 
+                      FROM Modules a 
+                      INNER JOIN EndClientModules b ON a.id = b.moduleId 
+                      GROUP BY a.name;";
 
-      
+            var result = await _context.Set<ModuleStatisticDTO>()
+                                       .FromSqlRaw(query)
+                                       .ToListAsync();
+            return result;
+        }
+
     }
 }
