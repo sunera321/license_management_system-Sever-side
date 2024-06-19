@@ -42,6 +42,7 @@ builder.Services.AddScoped<ILicenseKeyServices, LicenseKeyServices>();
 builder.Services.AddScoped<INotificationsSerives, NotificationsSerives>();
 
 
+
 var app = builder.Build();
 
 

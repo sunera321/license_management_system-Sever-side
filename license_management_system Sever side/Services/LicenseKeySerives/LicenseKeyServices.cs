@@ -162,6 +162,15 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error decoding string", ex);
             }
         }
+        public async Task<List<ActivationStatisticDto>> GetActivationStatisticsAsync()
+        {
+            var query = "SELECT YEAR(activation_date) AS Year, MONTH(activation_date) AS Month, COUNT(*) AS Count  FROM License_keys WHERE key_status = 'Activated' GROUP BY YEAR(activation_date),  MONTH(activation_date) ORDER BY Year, Month;";
+            var result = await _context.Set<ActivationStatisticDto>()
+                                       .FromSqlRaw(query)
+                                       .ToListAsync();
+            return result;
+
+        }
         /* private string HashString(string input)
          {
              // Hash the input string using SHA256 algorithm
@@ -176,6 +185,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                  return builder.ToString();
              }
          }*/
+
     }
 }
 
