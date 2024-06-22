@@ -30,6 +30,10 @@ namespace license_management_system_Sever_side.Models.Entities
 
         public bool isPartnerApproval { get; set; }
 
+        [Column("issued")]
+        [DisplayName("Key issued")]
+        public bool issued { get; set; } = false;
+
 
         [Column("comment_finace_mgt"), MaxLength(50)]
         [DisplayName("Finace Manager Comment")]
@@ -44,6 +48,7 @@ namespace license_management_system_Sever_side.Models.Entities
         public int EndClientId { get; set; }
         // Navigation property back to EndClient
         public virtual EndClient EndClient { get; set; }
+
 
         [ForeignKey("PartnerId ")]
         public int PartnerId { get; set; }
