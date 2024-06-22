@@ -77,7 +77,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
                         ClintName = endClient.Name,
-                        MacAddress = endClient.MacAddress
+                        MacAddress = endClient.MacAddress,
+                        HostUrl = endClient.HostUrl
                     };
 
                     _context.License_keys.Add(license);
