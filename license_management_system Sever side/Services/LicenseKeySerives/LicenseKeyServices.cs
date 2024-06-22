@@ -157,6 +157,16 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 return builder.ToString();
             }
         }
+        public async Task<List<ActivationStatisticDto>> GetActivationStatisticsAsync()
+        {
+            var query = "SELECT YEAR(activation_date) AS Year, MONTH(activation_date) AS Month, COUNT(*) AS Count  FROM License_keys WHERE key_status = 'Activated' GROUP BY YEAR(activation_date),  MONTH(activation_date) ORDER BY Year, Month;";
+            var result = await _context.Set<ActivationStatisticDto>()
+                                       .FromSqlRaw(query)
+                                       .ToListAsync();
+            return result;
+
+        }
 
     }
+
 }

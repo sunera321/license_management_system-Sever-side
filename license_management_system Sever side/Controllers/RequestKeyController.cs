@@ -129,7 +129,20 @@ namespace license_management_system_Sever_side.Controllers
 
 
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRequestKey(int id)
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(id);
+            if (requestKey == null)
+            {
+                return NotFound();
+            }
 
+            _context.RequestKeys.Remove(requestKey);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
     }
 }
