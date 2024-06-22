@@ -66,18 +66,19 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                     string combinedData = email + macAddress + hostUrl;
                     string hashedKey = NormalHash(combinedData);
 
-                    string Doublehashed = HashString(hashedKey);
+                    //string Doublehashed = HashString(hashedKey);
 
                     var license = new License_key
                     {
-                        Key_name = Doublehashed,
+                        Key_name = hashedKey,
                         ActivationDate = DateTime.Now,
                         DeactivatedDate = DateTime.Now.AddDays(requestKey.NumberOfDays),
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
                         ClintName = endClient.Name,
-                        MacAddress = endClient.MacAddress
+                        MacAddress = endClient.MacAddress,
+                        HostUrl = endClient.HostUrl
                     };
 
                     _context.License_keys.Add(license);

@@ -68,6 +68,12 @@ namespace license_management_system_Sever_side.Controllers
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+        [HttpDelete("{clientId}")]
+        public async Task<IActionResult> DeleteModuleByClientId(int clientId)
+        {
+            await _moduleSerives.DeleteModuleByClientId(clientId);
+            return Ok();
+        }
 
     }
 }
