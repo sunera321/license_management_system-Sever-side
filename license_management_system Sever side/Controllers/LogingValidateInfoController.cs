@@ -67,8 +67,14 @@ namespace license_management_system_Sever_side.Controllers
                
                if(dbLicenceKey.DeactivatedDate < DateTime.Now)
                 {
-                    dbLicenceKey.Key_Status = "Expired";
-                    _context.SaveChanges();
+                    if (dbLicenceKey.Key_Status != "Expired")
+                    {
+                        dbLicenceKey.Key_Status = "Expired";
+                        _context.SaveChanges();
+                        Console.WriteLine("Expireddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+                    }
+                   
+                    return Ok("Expired");
                 }
                 var EndClintDtl = await _context.EndClients.FirstOrDefaultAsync(c => c.Id == dbLicenceKey.ClintId);
                 var partner = await _context.Partners.FirstOrDefaultAsync(p => p.Id == EndClintDtl.PartnerId);
