@@ -112,6 +112,12 @@ namespace license_management_system_Sever_side.Controllers
             var result = await _request_key.SetPartnerApproval(id);
             return result ? NoContent() : NotFound();
         }
+        [HttpPatch("{id}/SetIssueTrue")]
+        public async Task<IActionResult> SetIssue(int id)
+        {
+            var result = await _request_key.SetIssue(id);
+            return result ? NoContent() : NotFound();
+        }
 
         [HttpPatch("{requestId}/RejectFianceMgt")]
         public async Task<IActionResult> RejectFinanceManagement(int requestId, [FromBody] string rejectionReason)
@@ -143,6 +149,7 @@ namespace license_management_system_Sever_side.Controllers
 
             return NoContent();
         }
+        
 
     }
 }

@@ -60,6 +60,17 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> SetIssue(int id)
+        {
+            var client = await _context.RequestKeys.FindAsync(id);
+            if (client == null)
+                return false;
+
+            client.issued = true;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<bool> RejectFinanceManagement(int requestId, string rejectionReason)
         {
@@ -86,7 +97,7 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
             await _context.SaveChangesAsync();
             return true;
         }
+       
 
-
-    }
+        }
 }

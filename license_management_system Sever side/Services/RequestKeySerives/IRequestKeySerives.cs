@@ -10,6 +10,7 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
         //public Task<IEnumerable<RequestKeyDto>> GetAllRequestKeysWithEndClientDetails();
         public Task<bool> SetFinanceApproval(int id);
         public Task<bool> SetPartnerApproval(int id);
+        public Task<bool> SetIssue(int id);
         public Task<bool> RejectFinanceManagement(int requestId, string rejectionReason);
         public Task<bool> RejectPartnerManagement(int requestId, string rejectionReason);
 
