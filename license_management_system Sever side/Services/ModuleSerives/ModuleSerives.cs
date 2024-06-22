@@ -56,5 +56,17 @@ namespace license_management_system_Sever_side.Services.ModuleSerives
             return result;
         }
 
+        public async Task DeleteModuleByClientId(int clientId)
+        {
+            var endClientModules = await _context.EndClientModules
+                .Where(ecm => ecm.EndClientId == clientId)
+                .ToListAsync();
+
+            if (endClientModules.Any())
+            {
+                _context.EndClientModules.RemoveRange(endClientModules);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

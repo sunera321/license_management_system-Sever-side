@@ -97,7 +97,24 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
             await _context.SaveChangesAsync();
             return true;
         }
-       
+        public async Task<bool> DeleteRequestKeyAsync(int id) 
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(id);
+            if (requestKey == null)
+                return false;
 
+            _context.RequestKeys.Remove(requestKey);
+            await _context.SaveChangesAsync();
+            return true;
         }
+        public async Task<RequestKeyDto> GetRequestKeyByIdAsync(int id)  // Implement this method
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(id);
+            if (requestKey == null)
+                return null;
+
+            return _mapper.Map<RequestKeyDto>(requestKey);
+        }
+
+    }
 }
