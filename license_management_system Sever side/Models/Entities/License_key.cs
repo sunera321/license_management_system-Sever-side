@@ -48,6 +48,11 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Clint Id")]
         public int? ClintId { get; set; }
 
+        [Column ("Clint Name")]
+        [DisplayName("Clint Name")]
+        public string ClintName { get; set;}
+
+
 
         [ForeignKey("RequestId")]
         public int RequestId { get; set; }

@@ -17,5 +17,9 @@ namespace license_management_system_Sever_side.Models.Entities
         [Column("text"), MaxLength(1000)]
         [DisplayName("Text")]
         public string Text { get; set; }
+
+        [Column("date")]
+        [DisplayName("Date")]
+        public DateTime Date { get; set; }=DateTime.Now;
     }
 }
