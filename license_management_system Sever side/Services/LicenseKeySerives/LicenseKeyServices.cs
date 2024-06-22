@@ -76,6 +76,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
+                        ClintName = endClient.Name,
                         MacAddress = endClient.MacAddress
                     };
 
