@@ -61,12 +61,12 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                     string email = endClient.Email;
                     string macAddress = endClient.MacAddress;
                     string hostUrl = endClient.HostUrl;
-                    // int ModuleID = (int)endClient.EndClientModules;
+                    string time = DateTime.Now.ToString();
 
-                    string combinedData = email + macAddress + hostUrl;
+                    string combinedData = email + macAddress + hostUrl+time;
                     string hashedKey = NormalHash(combinedData);
 
-                    //string Doublehashed = HashString(hashedKey);
+                  
 
                     var license = new License_key
                     {
