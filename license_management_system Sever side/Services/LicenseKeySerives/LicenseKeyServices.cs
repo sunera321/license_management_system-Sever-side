@@ -80,8 +80,12 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         MacAddress = endClient.MacAddress,
                         HostUrl = endClient.HostUrl
                     };
+                    //change endclint table ActivationDate and DeactivatedDate
+                    endClient.ActiveDate = DateTime.Now;
+                    endClient.ExpireDate = DateTime.Now.AddDays(requestKey.NumberOfDays);
 
                     _context.License_keys.Add(license);
+                    _context.EndClients.Update(endClient);
                     await _context.SaveChangesAsync();
 
                     return hashedKey;

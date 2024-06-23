@@ -1,12 +1,6 @@
-﻿using license_management_system_Sever_side.Data;
-using license_management_system_Sever_side.Models;
-using license_management_system_Sever_side.Models.DTOs;
-using license_management_system_Sever_side.Models.Entities;
+﻿using license_management_system_Sever_side.Models.DTOs;
+using license_management_system_Sever_side.Services.ActivateKeySerives;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Linq;
-using System.Text;
 
 namespace license_management_system_Sever_side.Controllers
 {
@@ -14,61 +8,23 @@ namespace license_management_system_Sever_side.Controllers
     [ApiController]
     public class ActivateKeyController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IActivateKeySerives _activateKeyService;
 
-        public ActivateKeyController(DataContext context)
+        public ActivateKeyController(IActivateKeySerives activateKeyService)
         {
-            _context = context;
+            _activateKeyService = activateKeyService;
         }
-      
 
         [HttpPost]
-        public IActionResult ActivateLicnseKey(ActivateKeyDot ValidetKey)
+        public IActionResult ActivateLicenseKey(ActivateKeyDot validetKey)
         {
-            if (ValidetKey.Clint_License_Key == null)
+            if (validetKey.Clint_License_Key == null)
             {
                 return BadRequest();
             }
-            ActivateKeyDot activateKey = new ActivateKeyDot();
-            activateKey.Clint_License_Key = ValidetKey.Clint_License_Key;
 
-            License_key key = _context.License_keys.FirstOrDefault(c => c.Key_name == ValidetKey.Clint_License_Key);
-            if (key == null)
-            {
-                Console.WriteLine("Invalid Key");
-                
-                return BadRequest("Invalid Key");
-            }
-           
-            else {
-                if(key.DeactivatedDate > DateTime.Now)
-                {
-                    if (key.Key_Status == "Activated")
-                    {
-                        return Ok("Key Already Activated");
-                       
-                    }
-                    else
-                    {
-                        key.Key_Status = "Activated";
-                      
-                    }
-                }
-                else
-                {
-                    key.Key_Status = "Expired";
-                   
-                }
-            }
-
-
-            _context.SaveChanges();
-            return Ok(key.Key_Status);
-            
+            string result = _activateKeyService.ActivateLicnseKey(validetKey);
+            return Ok(result);
         }
-
-      
-
-
     }
 }
