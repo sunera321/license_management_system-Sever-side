@@ -15,8 +15,8 @@ namespace license_management_system_Sever_side.Models.Entities
     }*/
     public class License_key
     {
-        internal string key_status;
 
+        internal string key_status;
         [Key, Column("Key_name"), MaxLength(150)]
         [DisplayName("Key")]
         public string? Key_name { get; set; }
