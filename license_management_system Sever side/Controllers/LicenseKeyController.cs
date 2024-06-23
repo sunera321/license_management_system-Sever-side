@@ -1,5 +1,6 @@
 ﻿using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
+using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.LicenseKeyServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -58,7 +59,26 @@ namespace license_management_system_Sever_side.Controllers
             }
         }
 
+        //Activation statistics
+        [HttpGet("statistics")]
+        public async Task<IActionResult> GetActivationStatisticsAsync()
+        {
+            try
+            {
+                var statistics = await _licenseKeyServices.GetActivationStatisticsAsync();
+                return Ok(statistics);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-    }
+
+
+
+
+
+            }
 
 }
