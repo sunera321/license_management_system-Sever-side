@@ -44,8 +44,21 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
                 return ("Client email not found.");
             }
 
-
-
+            //call clintidByModulesController to get modules name has been assigned to the this  client
+            var clientModules = _context.EndClientModules.Where(x => x.EndClientId == client.Id).ToList();
+            var moduleIds = clientModules.Select(x => x.ModuleId).ToList();
+            var moduleNames = new List<string>();
+            foreach (var moduleId in moduleIds)
+            {
+                var moduleName = _context.Modules.FirstOrDefault(x => x.ModulesId == moduleId);
+                moduleNames.Add(moduleName.Modulename);
+            }
+            //print the modules names
+            foreach (var moduleName in moduleNames)
+            {
+                Console.WriteLine(moduleName);
+            }
+            
 
 
             string templatePath = "Services\\EmailServices\\KeyEmail\\email-template.html";
@@ -56,6 +69,9 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
             emailTemplate = emailTemplate.Replace("{{activate}}", licenseKey.ActivationDate.ToString());
             emailTemplate = emailTemplate.Replace("{{expare}}", licenseKey.DeactivatedDate.ToString());
             emailTemplate = emailTemplate.Replace("{{LicenseKey}}", request.LicenseKey);
+            //REPLACE THE   MODULES NAMES list row by row
+            emailTemplate = emailTemplate.Replace("{{Modules}}", string.Join("<br>", moduleNames));
+           
           
 
             var email = new MimeMessage();

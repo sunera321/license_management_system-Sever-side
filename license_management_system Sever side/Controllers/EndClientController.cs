@@ -44,7 +44,7 @@ namespace license_management_system_Sever_side.Controllers
         [HttpGet("getEndClient")]
         public async Task<IActionResult> GetEndClient()
         {
-            var endClient = await _endClientService.GetAllEndClients();
+            var endClient = await _context.EndClients.ToListAsync();
             return Ok(endClient);
         }
 

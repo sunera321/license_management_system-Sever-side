@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240618113546_initial116")]
+    partial class initial116
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,34 +24,6 @@ namespace license_management_system_Sever_side.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.DTOs.ActivationStatisticDto", b =>
-                {
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.ToTable((string)null);
-
-                    b.ToView(null, (string)null);
-                });
-
-            modelBuilder.Entity("license_management_system_Sever_side.Models.DTOs.ModuleStatisticDTO", b =>
-                {
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
-
-                    b.ToTable("ModuleStatistics");
-                });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.ClientServerInfo", b =>
                 {
@@ -188,8 +163,8 @@ namespace license_management_system_Sever_side.Migrations
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
                 {
                     b.Property<string>("Key_name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("Key_name");
 
                     b.Property<DateTime>("ActivationDate")
@@ -199,11 +174,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int?>("ClintId")
                         .HasColumnType("int")
                         .HasColumnName("Clint Id");
-
-                    b.Property<string>("ClintName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Clint Name");
 
                     b.Property<DateTime>("DeactivatedDate")
                         .HasColumnType("datetime2")
@@ -338,10 +308,6 @@ namespace license_management_system_Sever_side.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("date");
-
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -400,10 +366,6 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<bool>("isPartnerApproval")
                         .HasColumnType("bit")
                         .HasColumnName("status_Partner_mgt");
-
-                    b.Property<bool>("issued")
-                        .HasColumnType("bit")
-                        .HasColumnName("issued");
 
                     b.HasKey("RequestID");
 

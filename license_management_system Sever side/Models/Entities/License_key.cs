@@ -15,7 +15,9 @@ namespace license_management_system_Sever_side.Models.Entities
     }*/
     public class License_key
     {
-        [Key, Column("Key_name"), MaxLength(50)]
+
+        internal string key_status;
+        [Key, Column("Key_name"), MaxLength(150)]
         [DisplayName("Key")]
         public string? Key_name { get; set; }
 
@@ -45,6 +47,11 @@ namespace license_management_system_Sever_side.Models.Entities
         [Column("Clint Id")]
         [DisplayName("Clint Id")]
         public int? ClintId { get; set; }
+
+        [Column ("Clint Name")]
+        [DisplayName("Clint Name")]
+        public string ClintName { get; set;}
+
 
 
         [ForeignKey("RequestId")]
