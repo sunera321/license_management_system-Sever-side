@@ -30,8 +30,8 @@ namespace license_management_system_Sever_side.Data
 
         public DbSet<ActivationStatisticDto> ActivationStatistics { get; set; }
 
-
-
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ClientLicenseInfo> ClientLicenseInfos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,8 @@ namespace license_management_system_Sever_side.Data
             modelBuilder.Entity<ModuleStatisticDTO>().HasNoKey();
 
             modelBuilder.Entity<ActivationStatisticDto>().HasNoKey().ToView(null);
+
+            modelBuilder.Entity<ClientLicenseInfo>().HasNoKey();
 
 
         }

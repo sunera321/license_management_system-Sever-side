@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Text;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace license_management_system_Sever_side.Services.LicenseKeyServices
 {
@@ -170,6 +171,15 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                                        .ToListAsync();
             return result;
 
+        }
+        
+        public async Task<List<ClientLicenseInfo>> GetClientLicenseInfoAsync()
+        {
+            var query = " SELECT ec.id  AS Id , ec.name AS Name , ec.email AS Email, lk.activation_date  AS ActivationDate,lk.deactivated_Date AS DeactivatedDate,lk.key_status AS KeyStatus FROM EndClients ec  JOIN license_keys lk ON ec.id = lk.[Clint Id];";
+            var result = await _context.Set < ClientLicenseInfo>()
+                                       .FromSqlRaw(query)
+                                       .ToListAsync();
+            return result;
         }
         /* private string HashString(string input)
          {

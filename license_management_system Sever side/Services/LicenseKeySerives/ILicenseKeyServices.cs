@@ -11,7 +11,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
         public Task<string> DecodeLicenseKeyByRequestId(int requestId);
 
        public Task<List<ActivationStatisticDto>> GetActivationStatisticsAsync();
-       
+
+        public Task<List<ClientLicenseInfo>> GetClientLicenseInfoAsync();
     }
 
 }
