@@ -60,7 +60,12 @@ namespace license_management_system_Sever_side.Controllers
                 var modules = await _context.Modules.ToListAsync();
                 return Ok(modules);
             }
-            catch (Exception ex)
+            catch
+            {
+                return StatusCode(500, "Internal server error: ");
+            }
+          }
+            
 
         // New endpoint to get module statistics
         [HttpGet("statistics")]
@@ -90,6 +95,7 @@ namespace license_management_system_Sever_side.Controllers
             }
 
             return Ok(module);
+        }
 
         [HttpDelete("{clientId}")]
         public async Task<IActionResult> DeleteModuleByClientId(int clientId)
