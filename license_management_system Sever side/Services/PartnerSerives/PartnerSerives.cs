@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿    using AutoMapper;
 using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +18,17 @@ namespace license_management_system_Sever_side.Services.PartnerSerives
         }
 
         // add new partner
-        public async Task AddPartner(Partner partner)
+        public async Task<Partner> AddPartner(Partner partner)
         {
-            _context.Partners.Add(partner);
+            var partnerExist = await _context.Partners.FirstOrDefaultAsync(x => x.Email == partner.Email);
+            if (partnerExist != null)
+            {
+                throw new Exception("Partner already exist");
+            }
+            await _context.Partners.AddAsync(partner);
             await _context.SaveChangesAsync();
+            return (partner);
+          
         }
 
         //get all partners
