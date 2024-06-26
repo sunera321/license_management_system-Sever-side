@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using license_management_system_Sever_side.Data;
 
@@ -11,9 +12,11 @@ using license_management_system_Sever_side.Data;
 namespace license_management_system_Sever_side.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240621100638_initial117")]
+    partial class initial117
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,8 +191,8 @@ namespace license_management_system_Sever_side.Migrations
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
                 {
                     b.Property<string>("Key_name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("Key_name");
 
                     b.Property<DateTime>("ActivationDate")
@@ -317,11 +320,6 @@ namespace license_management_system_Sever_side.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("module description");
-
-                    b.Property<float>("Modulecost")
-                        .HasMaxLength(100)
-                        .HasColumnType("real")
-                        .HasColumnName("codule Cost");
 
                     b.Property<string>("Modulename")
                         .IsRequired()

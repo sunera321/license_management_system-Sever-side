@@ -51,6 +51,7 @@ namespace license_management_system_Sever_side.Controllers
             return Ok();
         }
 
+
         [HttpGet("modules")]
         public async Task<IActionResult> GetModules()
         {
@@ -60,10 +61,23 @@ namespace license_management_system_Sever_side.Controllers
                 return Ok(modules);
             }
             catch (Exception ex)
+
+        // New endpoint to get module statistics
+        [HttpGet("statistics")]
+        public async Task<IActionResult> GetModuleStatistics()
+        {
+            try
+            {
+                var statistics = await _moduleSerives.GetModuleStatistics();
+                return Ok(statistics);
+            }
+            catch (System.Exception ex)
+
             {
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetModuleById(int id)
@@ -76,6 +90,13 @@ namespace license_management_system_Sever_side.Controllers
             }
 
             return Ok(module);
+
+        [HttpDelete("{clientId}")]
+        public async Task<IActionResult> DeleteModuleByClientId(int clientId)
+        {
+            await _moduleSerives.DeleteModuleByClientId(clientId);
+            return Ok();
+
         }
 
     }
