@@ -26,10 +26,9 @@ namespace license_management_system_Sever_side.Data
         public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set;}
         public DbSet<EndClientModule> EndClientModules { get; set; }
         public DbSet<Notifications> Notifications { get; set; }
-
         public DbSet<ModuleStatisticDTO> ModuleStatistics { get; set; }
-
         public DbSet<ActivationStatisticDto> ActivationStatistics { get; set; }
+
 
 
 
@@ -58,6 +57,9 @@ namespace license_management_system_Sever_side.Data
                     .HasOne(ecm => ecm.Module)
                     .WithMany(m => m.EndClientModules)
                     .HasForeignKey(ecm => ecm.ModuleId);
+                modelBuilder.Entity<User>()
+                    .HasIndex(u => u.UserId)
+                    .IsUnique();
 
             // Configure ModuleStatisticDTO  and ActivationStatisticDto as a keyless entity
             modelBuilder.Entity<ModuleStatisticDTO>().HasNoKey();
