@@ -165,7 +165,7 @@ namespace license_management_system_Sever_side.Services.LogingValidateInfoSerive
                         }
                         else
                         {
-                            keyLog.StatusCode = "Valid_Loging";
+                            keyLog.StatusCode = "Valid Loging";
                             Console.WriteLine("Valid Loging");
                             try
                             {
