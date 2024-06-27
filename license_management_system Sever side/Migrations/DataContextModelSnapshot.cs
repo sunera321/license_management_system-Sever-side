@@ -22,6 +22,34 @@ namespace license_management_system_Sever_side.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("license_management_system_Sever_side.Models.DTOs.ActivationStatisticDto", b =>
+                {
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
+                });
+
+            modelBuilder.Entity("license_management_system_Sever_side.Models.DTOs.ModuleStatisticDTO", b =>
+                {
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.ToTable("ModuleStatistics");
+                });
+
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.ClientServerInfo", b =>
                 {
                     b.Property<string>("MacAddress")
@@ -160,8 +188,8 @@ namespace license_management_system_Sever_side.Migrations
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.License_key", b =>
                 {
                     b.Property<string>("Key_name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
                         .HasColumnName("Key_name");
 
                     b.Property<DateTime>("ActivationDate")
@@ -171,6 +199,11 @@ namespace license_management_system_Sever_side.Migrations
                     b.Property<int?>("ClintId")
                         .HasColumnType("int")
                         .HasColumnName("Clint Id");
+
+                    b.Property<string>("ClintName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Clint Name");
 
                     b.Property<DateTime>("DeactivatedDate")
                         .HasColumnType("datetime2")
@@ -270,15 +303,20 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnName("features");
 
                     b.Property<string>("ImagePath")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
                         .HasColumnName("image path");
 
                     b.Property<string>("ModuleDescription")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("module description");
+
+                    b.Property<float>("Modulecost")
+                        .HasMaxLength(100)
+                        .HasColumnType("real")
+                        .HasColumnName("codule Cost");
 
                     b.Property<string>("Modulename")
                         .IsRequired()
@@ -289,6 +327,36 @@ namespace license_management_system_Sever_side.Migrations
                     b.HasKey("ModulesId");
 
                     b.ToTable("Modules");
+                });
+
+            modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.Notifications", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnName("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("license_management_system_Sever_side.Models.Entities.RequestKey", b =>
@@ -333,6 +401,10 @@ namespace license_management_system_Sever_side.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("status_Partner_mgt");
 
+                    b.Property<bool>("issued")
+                        .HasColumnType("bit")
+                        .HasColumnName("issued");
+
                     b.HasKey("RequestID");
 
                     b.HasIndex("EndClientId");
@@ -366,7 +438,14 @@ namespace license_management_system_Sever_side.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Users");
 

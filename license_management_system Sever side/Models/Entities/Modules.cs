@@ -15,21 +15,26 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Name")]
         public string Modulename { get; set; }
 
-        [Column("image path"), MaxLength(100)]
+        [Column("image path"), MaxLength(1000)]
         [DisplayName("Image Path")]
         public string? ImagePath { get; set; }
 
-        [Column("created data")]
-        [DisplayName("Created Data")]
+         [Column("created data")]
+         [DisplayName("Created Data")]
         public DateTime CreatedData { get; set; } = System.DateTime.Now;
+
 
         [Column("features"), MaxLength(100)]
         [DisplayName("Features")]
         public string Features { get; set; }
 
-        [Column("module description"), MaxLength(100)]
+        [Column("module description"), MaxLength(5000)]
         [DisplayName("Module Description")]
         public string ModuleDescription { get; set; }
+
+        [Column("codule Cost"), MaxLength(100)]
+        [DisplayName("Cost of Module")]
+        public float Modulecost { get; set; }
 
         // Navigation property for many-to-many relationship
         public virtual ICollection<EndClientModule> EndClientModules { get; set; } = new List<EndClientModule>();

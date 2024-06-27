@@ -24,6 +24,7 @@ namespace license_management_system_Sever_side.Models.DTOs
 
 
         public int? ModuleId { get; set; }
+        public Boolean issued { get; set; }
 
     }
 }

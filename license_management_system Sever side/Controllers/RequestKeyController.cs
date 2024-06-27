@@ -112,6 +112,12 @@ namespace license_management_system_Sever_side.Controllers
             var result = await _request_key.SetPartnerApproval(id);
             return result ? NoContent() : NotFound();
         }
+        [HttpPatch("{id}/SetIssueTrue")]
+        public async Task<IActionResult> SetIssue(int id)
+        {
+            var result = await _request_key.SetIssue(id);
+            return result ? NoContent() : NotFound();
+        }
 
         [HttpPatch("{requestId}/RejectFianceMgt")]
         public async Task<IActionResult> RejectFinanceManagement(int requestId, [FromBody] string rejectionReason)
@@ -129,6 +135,34 @@ namespace license_management_system_Sever_side.Controllers
 
 
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRequestKey(int id)
+        {
+            var requestKey = await _request_key.GetRequestKeyByIdAsync(id);
+            if (requestKey == null)
+            {
+                return NotFound();
+            }
+
+            bool result = await _request_key.DeleteRequestKeyAsync(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRequestKeyById(int id)
+        {
+            var requestKey = await _request_key.GetRequestKeyByIdAsync(id);
+            if (requestKey == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(requestKey);
+        }
 
 
     }
