@@ -33,6 +33,7 @@ namespace license_management_system_Sever_side.Services.EmailServices.ContectMai
 
             email.From.Add(MailboxAddress.Parse(config.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(request.To));
+            email.Subject = "hSenidBiz";
             email.Body = new TextPart(TextFormat.Html) { Text = EmailTem };
 
             using var smtp = new SmtpClient();
