@@ -34,6 +34,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddCors();
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IKeyEmailService, KeyEmailService>();
 builder.Services.AddScoped<IContectEmalService, ContectEmalService>();
 builder.Services.AddScoped<IEndClientService, EndClientService>();
