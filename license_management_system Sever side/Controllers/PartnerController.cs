@@ -19,6 +19,11 @@ namespace license_management_system_Sever_side.Controllers
         [HttpPost("addPartner")]
         public async Task<IActionResult> AddPartner(Partner partner)
         {
+            if (await _partnerSerives.PartnerUserIdExists(partner.UserId))
+            {
+                return BadRequest("A partner with this UserId already exists.");
+            }
+
             await _partnerSerives.AddPartner(partner);
             return Ok();
         }

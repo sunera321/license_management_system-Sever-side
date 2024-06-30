@@ -29,13 +29,11 @@ namespace license_management_system_Sever_side.Data
         public DbSet<ClientServerInfo> ClientServerInfos { get; set; }
         public DbSet<ClientServerSiteName> ClientServerSiteNames { get; set; }
         public DbSet<EndClientModule> EndClientModules { get; set; }
-
-
-
-
-
-
-
+        public DbSet<Notifications> Notifications { get; set; }
+        public DbSet<ModuleStatisticDTO> ModuleStatistics { get; set; }
+        public DbSet<ActivationStatisticDto> ActivationStatistics { get; set; }
+x        public DbSet<Review> Reviews { get; set; }
+        public DbSet<ClientLicenseInfo> ClientLicenseInfos { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,10 +51,14 @@ namespace license_management_system_Sever_side.Data
             modelBuilder.Entity<EndClientModule>()
                 .HasKey(ecm => new { ecm.EndClientId, ecm.ModuleId });
 
-            modelBuilder.Entity<EndClientModule>()
-                .HasOne(ecm => ecm.EndClient)
-                .WithMany(ec => ec.EndClientModules)
-                .HasForeignKey(ecm => ecm.EndClientId);
+                modelBuilder.Entity<EndClientModule>()
+                    .HasOne(ecm => ecm.Module)
+                    .WithMany(m => m.EndClientModules)
+                    .HasForeignKey(ecm => ecm.ModuleId);
+                modelBuilder.Entity<User>()
+                    .HasIndex(u => u.UserId)
+                    .IsUnique();
+
 
             modelBuilder.Entity<EndClientModule>()
                 .HasOne(ecm => ecm.Module)
@@ -155,6 +157,8 @@ namespace license_management_system_Sever_side.Data
 
             return modulePrices;
         }
+
+            modelBuilder.Entity<ClientLicenseInfo>().HasNoKey();
 
 
         public async Task<List<ModuleWiseRevenueDto>> GetModuleRevenue2024Async()
