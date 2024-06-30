@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using license_management_system_Sever_side.Data;
-using license_management_system_Sever_side.Models.DTOs; // Ensure DashboardDataDto is correctly placed in this namespace
-using license_management_system_Sever_side.Attributes; // Ensure DashboardDataDto is correctly placed in this namespace
+using license_management_system_Sever_side.Services.INDashboardServices; // Update this line
+using license_management_system_Sever_side.Models.DTOs;
+using license_management_system_Sever_side.Attributes;
 
 namespace license_management_system_Sever_side.Controllers
 {
@@ -10,11 +11,11 @@ namespace license_management_system_Sever_side.Controllers
     [ApiController]
     public class InDashboardController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IInDashboardService _inDashboardService;
 
-        public InDashboardController(DataContext context)
+        public InDashboardController(IInDashboardService inDashboardService)
         {
-            _context = context;
+            _inDashboardService = inDashboardService;
         }
 
         [HttpGet("getdashboarddata")]
@@ -22,7 +23,7 @@ namespace license_management_system_Sever_side.Controllers
         {
             try
             {
-                var dashboardData = await _context.GetDashboardDataAsync();
+                var dashboardData = await _inDashboardService.GetDashboardDataAsync();
                 if (dashboardData == null)
                 {
                     return NotFound();
@@ -35,18 +36,18 @@ namespace license_management_system_Sever_side.Controllers
             }
         }
 
-        [AuthorizeRole("3c5f0eea-412e-4d0a-9fde-849b9d3e5838", "7b449069-9d8e-4101-9b60-997be537120b","97111ac5-093b-41df-98ae-75ab8956e0d2")]
+        [AuthorizeRole("3c5f0eea-412e-4d0a-9fde-849b9d3e5838", "7b449069-9d8e-4101-9b60-997be537120b", "97111ac5-093b-41df-98ae-75ab8956e0d2")]
         [HttpGet("top-modules")]
         public async Task<ActionResult<List<ModuleRevenueDto>>> GetTopModules()
         {
             try
             {
-                var topModules = await _context.GetTop5ModulesByRevenueIn2024Async();
+                var topModules = await _inDashboardService.GetTop5ModulesByRevenueIn2024Async();
                 if (topModules == null || topModules.Count == 0)
                 {
                     return NotFound();
                 }
-                return Ok(topModules); // Returns HTTP 200 with the list of modules
+                return Ok(topModules);
             }
             catch (Exception ex)
             {
@@ -59,29 +60,30 @@ namespace license_management_system_Sever_side.Controllers
         {
             try
             {
-                var modulePrices = await _context.GetModulePricesByYearMonthAsync();
+                var modulePrices = await _inDashboardService.GetModulePricesByYearMonthAsync();
                 if (modulePrices == null || modulePrices.Count == 0)
                 {
                     return NotFound();
                 }
-                return Ok(modulePrices); // Returns HTTP 200 with module prices by year and month
+                return Ok(modulePrices);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
         [HttpGet("module-revenue-2024")]
         public async Task<ActionResult<List<ModuleWiseRevenueDto>>> GetModuleRevenue2024()
         {
             try
             {
-                var moduleRevenue = await _context.GetModuleRevenue2024Async();
+                var moduleRevenue = await _inDashboardService.GetModuleRevenue2024Async();
                 if (moduleRevenue == null || moduleRevenue.Count == 0)
                 {
                     return NotFound();
                 }
-                return Ok(moduleRevenue); // Returns HTTP 200 with the list of module revenue data
+                return Ok(moduleRevenue);
             }
             catch (Exception ex)
             {
