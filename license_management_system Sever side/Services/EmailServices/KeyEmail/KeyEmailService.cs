@@ -65,7 +65,7 @@ namespace license_management_system_Sever_side.Services.EmailServices.KeyEmail
             string emailTemplate = File.ReadAllText(templatePath);
 
             emailTemplate = emailTemplate.Replace("{{ClientName}}", client.Name);
-            emailTemplate = emailTemplate.Replace("{{id}", client.Id.ToString());
+            emailTemplate = emailTemplate.Replace("{{id}}", client.Id.ToString());
             emailTemplate = emailTemplate.Replace("{{activate}}", licenseKey.ActivationDate.ToString());
             emailTemplate = emailTemplate.Replace("{{expare}}", licenseKey.DeactivatedDate.ToString());
             emailTemplate = emailTemplate.Replace("{{LicenseKey}}", request.LicenseKey);

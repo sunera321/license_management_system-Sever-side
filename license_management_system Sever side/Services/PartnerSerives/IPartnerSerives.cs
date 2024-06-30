@@ -9,5 +9,6 @@ namespace license_management_system_Sever_side.Services.PartnerSerives
         public Task<IEnumerable<Partner>> GetAllPartners();
 
         public Task DeletePartner(int id);
+        public Task<bool> PartnerUserIdExists(string userId);
     }
 }
