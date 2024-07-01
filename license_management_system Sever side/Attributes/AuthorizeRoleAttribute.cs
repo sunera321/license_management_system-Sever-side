@@ -19,6 +19,10 @@ namespace license_management_system_Sever_side.Attributes
         {
             var roleIds = context.HttpContext.Request.Query["roleIds"].ToString().Split(',');
 
+            // Logging the roleIds to the console
+            Console.WriteLine("Role IDs from query: " + string.Join(", ", roleIds));
+            Console.WriteLine("Authorized role IDs: " + string.Join(", ", _roleIds));
+
             if (!_roleIds.Any(roleId => roleIds.Contains(roleId)))
             {
                 context.Result = new ForbidResult();
