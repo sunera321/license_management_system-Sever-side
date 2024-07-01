@@ -11,10 +11,12 @@ namespace license_management_system_Sever_side.Mappings
         {
             
             CreateMap<EndClient, AddEndClientDto>().ReverseMap();
+            CreateMap<EndClient, ControllPanalClientDto>().ReverseMap();
             CreateMap<RequestKey, RequestKeyDto>().ReverseMap();
             CreateMap<Modules, ModuleDto>().ReverseMap();
-
             CreateMap<License_key, License_keyDto>().ReverseMap();
+            CreateMap<Notifications, NotificationsDto>().ReverseMap();
+          
            
         }
     }

@@ -4,7 +4,7 @@ using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
+
 
 namespace license_management_system_Sever_side.Services.RequestKeySerives
 {
@@ -28,26 +28,93 @@ namespace license_management_system_Sever_side.Services.RequestKeySerives
             _context.RequestKeys.Add(requestKeyEntity);
             await _context.SaveChangesAsync();
         }
-        
+
         //get all request keys
-        
+
         public async Task<IEnumerable<RequestKeyDto>> GetAllrequestkeys()
         {
             var requestKeys = await _context.RequestKeys.ToListAsync();
             return _mapper.Map<List<RequestKeyDto>>(requestKeys);
         }
-       /* //Get All Requestkeys with Endclinet
-        public async Task<IEnumerable<RequestKeyDto>> GetAllRequestKeysWithEndClientDetails()
+
+        public async Task<bool> SetFinanceApproval(int id)
         {
-            var requestKeys = await _context.RequestKeys
-                                .Include(r => r.EndClient)
-                                .ToListAsync();
+            var client = await _context.RequestKeys.FindAsync(id);
+            if (client == null)
+                return false;
 
-            // Map the RequestKey entities to RequestKeyDto objects
-            var requestKeyDtos = _mapper.Map<List<RequestKeyDto>>(requestKeys);
+            client.isFinanceApproval = true;
 
-            return requestKeyDtos;
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
-        }*/
+        public async Task<bool> SetPartnerApproval(int id)
+        {
+            var client = await _context.RequestKeys.FindAsync(id);
+            if (client == null)
+                return false;
+
+            client.isPartnerApproval = true;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> SetIssue(int id)
+        {
+            var client = await _context.RequestKeys.FindAsync(id);
+            if (client == null)
+                return false;
+
+            client.issued = true;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RejectFinanceManagement(int requestId, string rejectionReason)
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(requestId);
+            if (requestKey == null)
+                return false;
+
+            requestKey.CommentFinaceMgt = rejectionReason;
+            requestKey.isFinanceApproval = false;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RejectPartnerManagement(int requestId, string rejectionReason)
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(requestId);
+            if (requestKey == null)
+                return false;
+
+            requestKey.CommentPartnerMgt = rejectionReason;
+            requestKey.isPartnerApproval = false;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> DeleteRequestKeyAsync(int id) 
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(id);
+            if (requestKey == null)
+                return false;
+
+            _context.RequestKeys.Remove(requestKey);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<RequestKeyDto> GetRequestKeyByIdAsync(int id)  // Implement this method
+        {
+            var requestKey = await _context.RequestKeys.FindAsync(id);
+            if (requestKey == null)
+                return null;
+
+            return _mapper.Map<RequestKeyDto>(requestKey);
+        }
+
     }
 }

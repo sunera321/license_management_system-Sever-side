@@ -1,5 +1,6 @@
 ﻿using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
+using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.LicenseKeyServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,12 +26,7 @@ namespace license_management_system_Sever_side.Controllers
             var licenseKey = await _context.License_keys.ToListAsync();
             return Ok(licenseKey);
         }
-        [HttpPost]
-        public async Task<IActionResult> AddLicenseKey(License_keyDto licenseKey)
-        {
-            await _licenseKeyServices.AddLicenseKey(licenseKey);
-            return Ok();
-        }
+      
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLicenseKey(string key)
@@ -62,6 +58,33 @@ namespace license_management_system_Sever_side.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //Activation statistics
+        [HttpGet("statistics")]
+        public async Task<IActionResult> GetActivationStatisticsAsync()
+        {
+            try
+            {
+                var statistics = await _licenseKeyServices.GetActivationStatisticsAsync();
+                return Ok(statistics);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("info")]
+        public async Task<ActionResult<ClientLicenseInfo>> GetLicenseInfo()
+        {
+            var info = await _licenseKeyServices.GetClientLicenseInfoAsync();
+            if (info == null) return NotFound();
+            return Ok(info);
+        }
+
+
+
+
 
 
     }

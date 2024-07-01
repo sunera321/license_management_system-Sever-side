@@ -46,6 +46,41 @@ namespace license_management_system_Sever_side.Controllers
             return Ok();
         }
 
+        // PATCH endpoint to update Client details
+        [HttpPatch("{clientId}")]
+        public async Task<IActionResult> UpdateClientDetails(int clientId, ClientUpdateDto model)
+        {
+            var client = await _context.EndClients.FindAsync(clientId);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            // Update client details
+            if (model.HostUrl != null)
+            {
+                client.HostUrl = model.HostUrl;
+            }
+
+            if (model.MackAddress != null)
+            {
+                client.MacAddress = model.MackAddress;
+            }
+
+            if (model.Website != null)
+            {
+                client.Website = model.Website;
+            }
+
+
+
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
         //get all request keys
         [HttpGet("getAllRequestKeys")]
@@ -54,7 +89,7 @@ namespace license_management_system_Sever_side.Controllers
             var requestKeys = await _request_key.GetAllrequestkeys();
             return Ok(requestKeys);
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestKey>>> GetAllRequestKeysWith()
         {
@@ -63,158 +98,72 @@ namespace license_management_system_Sever_side.Controllers
 
             return Ok(requestKeys);
         }
-        
-        // PATCH: api/PAfinanceTCH/5/SetFinanceTrue
+
         [HttpPatch("{id}/SetFinanceTrue")]
         public async Task<IActionResult> SetFinanceTrue(int id)
         {
-            var client = await _context.RequestKeys.FindAsync(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            client.isFinanceApproval = true;
-
-            _context.Entry(client).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var result = await _request_key.SetFinanceApproval(id);
+            return result ? NoContent() : NotFound();
         }
 
-        // PATCH: api/PAfinanceTCH/5/SetPartnerTrue
         [HttpPatch("{id}/SetPartnerTrue")]
         public async Task<IActionResult> SetPartnerTrue(int id)
         {
-            var client = await _context.RequestKeys.FindAsync(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            client.isPartnerApproval = true;
-
-            _context.Entry(client).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClientExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            var result = await _request_key.SetPartnerApproval(id);
+            return result ? NoContent() : NotFound();
+        }
+        [HttpPatch("{id}/SetIssueTrue")]
+        public async Task<IActionResult> SetIssue(int id)
+        {
+            var result = await _request_key.SetIssue(id);
+            return result ? NoContent() : NotFound();
         }
 
-        private bool ClientExists(int id)
+        [HttpPatch("{requestId}/RejectFianceMgt")]
+        public async Task<IActionResult> RejectFinanceManagement(int requestId, [FromBody] string rejectionReason)
         {
-            return _context.RequestKeys.Any(e => e.RequestID == id);
+            var result = await _request_key.RejectFinanceManagement(requestId, rejectionReason);
+            return result ? NoContent() : NotFound();
         }
 
-        // PATCH: api/RequestKey/{request_id}/Reject
-        [HttpPatch("{request_id}/RejectFianceMgt")]
-        public async Task<IActionResult> RejectRequest(int request_id, [FromBody] string rejectionReason)
+        [HttpPatch("{requestId}/RejectPartnerPart")]
+        public async Task<IActionResult> RejectPartnerManagement(int requestId, [FromBody] string rejectionReason)
         {
-            var requestKey = await _context.RequestKeys.FindAsync(request_id);
+            var result = await _request_key.RejectPartnerManagement(requestId, rejectionReason);
+            return result ? NoContent() : NotFound();
+        }
 
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRequestKey(int id)
+        {
+            var requestKey = await _request_key.GetRequestKeyByIdAsync(id);
             if (requestKey == null)
             {
                 return NotFound();
             }
 
-            // Update the CommentFinaceMgt column with the rejection reason
-            requestKey.CommentFinaceMgt = rejectionReason;
-
-            // Update the Partner Manager status to Rejected
-            requestKey.isFinanceApproval = false;
-
-            _context.Entry(requestKey).State = EntityState.Modified;
-
-            try
+            bool result = await _request_key.DeleteRequestKeyAsync(id);
+            if (!result)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RequestKeyExists(request_id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
         }
-
-        // PATCH: api/RequestKey/{request_id}/Reject
-        [HttpPatch("{request_id}/RejectFiancePart")]
-        public async Task<IActionResult> RejectRequestPart(int request_id, [FromBody] string rejectionReason)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRequestKeyById(int id)
         {
-            var requestKey = await _context.RequestKeys.FindAsync(request_id);
-
+            var requestKey = await _request_key.GetRequestKeyByIdAsync(id);
             if (requestKey == null)
             {
                 return NotFound();
             }
 
-            // Update the CommentFinaceMgt column with the rejection reason
-            requestKey.CommentPartnerMgt = rejectionReason;
-
-            // Update the Partner Manager status to Rejected
-            requestKey.isPartnerApproval = false;
-
-            _context.Entry(requestKey).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RequestKeyExists(request_id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(requestKey);
         }
 
-        private bool RequestKeyExists(int id)
-        {
-            return _context.RequestKeys.Any(e => e.RequestID == id);
-        }
 
     }
 }

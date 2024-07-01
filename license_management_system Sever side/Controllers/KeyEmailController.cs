@@ -19,8 +19,20 @@ namespace license_management_system_Sever_side.Controllers
         [HttpPost]
         public IActionResult SendEmail(SendKeyMailDto request)
         {
-            _keyEmailService.SendEmail(request);
-            return Ok("emal send successful");
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var massage = _keyEmailService.SendEmail(request);
+                return Ok(massage);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+       
         }
     }
 }

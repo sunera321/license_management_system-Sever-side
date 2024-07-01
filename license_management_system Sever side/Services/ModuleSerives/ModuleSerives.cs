@@ -4,11 +4,12 @@ using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace license_management_system_Sever_side.Services.ModuleSerives
 {
     public class ModuleSerives : IModuleSerives
     {
-        DataContext _context;
+         DataContext _context;
         IMapper _mapper;
         public ModuleSerives(DataContext dataContext, IMapper mapper)
         {
@@ -41,7 +42,31 @@ namespace license_management_system_Sever_side.Services.ModuleSerives
             _context.Modules.Update(moduleEntity);
             await _context.SaveChangesAsync();
         }
+        //get module statistics
+        public async Task<List<ModuleStatisticDTO>> GetModuleStatistics()
+        {
+            var query = @"SELECT a.name, COUNT(b.moduleId) AS total 
+                      FROM Modules a 
+                      INNER JOIN EndClientModules b ON a.id = b.moduleId 
+                      GROUP BY a.name;";
 
-      
+            var result = await _context.Set<ModuleStatisticDTO>()
+                                       .FromSqlRaw(query)
+                                       .ToListAsync();
+            return result;
+        }
+
+        public async Task DeleteModuleByClientId(int clientId)
+        {
+            var endClientModules = await _context.EndClientModules
+                .Where(ecm => ecm.EndClientId == clientId)
+                .ToListAsync();
+
+            if (endClientModules.Any())
+            {
+                _context.EndClientModules.RemoveRange(endClientModules);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

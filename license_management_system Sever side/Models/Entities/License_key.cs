@@ -15,6 +15,8 @@ namespace license_management_system_Sever_side.Models.Entities
     }*/
     public class License_key
     {
+
+        internal string key_status;
         [Key, Column("Key_name"), MaxLength(150)]
         [DisplayName("Key")]
         public string? Key_name { get; set; }
@@ -31,6 +33,12 @@ namespace license_management_system_Sever_side.Models.Entities
         [DisplayName("Mac Address")]
         public string? MacAddress { get; set; }
 
+        //create HostUrl Colom
+        [Column("HostUrl")]
+        [DisplayName("Host Url")]
+        public string? HostUrl { get; set; }
+
+
         [Column("key_status")]
         [DisplayName("Key Status")]
         public string Key_Status { get; set; }
@@ -39,6 +47,11 @@ namespace license_management_system_Sever_side.Models.Entities
         [Column("Clint Id")]
         [DisplayName("Clint Id")]
         public int? ClintId { get; set; }
+
+        [Column ("Clint Name")]
+        [DisplayName("Clint Name")]
+        public string ClintName { get; set;}
+
 
 
         [ForeignKey("RequestId")]

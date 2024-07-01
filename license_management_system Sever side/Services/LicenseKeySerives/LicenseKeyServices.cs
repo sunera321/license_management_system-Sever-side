@@ -5,7 +5,9 @@ using license_management_system_Sever_side.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Cryptography;
 using System.Text;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace license_management_system_Sever_side.Services.LicenseKeyServices
 {
@@ -58,11 +60,14 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 if (endClient != null && requestKey != null)
                 {
                     string email = endClient.Email;
-                    string macAddress = endClient.MackAddress;
+                    string macAddress = endClient.MacAddress;
                     string hostUrl = endClient.HostUrl;
+                    // int ModuleID = (int)endClient.EndClientModules;
 
                     string combinedData = email + macAddress + hostUrl;
-                    string hashedKey = HashString(combinedData);
+                    string hashedKey = NormalHash(combinedData);
+
+                    //string Doublehashed = HashString(hashedKey);
 
                     var license = new License_key
                     {
@@ -72,10 +77,16 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                         Key_Status = "Available", // Assuming you want to activate the key upon generation
                         RequestId = requestKey.RequestID,
                         ClintId = endClient.Id,
-                        MacAddress = endClient.MackAddress
+                        ClintName = endClient.Name,
+                        MacAddress = endClient.MacAddress,
+                        HostUrl = endClient.HostUrl
                     };
+                    //change endclint table ActivationDate and DeactivatedDate
+                    endClient.ActiveDate = DateTime.Now;
+                    endClient.ExpireDate = DateTime.Now.AddDays(requestKey.NumberOfDays);
 
                     _context.License_keys.Add(license);
+                    _context.EndClients.Update(endClient);
                     await _context.SaveChangesAsync();
 
                     return hashedKey;
@@ -90,6 +101,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error generating license key", ex);
             }
         }
+
 
         public async Task<string> DecodeLicenseKeyByRequestId(int requestId)
         {
@@ -113,7 +125,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
             }
         }
 
-        private string HashString(string input)
+        private string NormalHash(string input)
         {
             try
             {
@@ -136,6 +148,41 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                 throw new Exception("Error decoding string", ex);
             }
         }
+
+        private string HashString(string input)
+        {
+            // Hash the input string using SHA256 algorithm
+
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
+                {
+                    builder.Append(b.ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+        public async Task<List<ActivationStatisticDto>> GetActivationStatisticsAsync()
+        {
+            var query = "SELECT YEAR(activation_date) AS Year, MONTH(activation_date) AS Month, COUNT(*) AS Count  FROM License_keys WHERE key_status = 'Activated' GROUP BY YEAR(activation_date),  MONTH(activation_date) ORDER BY Year, Month;";
+            var result = await _context.Set<ActivationStatisticDto>()
+                                       .FromSqlRaw(query)
+                                       .ToListAsync();
+            return result;
+
+        }
+
+        
+        public async Task<List<ClientLicenseInfo>> GetClientLicenseInfoAsync()
+        {
+            var query = " SELECT ec.id  AS Id , ec.name AS Name , ec.email AS Email, lk.activation_date  AS ActivationDate,lk.deactivated_Date AS DeactivatedDate,lk.key_status AS KeyStatus FROM EndClients ec  JOIN license_keys lk ON ec.id = lk.[Clint Id];";
+            var result = await _context.Set < ClientLicenseInfo>()
+                                       .FromSqlRaw(query)
+                                       .ToListAsync();
+            return result;
+        }
         /* private string HashString(string input)
          {
              // Hash the input string using SHA256 algorithm
@@ -150,6 +197,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
                  return builder.ToString();
              }
          }*/
-    }
-}
 
+
+    }
+
+}
