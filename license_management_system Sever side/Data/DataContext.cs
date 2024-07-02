@@ -29,6 +29,8 @@ namespace license_management_system_Sever_side.Data
         public DbSet<ModuleStatisticDTO> ModuleStatistics { get; set; }
         public DbSet<ActivationStatisticDto> ActivationStatistics { get; set; }
 
+        public DbSet<Review> Reviews { get; set; }
+
 
 
 
@@ -58,10 +60,15 @@ namespace license_management_system_Sever_side.Data
                 .WithMany(m => m.EndClientModules)
                 .HasForeignKey(ecm => ecm.ModuleId);
 
+            modelBuilder.Entity<User>()
+                   .HasIndex(u => u.UserId)
+                   .IsUnique();
+
             // Configure ModuleStatisticDTO  and ActivationStatisticDto as a keyless entity
             modelBuilder.Entity<ModuleStatisticDTO>().HasNoKey();
 
             modelBuilder.Entity<ActivationStatisticDto>().HasNoKey().ToView(null);
+            modelBuilder.Entity<ClientLicenseInfo>().HasNoKey();
 
 
         }
