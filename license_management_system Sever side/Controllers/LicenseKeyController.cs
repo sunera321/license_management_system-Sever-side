@@ -29,7 +29,18 @@ namespace license_management_system_Sever_side.Controllers
             var licenseKey = await _context.License_keys.ToListAsync();
             return Ok(licenseKey);
         }
-      
+
+        [HttpGet("without auth")]
+
+        public async Task<IActionResult> GetAllLicenseKeysAuth()
+        {
+            var licenseKey = await _context.License_keys.ToListAsync();
+            return Ok(licenseKey);
+        }
+
+
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLicenseKey(string key)
@@ -77,6 +88,7 @@ namespace license_management_system_Sever_side.Controllers
             }
         }
 
+    
         [HttpGet("info")]
         public async Task<ActionResult> GetClientLicenseInfoAsync()
         {
