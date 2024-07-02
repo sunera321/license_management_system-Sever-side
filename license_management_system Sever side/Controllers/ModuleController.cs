@@ -1,4 +1,5 @@
-﻿using license_management_system_Sever_side.Data;
+﻿using license_management_system_Sever_side.Attributes;
+using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.ModuleSerives;
@@ -24,6 +25,7 @@ namespace license_management_system_Sever_side.Controllers
             _context = context;
         }
 
+        [AuthorizeRole("7b449069-9d8e-4101-9b60-997be537120b", "97111ac5-093b-41df-98ae-75ab8956e0d2", "3c5f0eea-412e-4d0a-9fde-849b9d3e5838")]
         [HttpPost]
         public async Task<IActionResult> AddModule(ModuleDto module)
         {
@@ -31,15 +33,20 @@ namespace license_management_system_Sever_side.Controllers
             return Ok("Module added");
         }
 
-        [HttpGet("getAllModules")]
-        public async Task<IActionResult> GetAllModules()
+        [AuthorizeRole("b6fb7992-75fe-4d51-81e9-a62e2b8bd6ff", "7b449069-9d8e-4101-9b60-997be537120b", "97111ac5-093b-41df-98ae-75ab8956e0d2", "3c5f0eea-412e-4d0a-9fde-849b9d3e5838")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllModule()
+
         {
             var modules = await _moduleSerives.GetAllModule();
             return Ok(modules);
         }
 
-        [HttpGet("getModulesWithId")]
-        public async Task<ActionResult<IEnumerable<Modules>>> GetModulesWithId()
+
+        [AuthorizeRole("b6fb7992-75fe-4d51-81e9-a62e2b8bd6ff", "7b449069-9d8e-4101-9b60-997be537120b", "97111ac5-093b-41df-98ae-75ab8956e0d2", "3c5f0eea-412e-4d0a-9fde-849b9d3e5838")]
+        [HttpGet("getModuleswithId")]
+        public async Task<ActionResult<IEnumerable<Modules>>> GetModuleswithId()
+
         {
             return await _context.Modules.ToListAsync();
         }
@@ -60,12 +67,11 @@ namespace license_management_system_Sever_side.Controllers
                 var modules = await _context.Modules.ToListAsync();
                 return Ok(modules);
             }
-            catch
+            catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error: ");
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
-          }
-            
+        }
 
         // New endpoint to get module statistics
         [HttpGet("statistics")]
@@ -84,95 +90,21 @@ namespace license_management_system_Sever_side.Controllers
         }
 
 
-    /* ///////////////////////////Reviews//////////////////////////////////////
-        // Create a new review
-        [HttpPost("{moduleId}/reviews")]
-        public async Task<IActionResult> AddReview(int moduleId, [FromBody] ReviewDto reviewDto)
-        {
-            if (reviewDto == null)
-            {
-                return BadRequest();
-            }
-
-            var review = new Review
-            {
-                ModuleId = moduleId,
-                Rating = reviewDto.Rating,
-                ReviewText = reviewDto.Review,
-                CustomerId = User.Identity.Name //  user authentication
-            };
-
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        // Read all reviews for a module
-        [HttpGet("{moduleId}/reviews")]
-        public async Task<ActionResult<IEnumerable<Review>>> GetReviews(int moduleId)
-        {
-            return await _context.Reviews.Where(r => r.ModuleId == moduleId).ToListAsync();
-        }
-
-        // Update a review
-        [HttpPut("reviews/{reviewId}")]
-        public async Task<IActionResult> UpdateReview(int reviewId, [FromBody] ReviewDto reviewDto)
-        {
-            var review = await _context.Reviews.FindAsync(reviewId);
-            if (review == null)
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetModuleById(int id)
         {
             var module = await _context.Modules.FindAsync(id);
 
             if (module == null)
-
             {
                 return NotFound();
             }
-
-
-            if (review.CustomerId != User.Identity.Name) // Ensure the customer owns the review
-            {
-                return Forbid();
-            }
-
-            review.Rating = reviewDto.Rating;
-            review.ReviewText = reviewDto.Review;
-
-            _context.Reviews.Update(review);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        // Delete a review
-        [HttpDelete("reviews/{reviewId}")]
-        public async Task<IActionResult> DeleteReview(int reviewId)
-        {
-            var review = await _context.Reviews.FindAsync(reviewId);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            if (review.CustomerId != User.Identity.Name) // Ensure the customer owns the review
-            {
-                return Forbid();
-            }
-
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
 
             return Ok(module);
-        }
 
+
+
+        }
         [HttpDelete("{clientId}")]
         public async Task<IActionResult> DeleteModuleByClientId(int clientId)
         {
@@ -183,7 +115,4 @@ namespace license_management_system_Sever_side.Controllers
     */
 
     }
-
-
-
 }
