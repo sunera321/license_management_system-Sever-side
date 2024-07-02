@@ -84,7 +84,7 @@ namespace license_management_system_Sever_side.Controllers
         }
 
 
-     ///////////////////////////Reviews//////////////////////////////////////
+    /* ///////////////////////////Reviews//////////////////////////////////////
         // Create a new review
         [HttpPost("{moduleId}/reviews")]
         public async Task<IActionResult> AddReview(int moduleId, [FromBody] ReviewDto reviewDto)
@@ -180,7 +180,7 @@ namespace license_management_system_Sever_side.Controllers
             return Ok();
 
         }
-
+    */
 
     }
 
