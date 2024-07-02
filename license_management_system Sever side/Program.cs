@@ -3,6 +3,7 @@ using license_management_system_Sever_side.Data;
 using license_management_system_Sever_side.Mappings;
 using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
+using license_management_system_Sever_side.Services.INDashboardServices;
 using license_management_system_Sever_side.Services.ActivateKeySerives;
 using license_management_system_Sever_side.Services.EmailServices.ContectMail;
 using license_management_system_Sever_side.Services.EmailServices.KeyEmail;
@@ -34,6 +35,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddCors();
+
+
+builder.Services.AddScoped<IInDashboardService, InDashboardService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IKeyEmailService, KeyEmailService>();
 builder.Services.AddScoped<IContectEmalService, ContectEmalService>();
 builder.Services.AddScoped<IEndClientService, EndClientService>();
