@@ -78,7 +78,7 @@ namespace license_management_system_Sever_side.Controllers
         }
 
         [HttpGet("info")]
-        public async Task<ActionResult<ClientLicenseInfo>> GetLicenseInfo()
+        public async Task<ActionResult> GetClientLicenseInfoAsync()
         {
             var info = await _licenseKeyServices.GetClientLicenseInfoAsync();
             if (info == null) return NotFound();

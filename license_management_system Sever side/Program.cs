@@ -15,6 +15,7 @@ using license_management_system_Sever_side.Services.NotificationSerives;
 using license_management_system_Sever_side.Services.PartnerSerives;
 using license_management_system_Sever_side.Services.RequestKeySerives;
 using Microsoft.EntityFrameworkCore;
+using license_management_system_Sever_side.Services.ReviewServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,8 @@ builder.Services.AddScoped<ILicenseKeyServices, LicenseKeyServices>();
 builder.Services.AddScoped<INotificationsSerives, NotificationsSerives>();
 builder.Services.AddScoped<IActivateKeySerives, ActivateKeySerives>();
 builder.Services.AddScoped<ILogingValidateInfoSerives, LogingValidateInfoSerives>();
+builder.Services.AddScoped<IReviewServices, ReviewServices>();
+
 
 
 
