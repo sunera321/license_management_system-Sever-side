@@ -2,7 +2,9 @@
 {
     public class ReviewDto
     {
+        public int ModuleId { get; set; }
         public int Rating { get; set; }
-        public string Review { get; set; }
+        public string ReviewText { get; set; }
+
     }
 }

@@ -6,7 +6,7 @@
         public int ModuleId { get; set; }
         public int Rating { get; set; }
         public string ReviewText { get; set; }
-        public string CustomerId { get; set; }
+   
     }
 
 }

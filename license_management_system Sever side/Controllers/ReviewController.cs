@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using license_management_system_Sever_side.Models.DTOs;
+﻿using license_management_system_Sever_side.Models.DTOs;
 using license_management_system_Sever_side.Models.Entities;
 using license_management_system_Sever_side.Services.ReviewServices;
-using license_management_system_Sever_side.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace license_management_system_Sever_side.Controllers
 {
@@ -12,92 +12,47 @@ namespace license_management_system_Sever_side.Controllers
     [ApiController]
     public class ReviewController : ControllerBase
     {
-        private readonly IReviewServices _reviewServices;
-        private readonly DataContext _context;
+        private readonly IReviewServices _reviewService;
 
-        public ReviewController(IReviewServices reviewServices, DataContext context)
+        public ReviewController(IReviewServices reviewService)
         {
-            _reviewServices = reviewServices;
-            _context = context;
+            _reviewService = reviewService;
         }
 
-        // Create a new review
-
-        [HttpPost("{moduleId}/reviews")]
-        public async Task<IActionResult> AddReview(int moduleId, [FromBody] ReviewDto reviewDto, [FromHeader] string userId)
-        {
-            if (reviewDto == null)
-            {
-                return BadRequest();
-            }
-
-            var review = new Review
-            {
-                ModuleId = moduleId,
-                Rating = reviewDto.Rating,
-                ReviewText = reviewDto.Review,
-                CustomerId = userId
-            };
-
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        // Read all reviews for a module
-        [HttpGet("{moduleId}/reviews")]
+        [HttpGet("{moduleId}")]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews(int moduleId)
         {
-            return await _context.Reviews.Where(r => r.ModuleId == moduleId).ToListAsync();
+            var reviews = await _reviewService.GetReviewsAsync(moduleId);
+            return Ok(reviews);
         }
 
-        // Update a review
-        [HttpPut("reviews/{reviewId}")]
-        public async Task<IActionResult> UpdateReview(int reviewId, [FromBody] ReviewDto reviewDto, [FromHeader] string userId)
+        [HttpGet("review/{reviewId}")]
+        public async Task<ActionResult<Review>> GetReviewById(int reviewId)
         {
-            var review = await _context.Reviews.FindAsync(reviewId);
+            var review = await _reviewService.GetReviewByIdAsync(reviewId);
+
             if (review == null)
             {
                 return NotFound();
             }
 
-            if (review.CustomerId != userId)
-            {
-                return Forbid();
-            }
+            return Ok(review);
+        }
 
-            review.Rating = reviewDto.Rating;
-            review.ReviewText = reviewDto.Review;
-
-            _context.Reviews.Update(review);
-            await _context.SaveChangesAsync();
-
+        //[Authorize]
+        [HttpPost]
+        public async Task<ActionResult> AddReview([FromBody] ReviewDto reviewDto)
+        {
+            await _reviewService.AddReviewAsync(reviewDto);
             return Ok();
         }
 
-        // Delete a review
-        [HttpDelete("reviews/{reviewId}")]
-        public async Task<IActionResult> DeleteReview(int reviewId, [FromHeader] string userId)
+        [Authorize]
+        [HttpDelete("{reviewId}")]
+        public async Task<ActionResult> DeleteReview(int reviewId)
         {
-            var review = await _context.Reviews.FindAsync(reviewId);
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            if (review.CustomerId != userId)
-            {
-                return Forbid();
-            }
-
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
-
+            await _reviewService.DeleteReviewAsync(reviewId);
             return Ok();
         }
     }
-
 }
-
-
