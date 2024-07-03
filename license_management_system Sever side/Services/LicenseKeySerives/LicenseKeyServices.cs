@@ -166,7 +166,8 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
         }
         public async Task<List<ActivationStatisticDto>> GetActivationStatisticsAsync()
         {
-            var query = "SELECT YEAR(activation_date) AS Year, MONTH(activation_date) AS Month, COUNT(*) AS Count  FROM License_keys WHERE key_status = 'Activated' GROUP BY YEAR(activation_date),  MONTH(activation_date) ORDER BY Year, Month;";
+
+            var query = "SELECT CAST(activation_date AS DATE) AS Date, YEAR(activation_date) AS Year, MONTH(activation_date) AS Month, COUNT(*) AS Count FROM License_keys WHERE key_status = 'Activated' GROUP BY CAST(activation_date AS DATE),  YEAR(activation_date),  MONTH(activation_date) ORDER BY Year, Month, Date;";
             var result = await _context.Set<ActivationStatisticDto>()
                                        .FromSqlRaw(query)
                                        .ToListAsync();
@@ -174,7 +175,7 @@ namespace license_management_system_Sever_side.Services.LicenseKeyServices
 
         }
 
-        
+
         public async Task<List<ClientLicenseInfo>> GetClientLicenseInfoAsync()
         {
             var query = " SELECT ec.id  AS Id , ec.name AS Name , ec.email AS Email, lk.activation_date  AS ActivationDate,lk.deactivated_Date AS DeactivatedDate,lk.key_status AS KeyStatus FROM EndClients ec  JOIN license_keys lk ON ec.id = lk.[Clint Id];";
